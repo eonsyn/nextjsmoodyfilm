@@ -1,0 +1,17 @@
+/* Infinite Scroll Animation */
+@keyframes scrollAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scrollAnimation 15s linear infinite;
+}
+
+.pause-animation {
+  animation-play-state: paused; /* Pauses the animation when hovered */
+}
