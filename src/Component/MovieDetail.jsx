@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { FaDownload } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MovieDetail = () => {
-  const { id } = useParams(); // Get the movie id from the URL
+  const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [processing, setProcessing] = useState(false); // For download processing
+  const [isHovered, setIsHovered] = useState(false); // For image hover
 
   useEffect(() => {
-    // Fetch movie details by id
     const fetchMovieDetails = async () => {
       try {
         const response = await fetch(
@@ -23,7 +23,6 @@ const MovieDetail = () => {
         }
 
         const data = await response.json();
-        console.log(data);
         setMovie(data);
       } catch (error) {
         setError(error.message);
@@ -36,35 +35,29 @@ const MovieDetail = () => {
     fetchMovieDetails();
   }, [id]);
 
-  // Function to handle the reload of download link
-  const loadLink = async (finalLink) => {
+  // Function to handle the URL processing and redirect
+  const handleDownload = async (downloadHref) => {
+    setProcessing(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/testdownload`,
-        {
-          method: "POST", // Use POST instead of GET
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url: finalLink }), // Send the body with the request
-        }
+        `${import.meta.env.VITE_API_BASE_URL}/api/test?url=${encodeURIComponent(
+          downloadHref
+        )}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch the download link");
+        throw new Error("Failed to fetch the original URL");
       }
-      toast.success("new link generated");
       const data = await response.json();
-      // Update the downloadHref with the new final link
-      const updatedMovie = { ...movie };
-      updatedMovie.downloadData = updatedMovie.downloadData.map((download) =>
-        download.finalLink === finalLink
-          ? { ...download, downloadHref: data.finalLink }
-          : download
-      );
-      setMovie(updatedMovie);
+      if (data.redirectedUrl) {
+        window.open(data.redirectedUrl, "_blank");
+      } else {
+        toast.error("Failed to retrieve the original URL");
+      }
     } catch (error) {
-      toast.error("failed to generate");
-      console.error("Error reloading download link:", error);
+      console.error("Error processing download link:", error);
+      toast.error("Error processing download link");
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -141,23 +134,17 @@ const MovieDetail = () => {
               className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
             >
               <span className="text-gray-800">{download.title}</span>
-              {download.downloadHref ? (
-                <a
-                  href={download.downloadHref}
-                  className="text-blue-600 hover:text-blue-800"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaDownload size={20} />
-                </a>
-              ) : (
-                <button
-                  onClick={() => loadLink(download.finalLink)}
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  Reload the download
-                </button>
-              )}
+              <button
+                onClick={() => handleDownload(download.downloadHref)}
+                className="text-blue-600 hover:text-blue-800 flex items-center"
+                disabled={processing}
+              >
+                {processing ? (
+                  <ClipLoader size={20} loading={processing} />
+                ) : (
+                  "Download"
+                )}
+              </button>
             </div>
           ))}
         </div>
