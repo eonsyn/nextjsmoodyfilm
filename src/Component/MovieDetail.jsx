@@ -59,11 +59,11 @@ const MovieDetail = () => {
         if (data.redirectedUrl) {
           window.open(data.redirectedUrl, "_blank");
         } else {
-          toast.error("Failed to retrieve the original URL");
+          toast.error("Try again");
         }
       } catch (error) {
         console.error("Error processing download link:", error);
-        toast.error("Error processing download link");
+        toast.error("try again");
       } finally {
         setProcessingId(null); // Reset processing state after download
       }
