@@ -62,7 +62,7 @@ const Home = () => {
       <div className="text-center mt-10">
         {/* Dummy Cards with opacity animation */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {Array.from({ length: 15 }).map((_, index) => (
+          {Array.from({ length: 16 }).map((_, index) => (
             <div
               key={index}
               className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg shadow-lg overflow-hidden animate-pulse opacity-50 h-[450px]"

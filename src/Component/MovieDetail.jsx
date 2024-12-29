@@ -71,15 +71,15 @@ const MovieDetail = () => {
 
   if (loading) {
     return (
-      <div className="text-center mt-10">
-        <ClipLoader size={50} loading={loading} />
+      <div className="text-center mt-10 h-screen w-screen flex items-center justify-center">
+        <ClipLoader size={100} loading={true} />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center mt-10 text-red-600">
+      <div className="text-center h-screen w-screen  mt-10 text-red-600">
         <p>Error loading movie details: {error}</p>
       </div>
     );
@@ -112,6 +112,7 @@ const MovieDetail = () => {
   return (
     <div className="container mx-auto px-4 py-6">
       <ToastContainer />
+
       <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
         {movie.filmTitle}
       </h1>
