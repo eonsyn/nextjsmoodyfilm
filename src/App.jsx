@@ -1,13 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AdminLogin from "./AdminComponent/AdminLogin.jsx";
 import MovieEdit from "./AdminComponent/MovieEdit";
 import MovieForm from "./AdminComponent/MovieForm";
-import AdminLogin from "./AdminComponent/AdminLogin.jsx";
 import MovieUpdate from "./AdminComponent/MovieUpdate";
-import RequestMovie from "./Component/RequestMovie.jsx";
 import "./App.css";
+import Footer from "./Component/Footer.jsx";
 import Home from "./Component/Home";
 import MovieDetail from "./Component/MovieDetail";
 import Navbar from "./Component/Navbar";
+import RequestMovie from "./Component/RequestMovie.jsx";
 import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/admin/MovieUpdate" element={<MovieUpdate />} />
           </Routes>
         </div>
+        <Footer />
       </SearchProvider>
     </Router>
   );

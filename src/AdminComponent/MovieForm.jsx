@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import { ClipLoader } from "react-spinners";
 import { FaFilm } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MovieForm = () => {
@@ -19,6 +19,7 @@ const MovieForm = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  // Fetch IMDb Data
   const handleGetData = async () => {
     setLoading(true);
     try {
@@ -29,15 +30,17 @@ const MovieForm = () => {
       );
       const data = response.data;
 
+      // Update formData with fetched data
       setFormData({
-        filmTitle: data.filmname,
-        description: data.storySummary,
-        imdbRating: data.rating,
-        directedBy: data.director,
-        genre: data.genres,
-        urlOfThumbnail: data.posterImg,
+        filmTitle: data.filmname || "",
+        description: data.storySummary || "",
+        imdbRating: data.rating || "",
+        directedBy: data.director || "",
+        genre: data.genres || [],
+        urlOfThumbnail: data.posterImg || "",
         urlOfPost: postUrl,
       });
+
       toast.success("Data fetched successfully!");
     } catch (error) {
       toast.error("Failed to fetch data. Please check the URL.");
@@ -46,17 +49,34 @@ const MovieForm = () => {
     }
   };
 
+  // Submit Form Data
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/admin/sendFormData`,
         formData,
         { withCredentials: true }
       );
+
+      // Reset form data after successful submission
+      setFormData({
+        filmTitle: "",
+        description: "",
+        imdbRating: "",
+        directedBy: "",
+        genre: [],
+        urlOfThumbnail: "",
+        urlOfPost: "",
+      });
+      setPostUrl("");
+      setUrl("");
       toast.success("Form submitted successfully!");
     } catch (error) {
       toast.error("Failed to submit the form. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +84,7 @@ const MovieForm = () => {
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        {/* Header Section */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-2">
             <FaFilm className="text-yellow-500" /> Movie Form
@@ -72,6 +93,8 @@ const MovieForm = () => {
             Fetch IMDb data and submit movie details easily.
           </p>
         </div>
+
+        {/* IMDb URL Input */}
         <div className="mb-6">
           <label className="block text-gray-700 font-semibold mb-2">
             IMDb URL:
@@ -93,7 +116,10 @@ const MovieForm = () => {
             </button>
           </div>
         </div>
+
+        {/* Form Section */}
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Film Title */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Film Title:
@@ -107,6 +133,8 @@ const MovieForm = () => {
               className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+
+          {/* Description */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Description:
@@ -119,6 +147,8 @@ const MovieForm = () => {
               className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+
+          {/* IMDb Rating and Director */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
@@ -147,6 +177,8 @@ const MovieForm = () => {
               />
             </div>
           </div>
+
+          {/* Genre */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Genre (comma-separated):
@@ -163,6 +195,8 @@ const MovieForm = () => {
               className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+
+          {/* Thumbnail URL */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Thumbnail URL:
@@ -176,6 +210,8 @@ const MovieForm = () => {
               className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+
+          {/* Post URL */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Post URL:
@@ -191,6 +227,8 @@ const MovieForm = () => {
               className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"

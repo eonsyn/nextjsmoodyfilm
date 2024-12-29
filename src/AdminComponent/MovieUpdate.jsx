@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useSearch } from "../context/SearchContext"; // Import the context
 import { ToastContainer, toast } from "react-toastify";
+import { useSearch } from "../context/SearchContext"; // Import the context
 
 const MovieUpdate = () => {
   const { searchTerm } = useSearch(); // Get searchTerm from context
@@ -15,15 +15,16 @@ const MovieUpdate = () => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/home`,
+          `${import.meta.env.VITE_API_BASE_URL}/admin/home`,
           {
             withCredentials: true, // Include cookies in the request
           }
         );
-        setMovies(response.data);
+        const { films } = response.data; // Extract 'films' from the response
+        setMovies(films || []); // Ensure 'films' is an array
       } catch (error) {
-        toast.error(error);
         console.error("Error fetching movies:", error);
+        toast.error("Failed to fetch movies. Please try again.");
       }
     };
     fetchMovies();
@@ -42,6 +43,11 @@ const MovieUpdate = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this film?"
+      );
+      if (!confirmDelete) return; // Exit if user cancels
+
       await axios.delete(
         `${import.meta.env.VITE_API_BASE_URL}/admin/delete/${id}`,
         {
@@ -49,10 +55,10 @@ const MovieUpdate = () => {
         }
       );
       setMovies(movies.filter((movie) => movie._id !== id));
-      toast.success("film deleted");
+      toast.success("Film deleted successfully.");
     } catch (error) {
-      toast.error(error);
       console.error("Error deleting movie:", error);
+      toast.error("Failed to delete the film. Please try again.");
     }
   };
 
