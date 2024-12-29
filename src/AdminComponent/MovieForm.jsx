@@ -1,169 +1,205 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
+import { FaFilm } from "react-icons/fa";
+import "react-toastify/dist/ReactToastify.css";
 
 const MovieForm = () => {
+  const [url, setUrl] = useState("");
+  const [postUrl, setPostUrl] = useState("");
   const [formData, setFormData] = useState({
     filmTitle: "",
-    urlOfPost: "",
+    description: "",
+    imdbRating: "",
+    directedBy: "",
+    genre: [],
     urlOfThumbnail: "",
-    genre: [], // Ensure it's always an array
+    urlOfPost: "",
   });
-
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]:
-        name === "genre" && value
-          ? value.split(",").map((g) => g.trim())
-          : value, // Ensure 'genre' is split correctly
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleGetData = async () => {
     setLoading(true);
-
-    // Ensure 'genre' is an array (split by comma if it's a string)
-    const updatedFormData = {
-      ...formData,
-      genre: Array.isArray(formData.genre)
-        ? formData.genre
-        : formData.genre
-        ? formData.genre.split(",").map((g) => g.trim())
-        : [], // Split by comma and remove extra spaces if it's a string
-    };
-
     try {
-      // Single API call to save the movie data
-      console.log(updatedFormData);
-      console.log(JSON.stringify(updatedFormData));
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/admin/sendFormData`,
-        {
-          method: "POST",
-          credentials: "include", // Include cookies in the request
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedFormData),
-        }
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/admin/getImdbData`,
+        { url },
+        { withCredentials: true }
       );
-
-      if (!response.ok) {
-        throw new Error("unauthorise access: IP address sending to admin");
-      }
-      const data = await response.json();
-      console.log(data);
-      toast.success("film uploaded");
+      const data = response.data;
 
       setFormData({
-        filmTitle: "",
-        urlOfPost: "",
-        urlOfThumbnail: "",
-        genre: [], // Reset genre to empty array
+        filmTitle: data.filmname,
+        description: data.storySummary,
+        imdbRating: data.rating,
+        directedBy: data.director,
+        genre: data.genres,
+        urlOfThumbnail: data.posterImg,
+        urlOfPost: postUrl,
       });
-    } catch (err) {
-      toast.error(`${err.message}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        theme: "light",
-      });
+      toast.success("Data fetched successfully!");
+    } catch (error) {
+      toast.error("Failed to fetch data. Please check the URL.");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/admin/sendFormData`,
+        formData,
+        { withCredentials: true }
+      );
+      toast.success("Form submitted successfully!");
+    } catch (error) {
+      toast.error("Failed to submit the form. Please try again.");
+    }
+  };
+
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-md">
+    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
-      <h1 className="text-2xl font-bold text-center mb-6">
-        Post Movie Details
-      </h1>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label
-            htmlFor="filmTitle"
-            className="block text-gray-700 font-medium"
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-2">
+            <FaFilm className="text-yellow-500" /> Movie Form
+          </h1>
+          <p className="text-gray-600">
+            Fetch IMDb data and submit movie details easily.
+          </p>
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 font-semibold mb-2">
+            IMDb URL:
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="Paste IMDb URL here"
+              className="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+            <button
+              onClick={handleGetData}
+              disabled={loading}
+              className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+            >
+              {loading ? <ClipLoader size={20} color="#fff" /> : "Get Data"}
+            </button>
+          </div>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Film Title:
+            </label>
+            <input
+              type="text"
+              value={formData.filmTitle}
+              onChange={(e) =>
+                setFormData({ ...formData, filmTitle: e.target.value })
+              }
+              className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Description:
+            </label>
+            <textarea
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                IMDb Rating:
+              </label>
+              <input
+                type="text"
+                value={formData.imdbRating}
+                onChange={(e) =>
+                  setFormData({ ...formData, imdbRating: e.target.value })
+                }
+                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Directed By:
+              </label>
+              <input
+                type="text"
+                value={formData.directedBy}
+                onChange={(e) =>
+                  setFormData({ ...formData, directedBy: e.target.value })
+                }
+                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Genre (comma-separated):
+            </label>
+            <input
+              type="text"
+              value={formData.genre.join(", ")}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  genre: e.target.value.split(",").map((g) => g.trim()),
+                })
+              }
+              className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Thumbnail URL:
+            </label>
+            <input
+              type="text"
+              value={formData.urlOfThumbnail}
+              onChange={(e) =>
+                setFormData({ ...formData, urlOfThumbnail: e.target.value })
+              }
+              className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Post URL:
+            </label>
+            <input
+              type="text"
+              value={postUrl}
+              onChange={(e) => {
+                setPostUrl(e.target.value);
+                setFormData({ ...formData, urlOfPost: e.target.value });
+              }}
+              placeholder="Paste post URL here"
+              className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
+            disabled={loading}
           >
-            Film Title
-          </label>
-          <input
-            type="text"
-            id="filmTitle"
-            name="filmTitle"
-            value={formData.filmTitle}
-            onChange={handleChange}
-            required
-            className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="urlOfPost"
-            className="block text-gray-700 font-medium"
-          >
-            URL of Post
-          </label>
-          <input
-            type="url"
-            id="urlOfPost"
-            name="urlOfPost"
-            value={formData.urlOfPost}
-            onChange={handleChange}
-            required
-            className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="urlOfThumbnail"
-            className="block text-gray-700 font-medium"
-          >
-            URL of Thumbnail
-          </label>
-          <input
-            type="url"
-            id="urlOfThumbnail"
-            name="urlOfThumbnail"
-            value={formData.urlOfThumbnail}
-            onChange={handleChange}
-            required
-            className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="genre" className="block text-gray-700 font-medium">
-            Genre (Optional, comma-separated)
-          </label>
-          <input
-            type="text"
-            id="genre"
-            name="genre"
-            value={formData.genre.join(", ")} // Join array into a comma-separated string for display
-            onChange={handleChange}
-            className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
-          disabled={loading}
-        >
-          {loading ? <ClipLoader size={20} color="#ffffff" /> : "Submit"}
-        </button>
-      </form>
+            {loading ? <ClipLoader size={20} color="#fff" /> : "Submit"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
