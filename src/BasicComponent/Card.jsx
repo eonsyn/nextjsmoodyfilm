@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Card = ({ title, thumbnail, id, ratingImdb }) => {
@@ -20,7 +21,11 @@ const Card = ({ title, thumbnail, id, ratingImdb }) => {
               {title}
             </h2>
             <div className="flex justify-between text-slate-300 items-center mt-2">
-              <p>{ratingImdb}</p>
+              <p className="flex justify-center items-center h-[10%] ">
+                {" "}
+                <FaStar className="text-yellow-500" />
+                <span className="pl-2">{ratingImdb}</span>
+              </p>
             </div>
           </div>
         </div>

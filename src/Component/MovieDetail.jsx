@@ -41,10 +41,7 @@ const MovieDetail = () => {
   const handleDownload = async (downloadHref, downloadId) => {
     setProcessingId(downloadId);
 
-    if (downloadHref.endsWith(".mkv") || downloadHref.endsWith("download")) {
-      window.open(downloadHref, "_blank");
-      setProcessingId(null);
-    } else {
+    if (downloadHref.startsWith("https://instant")) {
       try {
         const response = await fetch(
           `${
@@ -66,6 +63,9 @@ const MovieDetail = () => {
       } finally {
         setProcessingId(null);
       }
+    } else {
+      window.open(downloadHref, "_blank");
+      setProcessingId(null);
     }
   };
 
