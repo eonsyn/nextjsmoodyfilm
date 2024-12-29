@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+// Import libraries for smooth scrolling and infinite scroll
 import { useParams } from "react-router-dom";
+import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme
+import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [processingId, setProcessingId] = useState(null); // Track the clicked download button
-  const [isHovered, setIsHovered] = useState(false); // For image hover
+  const [processingId, setProcessingId] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -35,16 +38,12 @@ const MovieDetail = () => {
     fetchMovieDetails();
   }, [id]);
 
-  // Function to handle the URL processing and redirect
   const handleDownload = async (downloadHref, downloadId) => {
-    // Set processing state for the specific button clicked
     setProcessingId(downloadId);
 
-    // Check if the link ends with .mkv
-    if (downloadHref.endsWith(".mkv")) {
-      // If it's an .mkv file, open the link directly
+    if (downloadHref.endsWith(".mkv") || downloadHref.endsWith("download")) {
       window.open(downloadHref, "_blank");
-      setProcessingId(null); // Reset processing state
+      setProcessingId(null);
     } else {
       try {
         const response = await fetch(
@@ -59,13 +58,13 @@ const MovieDetail = () => {
         if (data.redirectedUrl) {
           window.open(data.redirectedUrl, "_blank");
         } else {
-          toast.error("Try again");
+          toast.error("Failed to redirect. Try again.");
         }
       } catch (error) {
         console.error("Error processing download link:", error);
-        toast.error("try again");
+        toast.error("Failed to process download. Try again.");
       } finally {
-        setProcessingId(null); // Reset processing state after download
+        setProcessingId(null);
       }
     }
   };
@@ -94,71 +93,94 @@ const MovieDetail = () => {
     );
   }
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    draggable: true,
+    autoplay: true,
+    autoplaySpeed: 1500,
+    swipeToSlide: true,
+    arrows: false,
+    pauseOnHover: false,
+    cssEase: "linear",
+    focusOnSelect: true,
+  };
+
   return (
     <div className="container mx-auto px-4 py-6">
       <ToastContainer />
-      <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+      <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
         {movie.filmTitle}
       </h1>
 
-      {/* Title Preview and Video Quality */}
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">
-          Preview of Video quality
-        </h2>
-      </div>
-
-      {/* Image Gallery with Infinite Scroll */}
-      <div
-        className="relative overflow-hidden mb-6"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div
-          className={`flex animate-scroll ${
-            isHovered ? "pause-animation" : ""
-          }`}
-        >
-          {/* Duplicate the images to create the illusion of infinite scroll */}
-          {[...movie.imageData, ...movie.imageData].map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Movie Image ${index + 1}`}
-              className="w-[90vmin] ml-3 h-[50vmin] object-cover rounded-md shadow-md"
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Download Links */}
-      <div>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Download Options
-        </h2>
-        <div className="space-y-4">
-          {movie.downloadData.map((download) => (
-            <div
-              key={download._id}
-              className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
-            >
-              <span className="text-gray-800">{download.title}</span>
-              <button
-                onClick={() =>
-                  handleDownload(download.downloadHref, download._id)
-                }
-                className="text-blue-600 hover:text-blue-800 flex items-center"
-                disabled={processingId === download._id}
-              >
-                {processingId === download._id ? (
-                  <ClipLoader size={20} loading={true} />
-                ) : (
-                  "Download"
-                )}
-              </button>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Preview Images
+      </h2>
+      <Slider {...settings} className="mb-6">
+        {movie.imageData.map((image, index) => (
+          <div
+            key={index}
+            className="px-2 mb-4 w-full sm:w-[80vmax] md:w-[60vmax] lg:w-[50vmax]"
+          >
+            <div className="pb-[56.25%] relative">
+              <img
+                src={image}
+                alt={`Movie Preview ${index + 1}`}
+                className="absolute top-0 left-0 w-full h-full object-cover rounded-md shadow-md"
+              />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </Slider>
+      <div className=" mb-6">
+        <p className="text-gray-700 mt-2">
+          <strong>Directed By:</strong> {movie.directedBy || "Unknown"}
+        </p>
+        <p className="text-gray-700">
+          <strong>IMDB Rating:</strong> {movie.imdbRating || "N/A"}
+        </p>
+      </div>
+      <div className="storydiv mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Storyline</h2>
+        <p
+          className="text-gray-700 mt-4"
+          dangerouslySetInnerHTML={{
+            __html: movie.description || "No description available.",
+          }}
+        />
+      </div>
+
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Download Options
+      </h2>
+      <div className="space-y-4">
+        {movie.downloadData.map((download) => (
+          <div
+            key={download._id}
+            className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
+          >
+            <span className="text-gray-800">{download.title}</span>
+            <button
+              onClick={() =>
+                handleDownload(
+                  download.downloadHref || download.finalLink,
+                  download._id
+                )
+              }
+              className="text-blue-600 hover:text-blue-800 flex items-center"
+              disabled={processingId === download._id}
+            >
+              {processingId === download._id ? (
+                <ClipLoader size={20} loading={true} />
+              ) : (
+                "Download"
+              )}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -66,6 +66,7 @@ const Home = () => {
               title={movie.filmTitle}
               thumbnail={movie.urlOfThumbnail}
               id={movie._id}
+              ratingImdb={movie.imdbRating ? movie.imdbRating : "N/A"}
             />
           ))
         ) : (

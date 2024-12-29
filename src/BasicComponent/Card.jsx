@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Card = ({ title, thumbnail, id }) => {
+const Card = ({ title, thumbnail, id, ratingImdb }) => {
   return (
     <Link to={`/movie/${id}`}>
       <div
@@ -20,7 +20,7 @@ const Card = ({ title, thumbnail, id }) => {
               {title}
             </h2>
             <div className="flex justify-between text-slate-300 items-center mt-2">
-              <p>Download here</p>
+              <p>{ratingImdb}</p>
             </div>
           </div>
         </div>
