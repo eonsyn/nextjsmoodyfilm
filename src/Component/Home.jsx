@@ -59,14 +59,28 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="text-center mt-10">
+      <div className="mx-5 text-center mt-[6rem]">
         {/* Dummy Cards with opacity animation */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {Array.from({ length: 16 }).map((_, index) => (
             <div
               key={index}
-              className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg shadow-lg overflow-hidden animate-pulse opacity-50 h-[450px]"
-            ></div>
+              className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl h-[450px] animate-pulse"
+            >
+              <div className="relative bg-gray-300 h-full">
+                <div className="w-full h-[60%] bg-gray-400 animate-opacity"></div>{" "}
+                {/* Placeholder for the image */}
+                <div className="absolute bottom-0 h-[50%] w-full bg-gradient-to-t from-gray-600 via-gray-500 to-gray-400"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="h-6 w-3/4 bg-gray-500 rounded-md mb-2 animate-opacity"></div>{" "}
+                  {/* Placeholder for title */}
+                  <div className="flex justify-between items-center">
+                    <div className="h-4 w-1/3 bg-gray-400 rounded-md animate-opacity"></div>{" "}
+                    {/* Placeholder for rating */}
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
