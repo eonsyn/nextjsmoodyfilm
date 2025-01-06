@@ -39,7 +39,7 @@ const Navbar = () => {
         <div>
           <Link
             to="/"
-            className="text-2xl font-bold hover:text-yellow-400 transition"
+            className="text-sm sm:text-2xl font-bold hover:text-yellow-400 transition"
           >
             MoodyFilms
           </Link>
@@ -47,13 +47,13 @@ const Navbar = () => {
 
         {/* Conditionally render the Search Bar */}
         {shouldShowSearch && (
-          <div className="mx-16 flex-grow sm:w-auto lg:w-1/3">
+          <div className="mx-1 sm:mx-16 flex-grow sm:w-auto lg:w-1/3">
             <input
               type="text"
               value={searchTerm}
               onChange={handleSearchChange}
               placeholder="Search movies..."
-              className="w-full px-4 text-slate-700 py-2 rounded-lg border-none focus:ring-2 focus:ring-blue-300"
+              className="w-full px-4 text-slate-700 py-1 sm:py-2 rounded-lg border-none focus:ring-2 focus:ring-blue-300"
             />
           </div>
         )}
