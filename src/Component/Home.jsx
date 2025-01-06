@@ -59,10 +59,13 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="mx-5 text-center mt-[6rem]">
+      <div className="mx-5 text-center mt-[2rem]">
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+          Loading Movie
+        </h1>
         {/* Dummy Cards with opacity animation */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {Array.from({ length: 16 }).map((_, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 12 }).map((_, index) => (
             <div
               key={index}
               className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl h-[450px] animate-pulse"

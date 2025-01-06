@@ -94,11 +94,25 @@ const MovieDetail = () => {
   }
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 1500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768, // Tablet
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480, // Mobile
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
     draggable: true,
     autoplay: true,
     autoplaySpeed: 1500,
@@ -120,7 +134,7 @@ const MovieDetail = () => {
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Preview Images
       </h2>
-      <Slider {...settings} className="mb-6">
+      <Slider {...settings} className="mb-6  ">
         {movie.imageData.map((image, index) => (
           <div
             key={index}
