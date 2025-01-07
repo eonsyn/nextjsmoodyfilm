@@ -1,0 +1,11 @@
+[
+    "/", 
+    "/requestMovie",
+    "/admin",
+    "/admin/MovieForm",
+    "/admin/MovieEdit/:id",
+    "/admin/MovieUpdate",
+    "/admin/RequestedMovies",
+    "/movie/:id" 
+  ]
+  

@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
  "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "generate:routes": "node generateRoutes.js",
-  "postbuild": "node updateReactSnapConfig.js && react-snap"
-},
-  "reactSnap": {
-  "inlineCss": true,
-  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
-  "include": []
+  "generate-routes": "node generateRoutes.js",
+  "build": "npm run generate-routes && react-scripts build"
 }
+,
+ "reactSnap": {
+  "inlineCss": true,
+  "puppeteerArgs": ["--no-sandbox"],
+  "routes": "./src/routes.js"
+}
+
 
 ,
   "dependencies": {
