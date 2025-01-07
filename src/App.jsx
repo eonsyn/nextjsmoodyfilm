@@ -10,8 +10,6 @@ import Navbar from "./Component/Navbar";
 import RequestMovie from "./Component/RequestMovie.jsx";
 import RequestedMovies from "./Component/RequestedMovies.jsx";
 import { SearchProvider } from "./context/SearchContext";
-import { routes } from "./routes"; // Import dynamically generated movie routes
-
 function App() {
   return (
     <Router>
@@ -22,6 +20,7 @@ function App() {
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/requestMovie" element={<RequestMovie />} />
 
             {/* Admin routes */}
@@ -29,15 +28,6 @@ function App() {
             <Route path="/admin/MovieForm" element={<MovieForm />} />
             <Route path="/admin/MovieEdit/:id" element={<MovieEdit />} />
             <Route path="/admin/MovieUpdate" element={<MovieUpdate />} />
-            <Route
-              path="/admin/RequestedMovies"
-              element={<RequestedMovies />}
-            />
-
-            {/* Dynamically created movie detail routes */}
-            {routes.map((route, index) => (
-              <Route key={index} path={route} element={<MovieDetail />} />
-            ))}
           </Routes>
         </div>
         <Footer />
