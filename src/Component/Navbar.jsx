@@ -1,8 +1,8 @@
+import { motion } from "framer-motion"; // Import motion from framer-motion
 import React, { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger menu and close icons
 import { Link, useLocation } from "react-router-dom";
 import { useSearch } from "../context/SearchContext"; // Import the context
-import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger menu and close icons
-import { motion } from "framer-motion"; // Import motion from framer-motion
 
 const Navbar = () => {
   const { searchTerm, setSearchTerm } = useSearch(); // Get searchTerm and setSearchTerm from context
@@ -93,6 +93,12 @@ const Navbar = () => {
               <Link to="/admin" className="hover:text-yellow-400 transition">
                 Admin Login
               </Link>
+              <Link
+                to="/admin/RequestedMovies"
+                className="hover:text-yellow-400 transition"
+              >
+                Check Request
+              </Link>
             </>
           )}
         </div>
@@ -169,6 +175,12 @@ const Navbar = () => {
                     onClick={toggleMenu} // Close menu on link click
                   >
                     Admin Login
+                  </Link>
+                  <Link
+                    to="/admin/RequestedMovies"
+                    className="hover:text-yellow-400 transition"
+                  >
+                    Check Request
                   </Link>
                 </>
               )}
