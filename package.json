@@ -3,16 +3,24 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+ "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "generate:routes": "node generateRoutes.js",
+  "postbuild": "node updateReactSnapConfig.js && react-snap"
+},
+  "reactSnap": {
+  "inlineCss": true,
+  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+  "include": []
+}
+
+,
   "dependencies": {
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "framer-motion": "^11.15.0",
+    "fs": "^0.0.1-security",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
@@ -20,6 +28,7 @@
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.1.0",
     "react-slick": "^0.30.3",
+    "react-snap": "^1.23.0",
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.2",
     "slick-carousel": "^1.8.1"
