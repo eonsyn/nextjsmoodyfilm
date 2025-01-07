@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const RequestedMovies = () => {
   const [requestedMovies, setRequestedMovies] = useState([]);
@@ -13,11 +13,12 @@ const RequestedMovies = () => {
     const fetchRequestedFilms = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/admin/requested-film`
+          `${import.meta.env.VITE_API_BASE_URL}/admin/requested-film`,
+          { withCredentials: true }
         );
         setRequestedMovies(response.data); // Store the fetched films
       } catch (error) {
-        toast.error("Error fetching requested films");
+        toast.error("Error fetching requested films.");
         console.error(error);
       }
     };
@@ -36,7 +37,10 @@ const RequestedMovies = () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/admin/get-requested-film`,
-        { params: { filmName } }
+        {
+          params: { filmName },
+          withCredentials: true,
+        }
       );
       if (response.data.films && response.data.films.length > 0) {
         const filmDetails = response.data.films[0]; // Assuming the first film is the correct one
@@ -57,6 +61,16 @@ const RequestedMovies = () => {
       return;
     }
 
+    // Ask for confirmation
+    const confirmSend = window.confirm(
+      `Are you sure you want to send an email for the film "${selectedFilm.filmName}" to "${selectedFilm.email}"?`
+    );
+
+    if (!confirmSend) {
+      toast.info("Email sending canceled.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/admin/send-Email-message`,
@@ -64,8 +78,10 @@ const RequestedMovies = () => {
           email: selectedFilm.email,
           movielink: `https://moodyfilm.netlify.app/movie/${filmId}`, // Adjust the link as needed
           filmName: selectedFilm.filmName,
-        }
+        },
+        { withCredentials: true }
       );
+
       if (response.data.success) {
         toast.success("Email sent and film request deleted successfully.");
         // After successful email, delete the film request from the list
@@ -83,12 +99,24 @@ const RequestedMovies = () => {
     }
   };
 
-  // Handle delete functionality
+  // Handle delete functionality with confirmation
   const handleDeleteFilm = async (id) => {
+    // Ask for confirmation
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this film request? This action cannot be undone."
+    );
+
+    if (!confirmDelete) {
+      toast.info("Delete action canceled.");
+      return; // Exit if the user cancels
+    }
+
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/admin/delete-request/${id}`
+        `${import.meta.env.VITE_API_BASE_URL}/admin/delete-request/${id}`,
+        { withCredentials: true }
       );
+
       if (response.data.success) {
         toast.success("Film request deleted successfully.");
         // Remove the deleted film from the state
@@ -109,7 +137,8 @@ const RequestedMovies = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container min-h-[80vh] mx-auto p-4">
+      <ToastContainer />
       <h1 className="text-3xl font-bold mb-4">Requested Movies</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow-md">
@@ -145,7 +174,6 @@ const RequestedMovies = () => {
           </tbody>
         </table>
       </div>
-
       {/* Popup to show film details when a row is clicked */}
       {selectedFilm && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
