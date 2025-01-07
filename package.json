@@ -8,14 +8,7 @@
     "build": "vite build",
     "generate:routes": "node generateRoutes.js"
   },
-  "reactSnap": {
-    "inlineCss": true,
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ],
-    "include": []
-  },
+  
   "dependencies": {
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
