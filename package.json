@@ -3,16 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
-  "generate-routes": "node generateRoutes.js",
-  "build": "npm run generate-routes && react-scripts build"
-}
-,
- "reactSnap": {
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+"reactSnap": {
   "inlineCss": true,
   "puppeteerArgs": ["--no-sandbox"],
-  "routes": "./src/routes.js"
+  "routes": "./prerender-routes.json"
 }
+
 
 
 ,
