@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // Import libraries for smooth scrolling and infinite scroll
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
 
 const MovieDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // To navigate programmatically
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -79,7 +80,7 @@ const MovieDetail = () => {
 
   if (error) {
     return (
-      <div className="text-center h-screen w-screen  mt-10 text-red-600">
+      <div className="text-center h-screen w-screen mt-10 text-red-600">
         <p>Error loading movie details: {error}</p>
       </div>
     );
@@ -134,7 +135,7 @@ const MovieDetail = () => {
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Preview Images
       </h2>
-      <Slider {...settings} className="mb-6  ">
+      <Slider {...settings} className="mb-6">
         {movie.imageData.map((image, index) => (
           <div
             key={index}
@@ -150,7 +151,7 @@ const MovieDetail = () => {
           </div>
         ))}
       </Slider>
-      <div className=" mb-6">
+      <div className="mb-6">
         <p className="text-gray-700 mt-2">
           <strong>Directed By:</strong> {movie.directedBy || "Unknown"}
         </p>
@@ -196,6 +197,24 @@ const MovieDetail = () => {
             </button>
           </div>
         ))}
+      </div>
+
+      {/* Updated watchOnline section */}
+      <div className="watchOnline mb-6 p-4 bg-gray-50 rounded-md shadow-md">
+        {movie.watchOnline ? (
+          <button
+            onClick={() =>
+              navigate(`/watch/${movie.watchOnline.split("/")[4]}`)
+            }
+            className="text-blue-600 hover:text-blue-800"
+          >
+            Watch Online
+          </button>
+        ) : (
+          <p className="text-gray-600">
+            Online watching of this movie is not available.
+          </p>
+        )}
       </div>
     </div>
   );
