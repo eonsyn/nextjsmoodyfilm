@@ -179,7 +179,13 @@ const MovieEdit = () => {
               <button
                 type="button"
                 className="hover:text-white border hover:border-white border-black text-black bg-accent px-4 py-2 rounded hover:bg-yellow-600"
-                onClick={() => removeDownloadData(index)}
+                onClick={() => {
+                  setFormData((prevData) => {
+                    const updatedGenres = [...prevData.genre];
+                    updatedGenres.splice(index, 1);
+                    return { ...prevData, genre: updatedGenres };
+                  });
+                }}
               >
                 Remove
               </button>
@@ -226,7 +232,13 @@ const MovieEdit = () => {
               <button
                 type="button"
                 className="hover:text-white hover:border-white text-black border border-black bg-accent px-4 py-2 rounded hover:bg-yellow-600"
-                onClick={() => removeDownloadData(index)}
+                onClick={() => {
+                  setFormData((prevData) => {
+                    const updatedImages = [...prevData.imageData];
+                    updatedImages.splice(index, 1);
+                    return { ...prevData, imageData: updatedImages };
+                  });
+                }}
               >
                 Remove
               </button>
@@ -344,7 +356,7 @@ const MovieEdit = () => {
         <div>
           <button
             type="submit"
-            className="w-full bg-primary text-white py-3 rounded"
+            className="w-full bg-blue-400 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Update Movie
           </button>
