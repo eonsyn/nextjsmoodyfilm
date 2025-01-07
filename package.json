@@ -3,19 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-"reactSnap": {
+ "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "generate:routes": "node generateRoutes.js",
+  "postbuild": "node updateReactSnapConfig.js && react-snap"
+},
+  "reactSnap": {
   "inlineCss": true,
-  "puppeteerArgs": ["--no-sandbox"],
-  "routes": "./prerender-routes.json"
+  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+  "include": []
 }
-
-
 
 ,
   "dependencies": {
