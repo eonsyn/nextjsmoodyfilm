@@ -28,6 +28,10 @@ function App() {
             <Route path="/admin/MovieForm" element={<MovieForm />} />
             <Route path="/admin/MovieEdit/:id" element={<MovieEdit />} />
             <Route path="/admin/MovieUpdate" element={<MovieUpdate />} />
+            <Route
+              path="/admin/RequestedMovies"
+              element={<RequestedMovies />}
+            />
           </Routes>
         </div>
         <Footer />

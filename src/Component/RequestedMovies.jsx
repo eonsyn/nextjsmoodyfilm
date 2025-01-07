@@ -2,11 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RequestedMovies = () => {
   const [requestedMovies, setRequestedMovies] = useState([]);
-  const [selectedFilm, setSelectedFilm] = useState(null); // State to store the selected film details
-  const [filmId, setFilmId] = useState(null); // State to store the id of the film from the API response
+  const [selectedFilm, setSelectedFilm] = useState(null);
+  const [filmId, setFilmId] = useState(null);
 
   // Fetch requested films from the server
   useEffect(() => {
@@ -16,7 +17,7 @@ const RequestedMovies = () => {
           `${import.meta.env.VITE_API_BASE_URL}/admin/requested-film`,
           { withCredentials: true }
         );
-        setRequestedMovies(response.data); // Store the fetched films
+        setRequestedMovies(response.data);
       } catch (error) {
         toast.error("Error fetching requested films.");
         console.error(error);
@@ -26,13 +27,11 @@ const RequestedMovies = () => {
     fetchRequestedFilms();
   }, []);
 
-  // Handle row click to open a popup with the film's details
   const handleRowClick = (film) => {
-    setSelectedFilm(film); // Set the selected film to show in the popup
-    setFilmId(null); // Reset the filmId when a new film is selected
+    setSelectedFilm(film);
+    setFilmId(null);
   };
 
-  // Fetch film details by filmName from the /admin/get-requested-film API
   const handleGetFilmDetails = async (filmName) => {
     try {
       const response = await axios.get(
@@ -43,8 +42,7 @@ const RequestedMovies = () => {
         }
       );
       if (response.data.films && response.data.films.length > 0) {
-        const filmDetails = response.data.films[0]; // Assuming the first film is the correct one
-        setFilmId(filmDetails._id); // Set the fetched film's id
+        setFilmId(response.data.films[0]._id);
       } else {
         toast.error("No details found for this film.");
       }
@@ -54,14 +52,12 @@ const RequestedMovies = () => {
     }
   };
 
-  // Handle sending the email
   const handleSendEmail = async () => {
     if (!selectedFilm || !filmId) {
       toast.error("Film details are incomplete.");
       return;
     }
 
-    // Ask for confirmation
     const confirmSend = window.confirm(
       `Are you sure you want to send an email for the film "${selectedFilm.filmName}" to "${selectedFilm.email}"?`
     );
@@ -76,7 +72,7 @@ const RequestedMovies = () => {
         `${import.meta.env.VITE_API_BASE_URL}/admin/send-Email-message`,
         {
           email: selectedFilm.email,
-          movielink: `https://moodyfilm.netlify.app/movie/${filmId}`, // Adjust the link as needed
+          movielink: `https://moodyfilm.netlify.app/movie/${filmId}`,
           filmName: selectedFilm.filmName,
         },
         { withCredentials: true }
@@ -84,12 +80,11 @@ const RequestedMovies = () => {
 
       if (response.data.success) {
         toast.success("Email sent and film request deleted successfully.");
-        // After successful email, delete the film request from the list
         setRequestedMovies(
           requestedMovies.filter((film) => film._id !== selectedFilm._id)
         );
-        setSelectedFilm(null); // Close the popup
-        setFilmId(null); // Reset the filmId
+        setSelectedFilm(null);
+        setFilmId(null);
       } else {
         toast.error("Failed to send email.");
       }
@@ -99,16 +94,14 @@ const RequestedMovies = () => {
     }
   };
 
-  // Handle delete functionality with confirmation
   const handleDeleteFilm = async (id) => {
-    // Ask for confirmation
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this film request? This action cannot be undone."
     );
 
     if (!confirmDelete) {
       toast.info("Delete action canceled.");
-      return; // Exit if the user cancels
+      return;
     }
 
     try {
@@ -119,7 +112,6 @@ const RequestedMovies = () => {
 
       if (response.data.success) {
         toast.success("Film request deleted successfully.");
-        // Remove the deleted film from the state
         setRequestedMovies(requestedMovies.filter((film) => film._id !== id));
       } else {
         toast.error("Failed to delete film request.");
@@ -130,93 +122,93 @@ const RequestedMovies = () => {
     }
   };
 
-  // Close the film details popup
   const closePopup = () => {
-    setSelectedFilm(null); // Reset the selected film state
-    setFilmId(null); // Reset the filmId state
+    setSelectedFilm(null);
+    setFilmId(null);
   };
 
   return (
-    <div className="container min-h-[80vh] mx-auto p-4">
+    <div className="container mx-auto p-6 min-h-screen">
       <ToastContainer />
-      <h1 className="text-3xl font-bold mb-4">Requested Movies</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow-md">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-4 text-left">Film Name</th>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Action</th>
+      <h1 className="text-4xl font-bold mb-6 text-center">Requested Movies</h1>
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="w-full text-left bg-white">
+          <thead className="bg-blue-500 text-white">
+            <tr>
+              <th className="p-4">Film Name</th>
+              <th className="p-4">Email</th>
+              <th className="p-4">Action</th>
             </tr>
           </thead>
           <tbody>
-            {requestedMovies.map((film) => (
-              <tr
-                key={film._id}
-                className="border-b cursor-pointer"
-                onClick={() => handleRowClick(film)} // When a row is clicked, open the popup with film details
-              >
-                <td className="p-4">{film.filmName}</td>
-                <td className="p-4">{film.email}</td>
-                <td className="p-4">
-                  <button
-                    className="text-red-500 hover:text-red-700"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from triggering the row's onClick
-                      handleDeleteFilm(film._id); // Delete the film when clicked
-                    }}
-                  >
-                    <AiOutlineDelete />
-                  </button>
+            {requestedMovies.length > 0 ? (
+              requestedMovies.map((film) => (
+                <tr
+                  key={film._id}
+                  className="border-b hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleRowClick(film)}
+                >
+                  <td className="p-4">{film.filmName}</td>
+                  <td className="p-4">{film.email}</td>
+                  <td className="p-4">
+                    <button
+                      className="text-red-600 hover:text-red-800"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteFilm(film._id);
+                      }}
+                    >
+                      <AiOutlineDelete size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="p-4 text-center text-gray-500">
+                  No requested movies found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
-      {/* Popup to show film details when a row is clicked */}
+
       {selectedFilm && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
             <h2 className="text-2xl font-bold mb-4">Film Details</h2>
-            <div className="mb-4">
+            <p className="mb-4">
               <strong>Film Name:</strong> {selectedFilm.filmName}
-            </div>
-            <div className="mb-4">
+            </p>
+            <p className="mb-4">
               <strong>Email:</strong> {selectedFilm.email}
-            </div>
-            <div className="mb-4">
+            </p>
+            <p className="mb-4">
               <strong>Requested On:</strong>{" "}
               {new Date(selectedFilm.createdAt).toLocaleDateString()}
-            </div>
-            {/* Display the film ID when fetched */}
+            </p>
             {filmId && (
-              <div className="mb-4">
+              <p className="mb-4">
                 <strong>Film ID:</strong> {filmId}
-              </div>
+              </p>
             )}
-
             <div className="flex justify-end gap-4">
-              {/* Button to fetch film details */}
               <button
                 onClick={() => handleGetFilmDetails(selectedFilm.filmName)}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
                 Get Film Details
               </button>
-
-              {/* Button to send email */}
               <button
                 onClick={handleSendEmail}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
               >
                 Send Email
               </button>
-
-              {/* Button to close the popup */}
               <button
                 onClick={closePopup}
-                className="bg-gray-500 text-white px-4 py-2 rounded-md"
+                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
               >
                 Close
               </button>
