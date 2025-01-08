@@ -142,6 +142,13 @@ const MovieEdit = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Ask for confirmation
+    const isConfirmed = window.confirm(
+      "Are you sure you want to update the movie?"
+    );
+    if (!isConfirmed) return;
+
     try {
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/admin/updateFilm/${id}`,
