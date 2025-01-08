@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RequestMovie = () => {
   const [formData, setFormData] = useState({ email: "", filmName: "" });
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -13,8 +14,7 @@ const RequestMovie = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
-    setError("");
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -23,37 +23,40 @@ const RequestMovie = () => {
       );
 
       if (response.status === 201) {
-        setMessage(
+        toast.success(
           "Your request has been submitted. The film will be available within 24 hours, and you will receive an email confirmation."
         );
         setFormData({ email: "", filmName: "" });
       }
     } catch (error) {
       console.error("Error submitting film request:", error);
-      setError(
+      toast.error(
         error.response?.data?.message ||
           "An error occurred. Please try again later."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-4 text-center">Request a Movie</h1>
-        {message && (
-          <p className="text-green-500 text-sm mb-4 text-center">{message}</p>
-        )}
-        {error && (
-          <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
-        )}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4">
+      <ToastContainer />
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+          Request a Movie 🎬
+        </h1>
+        <p className="text-sm text-gray-600 mb-4 text-center">
+          Can't find the movie you want? Submit a request and we'll notify you
+          when it's available!
+        </p>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-5">
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              Email Address
             </label>
             <input
               type="email"
@@ -61,17 +64,17 @@ const RequestMovie = () => {
               id="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your email"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-5">
             <label
               htmlFor="filmName"
               className="block text-sm font-medium text-gray-700"
             >
-              Film Name
+              Movie Name
             </label>
             <input
               type="text"
@@ -80,17 +83,25 @@ const RequestMovie = () => {
               value={formData.filmName}
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="Enter the film name"
+              placeholder="Enter the exact movie name (ensure correct spelling)"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300"
+            className={`w-full p-3 rounded-md text-white font-semibold transition duration-300 ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+            disabled={loading}
           >
-            Submit Request
+            {loading ? "Submitting..." : "Submit Request"}
           </button>
         </form>
+        <p className="text-sm text-gray-500 mt-6 text-center">
+          Note: We’ll respond to your request within 24 hours.
+        </p>
       </div>
     </div>
   );
