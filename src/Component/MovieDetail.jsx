@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // Import libraries for smooth scrolling and infinite scroll
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
@@ -200,19 +200,21 @@ const MovieDetail = () => {
       </div>
 
       {/* Updated watchOnline section */}
-      <div className="watchOnline mb-6 p-4 bg-gray-50 rounded-md shadow-md">
+      <div className="watch-online mt-6  p-2   bg-white rounded-lg shadow-lg border border-gray-200">
         {movie.watchOnline ? (
-          <button
-            onClick={() =>
-              navigate(`/watch/${movie.watchOnline.split("/")[4]}`)
-            }
-            className="text-blue-600 hover:text-blue-800"
-          >
-            Watch Online
-          </button>
+          <div className="text-center">
+            <button
+              onClick={() =>
+                navigate(`/watch/${movie.watchOnline.split("/")[4]}`)
+              }
+              className="px-6 py-2 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+            >
+              🎥 Watch Online .
+            </button>
+          </div>
         ) : (
-          <p className="text-gray-600">
-            Online watching of this movie is not available.
+          <p className="text-center text-gray-600 font-medium">
+            Online streaming of this movie comming soon....
           </p>
         )}
       </div>
