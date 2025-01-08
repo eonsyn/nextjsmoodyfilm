@@ -10,6 +10,7 @@ import Navbar from "./Component/Navbar";
 import RequestMovie from "./Component/RequestMovie.jsx";
 import RequestedMovies from "./Component/RequestedMovies.jsx";
 import WatchMovie from "./Component/WatchMovie.jsx";
+import OnlineWatch from "./Component/OnlineWatch.jsx";
 import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/watch/:id" element={<WatchMovie />} />
+            <Route path="/OnlineWatch" element={<OnlineWatch />} />
 
             <Route path="/requestMovie" element={<RequestMovie />} />
 

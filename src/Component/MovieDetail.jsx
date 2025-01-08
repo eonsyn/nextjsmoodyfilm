@@ -179,22 +179,38 @@ const MovieDetail = () => {
             className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
           >
             <span className="text-gray-800">{download.title}</span>
-            <button
-              onClick={() =>
-                handleDownload(
-                  download.downloadHref || download.finalLink,
-                  download._id
-                )
-              }
-              className="text-blue-600 hover:text-blue-800 flex items-center"
-              disabled={processingId === download._id}
-            >
-              {processingId === download._id ? (
-                <ClipLoader size={20} loading={true} />
-              ) : (
-                "Download"
+            <div className="flex items-center space-x-4">
+              {download.downloadHref?.endsWith(".mkv") && (
+                <button
+                  onClick={() =>
+                    navigate(
+                      `/OnlineWatch?url=${encodeURIComponent(
+                        download.downloadHref || download.finalLink
+                      )}`
+                    )
+                  }
+                  className="text-green-600 hover:text-green-800 flex items-center"
+                >
+                  Watch Online
+                </button>
               )}
-            </button>
+              <button
+                onClick={() =>
+                  handleDownload(
+                    download.downloadHref || download.finalLink,
+                    download._id
+                  )
+                }
+                className="text-blue-600 hover:text-blue-800 flex items-center"
+                disabled={processingId === download._id}
+              >
+                {processingId === download._id ? (
+                  <ClipLoader size={20} loading={true} />
+                ) : (
+                  "Download"
+                )}
+              </button>
+            </div>
           </div>
         ))}
       </div>
