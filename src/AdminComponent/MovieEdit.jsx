@@ -70,6 +70,21 @@ const MovieEdit = () => {
     });
   };
 
+  // Handle changes in download data
+  const handleDownloadDataChange = (index, fieldName, value) => {
+    setFormData((prevData) => {
+      const updatedDownloadData = [...prevData.downloadData];
+      updatedDownloadData[index] = {
+        ...updatedDownloadData[index],
+        [fieldName]: value,
+      };
+      return {
+        ...prevData,
+        downloadData: updatedDownloadData,
+      };
+    });
+  };
+
   // Add new download data row
   const addDownloadData = () => {
     setFormData((prevData) => ({
