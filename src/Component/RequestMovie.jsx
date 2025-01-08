@@ -100,7 +100,8 @@ const RequestMovie = () => {
           </button>
         </form>
         <p className="text-sm text-gray-500 mt-6 text-center">
-          Note: We’ll respond to your request within 24 hours.
+          Note: Please ensure the movie name is accurate, and the spelling is
+          correct to help us process your request promptly.
         </p>
       </div>
     </div>
