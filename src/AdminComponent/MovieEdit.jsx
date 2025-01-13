@@ -111,16 +111,19 @@ const MovieEdit = () => {
   // Handle download link generation
   const loadLink = async (finalLink) => {
     try {
+      console.log(
+        `https://getlink-1.onrender.com/test/?finalLink=${finalLink}`
+      );
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/testdownload`,
+        `https://getlink-1.onrender.com/test/?finalLink=${finalLink}`, // Include finalLink as a query parameter
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ url: finalLink }),
         }
       );
+      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to fetch the download link");
       }
@@ -351,6 +354,7 @@ const MovieEdit = () => {
               />
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={() => loadLink(data.finalLink)}
                   className="hover:text-white text-black border hover:border-white border-black bg-primary px-4 py-2 rounded hover:bg-blue-600"
                 >
