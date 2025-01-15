@@ -27,12 +27,7 @@ function BannerAd() {
     };
   }, []); // Run only once when the component mounts
 
-  return (
-    <div>
-      {/* Optional placeholder */}
-      <p>Ad.</p>
-    </div>
-  );
+  return <div>{/* Optional placeholder */}</div>;
 }
 
 export default BannerAd;

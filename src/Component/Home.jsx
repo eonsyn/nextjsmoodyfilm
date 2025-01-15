@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BannerAd from "../AdsComponent/BannerAd";
+
 import Card from "../BasicComponent/Card";
 import { useSearch } from "../context/SearchContext";
 const Home = () => {
@@ -155,8 +155,6 @@ const Home = () => {
           Next
         </button>
       </div>
-
-      <BannerAd />
     </div>
   );
 };
