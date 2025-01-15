@@ -4,8 +4,10 @@ import { FaFilm } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const MovieForm = () => {
+  const navigate = useNavigate();
   const [url, setUrl] = useState("");
   const [postUrl, setPostUrl] = useState("");
   const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ const MovieForm = () => {
       toast.error("Failed to fetch data. Please check the URL.");
     } finally {
       setLoading(false);
+      navigate("/admin");
     }
   };
 

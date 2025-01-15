@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AdminLogin from "./AdminComponent/AdminLogin.jsx";
 import MovieEdit from "./AdminComponent/MovieEdit";
@@ -7,16 +8,26 @@ import Footer from "./Component/Footer.jsx";
 import Home from "./Component/Home";
 import MovieDetail from "./Component/MovieDetail";
 import Navbar from "./Component/Navbar";
+import OnlineWatch from "./Component/OnlineWatch.jsx";
 import RequestMovie from "./Component/RequestMovie.jsx";
 import RequestedMovies from "./Component/RequestedMovies.jsx";
 import WatchMovie from "./Component/WatchMovie.jsx";
-import OnlineWatch from "./Component/OnlineWatch.jsx";
 import { SearchProvider } from "./context/SearchContext";
+
 function App() {
   return (
     <Router>
       <SearchProvider>
+        <Helmet>
+          <title>MoodyFilms - Home</title>
+          <meta name="url" content={`https://moodyfilm.netlify.app/`} />
+          <meta
+            name="description"
+            content="MoodyFilms - Discover and download movies, explore trailers, read synopses, and enjoy personalized AI-powered movie recommendations based on your mood. A retro-inspired platform for true film lovers."
+          />
+        </Helmet>
         <Navbar />
+
         <div className="pt-16">
           {/* Padding to prevent content from hiding under navbar */}
           <Routes>
@@ -25,7 +36,6 @@ function App() {
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/watch/:id" element={<WatchMovie />} />
             <Route path="/OnlineWatch" element={<OnlineWatch />} />
-
             <Route path="/requestMovie" element={<RequestMovie />} />
 
             {/* Admin routes */}

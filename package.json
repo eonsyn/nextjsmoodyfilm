@@ -8,7 +8,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview" 
   },
   "dependencies": {
     "axios": "^1.7.9",
@@ -17,11 +17,13 @@
     "node-vibrant": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
     "react-icons": "^5.4.0",
     "react-lazy-load-image-component": "^1.6.3",
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.1.0",
     "react-slick": "^0.30.3",
+    "react-snap": "^1.23.0",
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.2",
     "slick-carousel": "^1.8.1"

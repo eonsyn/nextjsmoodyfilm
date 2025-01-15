@@ -7,7 +7,7 @@ const Card = ({ title, thumbnail, id, ratingImdb }) => {
     <Link to={`/movie/${id}`}>
       <div
         key={id}
-        className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl h-[450px]"
+        className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]  "
       >
         <div className="relative h-full  bg-gray-400">
           <img

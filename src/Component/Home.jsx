@@ -68,7 +68,7 @@ const Home = () => {
           {Array.from({ length: 12 }).map((_, index) => (
             <div
               key={index}
-              className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl h-[450px] animate-pulse"
+              className="aspect-w-16 aspect-h-9 bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px] animate-pulse"
             >
               <div className="relative bg-gray-300 h-full">
                 <div className="w-full h-[60%] bg-gray-400 animate-opacity"></div>{" "}

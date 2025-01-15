@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 // Import libraries for smooth scrolling and infinite scroll
+import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
@@ -126,6 +127,20 @@ const MovieDetail = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
+      <Helmet>
+        <title>
+          {movie?.filmTitle ? `${movie.filmTitle} - MoodyFilms` : "Loading..."}
+        </title>
+
+        <meta
+          name="description"
+          content={movie?.description ? `${movie.description}` : "Loading.."}
+        />
+        <meta
+          name="url"
+          content={`https://moodyfilm.netlify.app/movie/${id}`}
+        />
+      </Helmet>
       <ToastContainer />
 
       <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
@@ -189,7 +204,7 @@ const MovieDetail = () => {
                       )}`
                     )
                   }
-                  className="text-green-600 hover:text-green-800 flex items-center"
+                  className="bg-green-600 p-2 rounded-md   text-white flex items-center"
                 >
                   Watch Online
                 </button>
@@ -201,7 +216,7 @@ const MovieDetail = () => {
                     download._id
                   )
                 }
-                className="text-blue-600 hover:text-blue-800 flex items-center"
+                className="bg-red-600  text-white flex items-center p-2 rounded-md "
                 disabled={processingId === download._id}
               >
                 {processingId === download._id ? (
