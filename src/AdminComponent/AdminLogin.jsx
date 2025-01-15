@@ -1,7 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ userId: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -26,7 +27,7 @@ const AdminLogin = () => {
       if (response.status === 200) {
         setSuccessMessage("Login successful!");
         setErrorMessage("");
-        console.log("Token stored in cookies.");
+        navigate("/admin/RequestedMovies");
       }
     } catch (error) {
       console.error("Login failed:", error);

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 const RequestedMovies = () => {
+  const navigate = useNavigate();
+
   const [requestedMovies, setRequestedMovies] = useState([]);
   const [selectedFilm, setSelectedFilm] = useState(null);
   const [filmId, setFilmId] = useState(null);
@@ -21,6 +23,7 @@ const RequestedMovies = () => {
       } catch (error) {
         toast.error("Error fetching requested films.");
         console.error(error);
+        navigate("/admin");
       }
     };
 

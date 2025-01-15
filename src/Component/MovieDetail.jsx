@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // Import libraries for smooth scrolling and infinite scroll
 import { Helmet } from "react-helmet";
+import { FaDownload } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
@@ -8,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme
 import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
-
 const MovieDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // To navigate programmatically
@@ -193,8 +193,10 @@ const MovieDetail = () => {
             key={download._id}
             className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
           >
-            <span className="text-gray-800">{download.title}</span>
-            <div className="flex items-center space-x-4">
+            <span className="text-gray-800 w-[60%] sm:w-[60%]">
+              {download.title}
+            </span>
+            <div className="flex sm:flex-row flex-col gap-1  sm:gap-0 items-center space-x-4">
               {download.downloadHref?.endsWith(".mkv") && (
                 <button
                   onClick={() =>
@@ -216,13 +218,13 @@ const MovieDetail = () => {
                     download._id
                   )
                 }
-                className="bg-red-600  text-white flex items-center p-2 rounded-md "
+                className="bg-red-600  text-white flex items-center py-3 px-10    rounded-md "
                 disabled={processingId === download._id}
               >
                 {processingId === download._id ? (
                   <ClipLoader size={20} loading={true} />
                 ) : (
-                  "Download"
+                  <FaDownload />
                 )}
               </button>
             </div>
