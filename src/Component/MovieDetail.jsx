@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme
 import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
+import NativeBanner from "../AdsComponent/NativeBanner";
+
 const MovieDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // To navigate programmatically
@@ -183,7 +185,7 @@ const MovieDetail = () => {
           }}
         />
       </div>
-      <div id="container-11d07442a2e610464e7bd1e318d65962"></div>
+      <NativeBanner />
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Download Options
       </h2>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import BannerAd from "../AdsComponent/BannerAd";
 import Card from "../BasicComponent/Card";
 import { useSearch } from "../context/SearchContext";
 const Home = () => {
@@ -109,7 +110,6 @@ const Home = () => {
       <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
         Movie Library
       </h1>
-
       {/* Movie Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredMovies.length > 0 ? (
@@ -127,7 +127,6 @@ const Home = () => {
           <p className="text-center col-span-4">No movies found</p>
         )}
       </div>
-
       {/* Pagination Controls */}
       <div className="flex justify-center items-center mt-8">
         <button
@@ -156,6 +155,8 @@ const Home = () => {
           Next
         </button>
       </div>
+
+      <BannerAd />
     </div>
   );
 };
