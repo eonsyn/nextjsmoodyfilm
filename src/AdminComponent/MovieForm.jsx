@@ -45,7 +45,7 @@ const MovieForm = () => {
 
       toast.success("Data fetched successfully!");
     } catch (error) {
-      navigate("/admin");
+       
       toast.error("Failed to fetch data. Please check the URL.");
     } finally {
       setLoading(false);
@@ -77,7 +77,7 @@ const MovieForm = () => {
       setUrl("");
       toast.success("Form submitted successfully!");
     } catch (error) {
-      navigate("/admin");
+       
       toast.error("Failed to submit the form. Please try again.");
     } finally {
       setLoading(false);
