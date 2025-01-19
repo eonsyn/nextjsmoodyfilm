@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,6 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 const RequestMovie = () => {
   const [formData, setFormData] = useState({ email: "", filmName: "" });
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0, // Scroll to the top of the page
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

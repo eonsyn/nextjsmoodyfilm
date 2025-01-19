@@ -23,6 +23,13 @@ const MovieDetail = () => {
   const [islogin, setIslogin] = useState(false);
   const [user, setUser] = useState({});
   useEffect(() => {
+    window.scrollTo({
+      top: 0, // Scroll to the top of the page
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const response = await fetch(

@@ -37,6 +37,12 @@ const Home = () => {
   useEffect(() => {
     fetchMovies(currentPage, searchTerm); // Fetch movies based on searchTerm and currentPage
   }, [currentPage, searchTerm]);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0, // Scroll to the top of the page
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  }, []);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
