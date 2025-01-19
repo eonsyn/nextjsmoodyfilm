@@ -31,7 +31,6 @@ const Home = () => {
       console.error("Error fetching movies:", error);
     } finally {
       setLoading(false);
-      console.log("hi");
     }
   };
 

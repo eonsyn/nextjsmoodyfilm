@@ -1,10 +1,16 @@
 // WatchMovie.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const WatchMovie = () => {
   // Extract the playlist ID from the URL params
   const { id } = useParams();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0, // Scroll to the top of the page
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  }, []);
 
   // Check if the ID exists
   if (!id) {

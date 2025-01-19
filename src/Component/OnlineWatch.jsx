@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const OnlineWatch = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0, // Scroll to the top of the page
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  }, []);
+
   // Extract the query parameters from the URL
   const location = useLocation();
   const params = new URLSearchParams(location.search);
