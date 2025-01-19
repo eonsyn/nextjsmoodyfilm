@@ -13,7 +13,8 @@ import RequestMovie from "./Component/RequestMovie.jsx";
 import RequestedMovies from "./Component/RequestedMovies.jsx";
 import WatchMovie from "./Component/WatchMovie.jsx";
 import { SearchProvider } from "./context/SearchContext";
-
+import Login from "./UserComponent/UserLogin.jsx";
+import Signup from "./UserComponent/UserSignup.jsx";
 function App() {
   return (
     <Router>
@@ -37,6 +38,9 @@ function App() {
             <Route path="/watch/:id" element={<WatchMovie />} />
             <Route path="/OnlineWatch" element={<OnlineWatch />} />
             <Route path="/requestMovie" element={<RequestMovie />} />
+            {/* User routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
             {/* Admin routes */}
             <Route path="/admin" element={<AdminLogin />} />

@@ -10,7 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme
 import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
 import NativeBanner from "../AdsComponent/NativeBanner";
-
+import Comment from "../BasicComponent/Comment";
+import ReviewForm from "../UserComponent/ReviewForm";
 const MovieDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // To navigate programmatically
@@ -18,7 +19,9 @@ const MovieDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [processingId, setProcessingId] = useState(null);
-
+  const [reviews, setReviews] = useState([]);
+  const [islogin, setIslogin] = useState(false);
+  const [user, setUser] = useState({});
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -30,6 +33,7 @@ const MovieDetail = () => {
         }
 
         const data = await response.json();
+        console.log(data);
         setMovie(data);
       } catch (error) {
         setError(error.message);
@@ -41,7 +45,39 @@ const MovieDetail = () => {
 
     fetchMovieDetails();
   }, [id]);
+  useEffect(() => {
+    const isUserLoggin = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("MoodyfilmUser"));
+        if (!user) {
+          setIslogin(false);
+        } else {
+          setUser(user);
+          setIslogin(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/user/allReviews/${id}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+        const data = await response.json();
+        setReviews(data.reviews);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchReviews();
+    isUserLoggin();
+  }, [id]);
   const handleDownload = async (downloadHref, downloadId) => {
     setProcessingId(downloadId);
 
@@ -73,6 +109,120 @@ const MovieDetail = () => {
     }
   };
 
+  const handleLike = async (reviewId) => {
+    try {
+      if (!islogin) {
+        const confirmDelete = window.confirm("You have to login first..");
+        if (!confirmDelete) return; // Exit if user cancels
+        navigate("/login");
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/likeReview`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reviewId,
+            userId: user.id,
+          }),
+
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.review) {
+        setReviews((prevReviews) =>
+          prevReviews.map((review) =>
+            review.id === reviewId ? { ...review, ...data.review } : review
+          )
+        );
+        toast.success("You like this comment!");
+      } else {
+        toast.error("You have to login first!");
+        console.error(data.error);
+      }
+    } catch (error) {
+      console.error("Error liking review:", error);
+    }
+  };
+
+  const handleDislike = async (reviewId) => {
+    try {
+      if (!islogin) {
+        const confirmLogin = window.confirm("You have to login first..");
+        if (!confirmLogin) return; // Exit if user cancels
+        navigate("/login");
+      }
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/dislikeReview`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reviewId,
+            userId: user.id,
+          }),
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.review) {
+        setReviews((prevReviews) =>
+          prevReviews.map((review) =>
+            review.id === reviewId ? { ...review, ...data.review } : review
+          )
+        );
+        toast.success("You dislike this comment!");
+      } else {
+        toast.error("You have to login first!");
+        console.error(data.error);
+      }
+    } catch (error) {
+      toast.error("you have to login first!");
+      console.error("Error disliking review:", error);
+    }
+  };
+  const handleDelete = async (commentId) => {
+    const confirmDelete = window.confirm(
+      "You are sure you want to delete this comment ?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/deleteReview/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("MoodyfilmToken")}`, // Add token if required
+          },
+          credentials: "include", // Include credentials in the request
+        }
+      );
+
+      if (response.ok) {
+        alert("Review deleted successfully");
+        // Update the reviews state to remove the deleted comment
+        setReviews((prevReviews) =>
+          prevReviews.filter((r) => r.id !== commentId)
+        );
+      } else {
+        const errorData = await response.json();
+        console.error("Error deleting review:", errorData.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   if (loading) {
     return (
       <div className="text-center mt-10 h-screen w-screen flex items-center justify-center">
@@ -253,6 +403,24 @@ const MovieDetail = () => {
           </p>
         )}
       </div>
+      <div className="h-3 "></div>
+      <ReviewForm filmId={id} />
+      <div className="h-3 "></div>
+      {reviews.map((review) => (
+        <Comment
+          key={review.id}
+          commentBy={review.userId}
+          userName={review.userName}
+          userProfile={review.userProfile}
+          review={review.review}
+          likedBy={review.likedBy}
+          dislikedBy={review.dislikedBy}
+          createdAt={review.createdAt}
+          onLike={() => handleLike(review.id)}
+          onDislike={() => handleDislike(review.id)}
+          onDelete={() => handleDelete(review.id)}
+        />
+      ))}
     </div>
   );
 };

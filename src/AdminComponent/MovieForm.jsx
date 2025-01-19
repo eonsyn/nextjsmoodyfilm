@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { FaFilm } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MovieForm = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [url, setUrl] = useState("");
   const [postUrl, setPostUrl] = useState("");
   const [formData, setFormData] = useState({
@@ -45,7 +45,6 @@ const MovieForm = () => {
 
       toast.success("Data fetched successfully!");
     } catch (error) {
-       
       toast.error("Failed to fetch data. Please check the URL.");
     } finally {
       setLoading(false);
@@ -77,7 +76,6 @@ const MovieForm = () => {
       setUrl("");
       toast.success("Form submitted successfully!");
     } catch (error) {
-       
       toast.error("Failed to submit the form. Please try again.");
     } finally {
       setLoading(false);
