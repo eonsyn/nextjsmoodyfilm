@@ -71,7 +71,7 @@ const Home = () => {
   if (loading) {
     return (
       <>
-        <div className="mx-5 px-12   text-center mt-[2rem]">
+        <div className="mx-5      text-center mt-[2rem]">
           <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
             Loading Movie
           </h1>
