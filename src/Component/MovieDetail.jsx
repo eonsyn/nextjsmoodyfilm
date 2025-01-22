@@ -365,11 +365,27 @@ const MovieDetail = () => {
                       )}`
                     )
                   }
-                  className="bg-green-600 p-2 rounded-md   text-white flex items-center"
+                  className="bg-green-600 p-2 rounded-md text-white flex items-center"
                 >
                   Watch Online
                 </button>
               )}
+
+              {download.downloadHref?.startsWith("https://dai.ly/") && (
+                <button
+                  onClick={() => {
+                    const videoId =
+                      download.downloadHref.split("https://dai.ly/")[1];
+                    navigate(
+                      `/watchondailymotion/${encodeURIComponent(videoId)}`
+                    );
+                  }}
+                  className="bg-green-600 p-2 rounded-md text-white flex items-center"
+                >
+                  Watch Online
+                </button>
+              )}
+
               <button
                 onClick={() =>
                   handleDownload(

@@ -9,6 +9,7 @@ import Home from "./Component/Home";
 import MovieDetail from "./Component/MovieDetail";
 import Navbar from "./Component/Navbar";
 import OnlineWatch from "./Component/OnlineWatch.jsx";
+import Watchondailymotion from "./Component/Watchondailymotion.jsx";
 import RequestMovie from "./Component/RequestMovie.jsx";
 import RequestedMovies from "./Component/RequestedMovies.jsx";
 import WatchMovie from "./Component/WatchMovie.jsx";
@@ -36,8 +37,13 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/watch/:id" element={<WatchMovie />} />
+            <Route
+              path="/watchondailymotion/:id"
+              element={<Watchondailymotion />}
+            />
             <Route path="/OnlineWatch" element={<OnlineWatch />} />
             <Route path="/requestMovie" element={<RequestMovie />} />
+
             {/* User routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
