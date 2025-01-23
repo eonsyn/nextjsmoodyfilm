@@ -385,23 +385,30 @@ const MovieDetail = () => {
                   Watch Online
                 </button>
               )}
-
-              <button
-                onClick={() =>
-                  handleDownload(
-                    download.downloadHref || download.finalLink,
-                    download._id
-                  )
-                }
-                className="bg-red-600  text-white flex items-center py-3 px-10    rounded-md "
-                disabled={processingId === download._id}
-              >
-                {processingId === download._id ? (
-                  <ClipLoader size={20} loading={true} />
-                ) : (
-                  <FaDownload />
-                )}
-              </button>
+              {download.downloadHref ? (
+                // Check only if downloadHref exists (first condition)
+                !download.downloadHref.startsWith("https://dai.ly") ? (
+                  <button
+                    onClick={() =>
+                      handleDownload(
+                        download.downloadHref || download.finalLink,
+                        download._id
+                      )
+                    }
+                    className="bg-red-600  text-white flex items-center py-3 px-10    rounded-md "
+                    disabled={processingId === download._id}
+                  >
+                    {processingId === download._id ? (
+                      <ClipLoader size={20} loading={true} />
+                    ) : (
+                      <FaDownload />
+                    )}
+                  </button>
+                ) : null
+              ) : (
+                // Content to display if downloadHref doesn't exist (second condition)
+                <p> Link unavailable.</p>
+              )}
             </div>
           </div>
         ))}
