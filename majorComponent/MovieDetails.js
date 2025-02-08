@@ -70,7 +70,7 @@ export default function MovieDetail({ movie }) {
   }
 
   return (
-    <div className="right-upper-component h-[50vh] flex justify-between w-full py-2">
+    <div className="right-upper-component h-[60vh] flex justify-between w-full py-2">
       {/* Main Movie Image */}
       <div
         className="h-full w-[68%] rounded-md overflow-hidden"

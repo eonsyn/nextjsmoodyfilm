@@ -68,10 +68,10 @@ function MoviesList() {
   }
 
   return (
-    <div className="container min-h-screen mx-auto px-4 py-6">
-      <h1 className="text-3xl font-bold text-center text-gray-900 text-white mb-8">
+    <div className="container min-h-screen mx-auto pt-10  px-4 py-6">
+      {/* <h1 className="text-3xl font-bold text-center text-gray-900 text-white mb-8">
         Movie Library
-      </h1>
+      </h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {movies.length > 0 ? (
           movies.map((movie) => <Card key={movie._id} {...movie} />)

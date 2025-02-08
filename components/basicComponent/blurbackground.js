@@ -9,7 +9,7 @@ const BlurBackground = ({ children }) => {
       <div className="absolute inset-0 backdrop-blur-3xl"></div>
 
       {/* Content */}
-      <div className="relative w-full min-h-screen flex items-center justify-center bg-opacity-50 bg-gray-800">
+      <div className="relative w-full min-h-screen flex flex-col  items-center justify-center bg-opacity-50 bg-gray-800">
         {children}
       </div>
     </div>

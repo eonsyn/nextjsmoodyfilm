@@ -85,66 +85,61 @@ export default async function MovieDetails({ params }) {
   if (!movie) return notFound(); // Show 404 page if movie is not found
 
   return (
-    <div className="min-h-screen w-screen flex  justify-evenly relative  ">
-      <div className="left-sidebar   w-[15%] relative pl-4  bg-orange-800 ">
-        <Navigation></Navigation>
-      </div>
-      <div className="right pl-3 w-[80%] component">
-        <MovieDetail movie={movie}></MovieDetail>
-        <div className=" text-white ">
-          <div className="mb-6 mt-5">
-            <p className="  mt-2">
-              <strong className="text-white">Directed By:</strong>{" "}
-              {movie.directedBy || "Unknown"}
-            </p>
-            <p className=" ">
-              <strong className="text-white">IMDB Rating:</strong>{" "}
-              {movie.imdbRating || "N/A"}
-            </p>
-          </div>
-          <h2 className="font-bold text-4xl">Download</h2>
-          <div className="space-y-4  ">
-            {movie.downloadData.map((download) => (
-              <div
-                key={download._id}
-                className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
-              >
-                <span className="  w-[60%] sm:w-[60%]">{download.title}</span>
-                <div className="flex sm:flex-row flex-col gap-1 sm:gap-0 items-center space-x-4">
-                  {download.downloadHref && (
-                    <WatchButton url={download.downloadHref} />
-                  )}
-                  {download.downloadHref && (
-                    <DownloadButton
-                      url={download.downloadHref}
-                      downloadId={download._id}
-                    />
-                  )}
-                </div>
+    <div className=" component">
+      <MovieDetail movie={movie}></MovieDetail>
+      <div className=" text-white ">
+        <div className="mb-6 mt-5">
+          <p className="  mt-2">
+            <strong className="text-white">Directed By:</strong>{" "}
+            {movie.directedBy || "Unknown"}
+          </p>
+          <p className=" ">
+            <strong className="text-white">IMDB Rating:</strong>{" "}
+            {movie.imdbRating || "N/A"}
+          </p>
+        </div>
+        <h2 className="font-bold text-4xl">Download</h2>
+        <div className="space-y-4  ">
+          {movie.downloadData.map((download) => (
+            <div
+              key={download._id}
+              className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
+            >
+              <span className="  w-[60%] sm:w-[60%]">{download.title}</span>
+              <div className="flex sm:flex-row flex-col gap-1 sm:gap-0 items-center space-x-4">
+                {download.downloadHref && (
+                  <WatchButton url={download.downloadHref} />
+                )}
+                {download.downloadHref && (
+                  <DownloadButton
+                    url={download.downloadHref}
+                    downloadId={download._id}
+                  />
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="watch-online mt-6 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
-            {movie.watchOnline ? (
-              <div className="text-center">
-                <Link href={`/watch/${movie.watchOnline.split("/")[4]}`}>
-                  <button className="px-6 py-2 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
-                    🎥 Watch Online
-                  </button>
-                </Link>
-              </div>
-            ) : (
-              <p className="text-center text-black font-medium">
-                Online streaming of this movie coming soon...
-              </p>
-            )}
-          </div>
+        <div className="watch-online mt-6 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+          {movie.watchOnline ? (
+            <div className="text-center">
+              <Link href={`/watch/${movie.watchOnline.split("/")[4]}`}>
+                <button className="px-6 py-2 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                  🎥 Watch Online
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <p className="text-center text-black font-medium">
+              Online streaming of this movie coming soon...
+            </p>
+          )}
         </div>
-        <AllComment id={id} />
-        <div className="relative h-[200vh] w-full no-scrollbar ">
-          <RightLowerComponent filmcards={filmcards} />
-        </div>
+      </div>
+      <AllComment id={id} />
+      <div className="relative h-[200vh] w-full no-scrollbar ">
+        <RightLowerComponent filmcards={filmcards} />
       </div>
     </div>
   );

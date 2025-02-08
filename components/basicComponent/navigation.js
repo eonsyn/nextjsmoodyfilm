@@ -16,10 +16,10 @@ const Navbar = () => {
     { name: "Movies", href: "/movies" }, // Main Movies Page
     { name: "Contact", href: "/contact" },
   ];
-
+  //
   return (
     <aside className=" shadow-md w-full   ">
-      <ul className="flex flex-col fixed top-0 left-0  space-y-4 py-8  items-center">
+      <ul className="flex flex-col fixed top-10 space-y-4 py-8  items-center">
         {navItems.map((item) => (
           <li key={item.href}>
             <Link
@@ -37,6 +37,11 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
+      <div className="fixed bottom-16 ">
+        <Link href="/request-movies">
+          <strong className="text-white">Request Movie</strong>
+        </Link>
+      </div>
     </aside>
   );
 };
