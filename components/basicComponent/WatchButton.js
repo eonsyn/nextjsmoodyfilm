@@ -19,7 +19,7 @@ const WatchButton = ({ url }) => {
     <>
       <button
         onClick={handleWatch}
-        className="bg-green-600 p-2 rounded-md text-black flex items-center"
+        className="bg-green-600 p-2 rounded-md text-white flex items-center"
       >
         Watch Online
       </button>

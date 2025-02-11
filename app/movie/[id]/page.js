@@ -102,7 +102,7 @@ export default async function MovieDetails({ params }) {
           {movie.downloadData.map((download) => (
             <div
               key={download._id}
-              className="flex justify-between items-center p-4 bg-gray-50 rounded-md shadow-md"
+              className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md  rounded-md shadow-md"
             >
               <span className="  w-[60%] sm:w-[60%]">{download.title}</span>
               <div className="flex sm:flex-row flex-col gap-1 sm:gap-0 items-center space-x-4">
