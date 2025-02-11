@@ -6,6 +6,7 @@ import gsap from "gsap";
 
 const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
   const cardRef = useRef(null);
+  const playIconRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
@@ -27,6 +28,28 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
     }
   }, [loading]);
 
+  useEffect(() => {
+    if (playIconRef.current && loading) {
+      // Get the total length of the polygon path
+      const pathLength = playIconRef.current
+        .querySelector("polygon")
+        .getTotalLength();
+
+      // Set initial stroke properties
+      gsap.set(playIconRef.current.querySelector("polygon"), {
+        strokeDasharray: pathLength,
+        strokeDashoffset: pathLength,
+      });
+
+      // Animate the stroke offset to 0 for the draw effect
+      gsap.to(playIconRef.current.querySelector("polygon"), {
+        strokeDashoffset: 0,
+        duration: 1.5,
+        ease: "power2.out",
+      });
+    }
+  }, [loading]);
+
   return (
     <Link href={`/movie/${_id}`}>
       <div
@@ -40,6 +63,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
             className="waiting-card absolute top-0 left-0 w-full h-full bg-white/30 backdrop-blur-md flex items-center justify-center z-20"
           >
             <svg
+              ref={playIconRef}
               xmlns="http://www.w3.org/2000/svg"
               width="80"
               height="80"
@@ -49,9 +73,8 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="animate-pulse"
             >
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           </div>
         )}
