@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
-import { FaStar } from "react-icons/fa";
-import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { FaStar } from "react-icons/fa";
 
 const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
   const cardRef = useRef(null);
@@ -60,7 +60,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
         {loading && (
           <div
             ref={cardRef}
-            className="waiting-card absolute top-0 left-0 w-full h-full bg-white/30 backdrop-blur-md flex items-center justify-center z-20"
+            className="  waiting-card absolute top-0 left-0 w-full h-full bg-white/30 backdrop-blur-md flex items-center justify-center z-20"
           >
             <svg
               ref={playIconRef}
@@ -69,7 +69,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
               height="80"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="black"
+              stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
