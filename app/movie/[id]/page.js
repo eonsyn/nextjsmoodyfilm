@@ -1,5 +1,4 @@
 import DownloadButton from "@/components/basicComponent/downloadbutton";
-import Navigation from "@/components/basicComponent/navigation";
 import WatchButton from "@/components/basicComponent/WatchButton";
 import RightLowerComponent from "@/components/imageSlider/scrollCards";
 import AllComment from "@/majorComponent/allComment";
@@ -85,7 +84,7 @@ export default async function MovieDetails({ params }) {
   if (!movie) return notFound(); // Show 404 page if movie is not found
 
   return (
-    <div className=" component">
+    <div className="mt-4">
       <MovieDetail movie={movie}></MovieDetail>
       <div className=" text-white ">
         <div className="mb-6 mt-5">

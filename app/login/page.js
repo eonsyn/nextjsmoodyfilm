@@ -1,9 +1,10 @@
 "use client";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
 
-export default function Page() {
+export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -19,48 +20,24 @@ export default function Page() {
     setError("");
     setLoading(true);
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(formData),
-        }
-      );
+    const result = await signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      redirect: false,
+    });
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong!");
-      }
-
-      const user = {
-        email: formData.email,
-        name: data.name,
-        username: data.username,
-        profile: data.profile,
-        id: data.userId,
-      };
-      localStorage.setItem("MoodyfilmUser", JSON.stringify(user));
-      localStorage.setItem("moodyfilmUserLogin", "true");
-
-      window.dispatchEvent(new Event("storage")); // Trigger storage event to notify Navbar
-
+    if (result?.error) {
+      setError(result.error);
+    } else {
       router.push("/");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[100vh] -mt-10 bg-gray-100">
-      <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-[100vh] -mt-10 ">
+      <div className="w-full max-w-sm p-6 bg-white/30 backdrop-blur-md rounded-lg shadow-md">
+        <h1 className="text-3xl text-background font-bold text-center   mb-6">
           MoodyFilms Login
         </h1>
         <form onSubmit={handleLogin} className="space-y-4">

@@ -73,7 +73,7 @@ export default function MovieDetail({ movie }) {
     <div className="right-upper-component h-[60vh] flex justify-between w-full py-2">
       {/* Main Movie Image */}
       <div
-        className="h-full w-[68%] rounded-md overflow-hidden"
+        className="h-full w-[68%] rounded-2xl overflow-hidden"
         style={{ backgroundColor: dominantColor }}
       >
         <img
@@ -87,7 +87,7 @@ export default function MovieDetail({ movie }) {
       <div className="h-full flex flex-col justify-between w-[30%]">
         {/* Movie Story */}
         <div
-          className="w-full h-[63%] rounded-md p-4 overflow-y-auto "
+          className="w-full h-[63%] rounded-2xl p-4 overflow-y-auto "
           style={{
             backgroundImage: `linear-gradient(to bottom right,${colourgradient})`,
             transition: "background-image 1s ease-in-out", // Smooth transition

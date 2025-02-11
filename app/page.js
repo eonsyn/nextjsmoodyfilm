@@ -38,7 +38,7 @@ function MoviesList() {
   if (isLoading) {
     return (
       <div className="mx-5 text-center mt-[2rem]">
-        <h1 className="text-3xl font-bold text-center text-gray-900 text-white mb-8">
+        <h1 className="text-3xl font-bold text-center   text-white mb-8">
           Loading Movies...
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -91,7 +91,7 @@ function MoviesList() {
         >
           Previous
         </button>
-        <span className="px-4 py-2 mx-1 text-gray-700">
+        <span className="px-4 py-2 mx-1 text-white">
           Page {currentPage} of {totalPages}
         </span>
         <button
