@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
                   </h1>
                 </div>
                 <div className="left-header flex w-screen md:w-[85vw] h-full items-center justify-between   ">
-                  <div className="searchbar flex items-center justify-end pl-2 md:pl-0 h-full w-[50%]">
+                  <div className="searchbar flex items-center justify-end pl-2 md:pl-0 h-full w-[60%] md:w-[50%]">
                     <SearchBar />
                   </div>
                   <div className="signup-signin flex items-center justify-end h-full w-[35%]  pr-4  ">
