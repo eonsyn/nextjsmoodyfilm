@@ -16,6 +16,11 @@ export default {
         text: "#202124", // Dark Gray
       },
     },
+    fontFamily: {
+      playwrite: ["Playwrite IS", "serif"],
+      poppins: ["Poppins", "sans-serif"],
+      darumadrop: ["Darumadrop One", "serif"],
+    },
   },
   plugins: [],
 };

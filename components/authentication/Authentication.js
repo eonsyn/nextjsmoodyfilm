@@ -206,14 +206,14 @@ function Authentication() {
           <>
             <Link
               href="/signup"
-              className="text-black text-xl font-bold hover:bg-gray-200 w-full text-center py-3"
+              className="text-black block text-xl font-bold hover:bg-gray-200 w-full text-center py-3"
               onClick={handleMobileLinkClick}
             >
               SignUp
             </Link>
             <Link
               href="/login"
-              className="text-black text-xl font-bold hover:bg-gray-200 w-full text-center py-3"
+              className="text-black block text-xl font-bold hover:bg-gray-200 w-full text-center py-3"
               onClick={handleMobileLinkClick}
             >
               Login

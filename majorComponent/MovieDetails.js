@@ -70,24 +70,24 @@ export default function MovieDetail({ movie }) {
   }
 
   return (
-    <div className="right-upper-component h-[60vh] flex justify-between w-full py-2">
+    <div className="right-upper-component h-fit md:h-[60vh] flex justify-between w-full py-2">
       {/* Main Movie Image */}
       <div
-        className="h-full w-[68%] rounded-2xl overflow-hidden"
+        className="h-full hidden md:block w-[68%] rounded-2xl overflow-hidden"
         style={{ backgroundColor: dominantColor }}
       >
         <img
           src={mainImage}
           alt="Movie Poster"
-          className="w-full h-full object-cover"
+          className="w-full hidden md:block h-full object-cover"
         />
       </div>
 
       {/* Description and Additional Images */}
-      <div className="h-full flex flex-col justify-between w-[30%]">
+      <div className=" h-fit md:h-full flex flex-col   md:justify-between w-full md:w-[30%]">
         {/* Movie Story */}
         <div
-          className="w-full h-[63%] rounded-2xl p-4 overflow-y-auto "
+          className="w-full hidden md:block h-[63%] rounded-2xl p-4 overflow-y-auto "
           style={{
             backgroundImage: `linear-gradient(to bottom right,${colourgradient})`,
             transition: "background-image 1s ease-in-out", // Smooth transition
@@ -100,9 +100,25 @@ export default function MovieDetail({ movie }) {
             {he.decode(movie.description || "")}
           </p>
         </div>
+        <div className="mobile-story md:hidden text-white ">
+          <h1 className="text-3xl">{movie.filmTitle}</h1>
+          <span className="pt-2">Story:</span>
+          {/* <h1 class="font-playwrite text-3xl font-thin">
+            This is Playwrite IS
+          </h1>
+          <p class="font-poppins font-extrabold italic">
+            This is Poppins ExtraBold Italic
+          </p>
+          <h2 class="font-darumadrop text-xl font-bold">
+            This is Darumadrop One
+          </h2> */}
 
+          <p className="leading-5  pt-2  text-white">
+            {he.decode(movie.description || "")}
+          </p>
+        </div>
         {/* 🔥 Smooth Scrolling Image Gallery */}
-        <div className="scrollable_image_div w-full h-[33%] rounded-md overflow-hidden">
+        <div className="scrollable_image_div w-full pt-4 md:pt-0 h-[33%] rounded-md overflow-hidden">
           <motion.div
             className="flex h-full"
             style={{ width: `${doubledImages.length * 50}%` }} // Ensure correct width
