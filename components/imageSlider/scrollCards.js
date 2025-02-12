@@ -49,13 +49,15 @@ export default function RightLowerComponent({ filmcards }) {
   return (
     <div
       ref={componentRef}
-      className=" right-lower-component w-full h-[100vh]   sticky top-6"
+      className=" right-lower-component    w-full h-[100vh]   sticky top-6"
     >
       <div className="p-2">
-        <h2 className="text-3xl pt-8 font-bold text-white">You must like :</h2>
+        <h2 className="text-xl md:text-3xl pt-8 font-bold text-white">
+          You must like :
+        </h2>
         <div
           ref={cardivRef}
-          className="cardiv no-scrollbar h-screen flex gap-4 overflow-x-auto whitespace-nowrap mt-6 p-4"
+          className="cardiv no-scrollbar h-screen flex gap-4 overflow-x-auto whitespace-nowrap  p-4"
         >
           {filmcards.length > 0 ? (
             filmcards.map((movie) => (

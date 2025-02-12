@@ -48,13 +48,12 @@ export default async function MovieDetails({ params }) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
 
-  const cardsrem = (await getRecommendation(movie.genre)).films;
-  console.log(cardsrem);
-  const filmcards = cardsrem;
+  const filmcards = (await getRecommendation(movie.genre)).films;
+
   if (!movie) return notFound(); // Show 404 page if movie is not found
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 w-full">
       <MovieDetail movie={movie}></MovieDetail>
       <div className=" text-white ">
         <div className="mb-6 mt-5">
@@ -110,7 +109,7 @@ export default async function MovieDetails({ params }) {
         </div>
       </div>
       <AllComment id={id} />
-      <div className="relative h-[200vh] pt-4 w-full no-scrollbar ">
+      <div className="relative  h-[200vh] pt-4 w-full no-scrollbar ">
         <RightLowerComponent filmcards={filmcards} />
       </div>
     </div>
