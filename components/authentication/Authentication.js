@@ -116,7 +116,7 @@ function Authentication() {
     <div className="relative md:bg-white/30 md:backdrop-blur-md h-[80%] px-2 shadow-lg rounded-md text-white flex items-center md:space-x-4 space-x-2">
       {status === "authenticated" ? (
         <>
-          <div className="rounded-full h-10 w-10 bg-red-100 text-black flex items-center justify-center border-2 border-orange-200 text-xl font-bold">
+          <div className="rounded-full h-10 w-10 bg-red-100 text-black flex items-center justify-center border-2 border-orange-200 text-xl hidden md:block font-bold">
             {session?.user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="name hidden md:block">
