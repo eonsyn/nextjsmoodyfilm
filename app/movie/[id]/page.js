@@ -109,7 +109,7 @@ export default async function MovieDetails({ params }) {
         </div>
       </div>
       <AllComment id={id} />
-      <div className="relative  h-[200vh] pt-4 w-full no-scrollbar ">
+      <div className="relative h-fit   pt-4 w-full   ">
         <RightLowerComponent filmcards={filmcards} />
       </div>
     </div>
