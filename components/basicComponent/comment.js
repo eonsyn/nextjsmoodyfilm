@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
@@ -16,39 +17,37 @@ const Comment = ({
   onDislike,
   onDelete,
 }) => {
+  const { data: session, status } = useSession();
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
 
   useEffect(() => {
-    try {
-      const storedUser = JSON.parse(localStorage.getItem("MoodyfilmUser"));
-      if (storedUser) {
-        setUser(storedUser);
-        setIsLogin(true);
-        console.log(isLogin);
-        setHasLiked(likedBy.includes(storedUser.id));
-        setHasDisliked(dislikedBy.includes(storedUser.id));
-      }
-    } catch (error) {
-      console.error("Error retrieving user info:", error);
+    if (status === "authenticated" && session?.user) {
+      setUser(session.user);
+      setIsLogin(true);
+
+      setHasLiked(session.user.id && likedBy.includes(session.user.id));
+      setHasDisliked(session.user.id && dislikedBy.includes(session.user.id));
+    } else if (status === "unauthenticated") {
+      setIsLogin(false);
+      setUser(null);
     }
-  }, [likedBy, dislikedBy]);
+  }, [likedBy, dislikedBy, status, session]);
 
   return (
-    <div className="flex text-black items-start space-x-4 bg-slate-400 shadow-md rounded-lg p-4 mb-4 relative">
-      <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-blue-500 text-white font-bold text-lg">
+    <div className="bg-black/20 backdrop-blur-lg shadow-lg rounded-lg p-6 mb-5 flex items-start space-x-4 relative border border-gray-700">
+      {/* User Avatar */}
+      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
         {userProfile}
       </div>
 
+      {/* Comment Box */}
       <div className="flex-grow">
         <div className="flex items-center justify-between">
-          <span className="text-xl text-blue-800 font-bold text-gray-700">
-            {userName}
-          </span>
-
-          <span className="text-xs text-gray-500">
+          <span className="text-lg font-semibold text-white">{userName}</span>
+          <span className="text-xs text-gray-400">
             {new Date(createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -56,40 +55,49 @@ const Comment = ({
             })}
           </span>
         </div>
-        <p className="mt-2   text-xl text-gray-800">{review}</p>
 
-        <div className="flex text-white items-center space-x-4 mt-2">
+        <p className="mt-3 text-gray-300 text-base bg-gray-800/40 p-4 rounded-md border border-gray-600">
+          {review}
+        </p>
+
+        {/* Interaction Buttons */}
+        <div className="flex items-center space-x-4 mt-4">
           <button
             onClick={onLike}
-            className={`flex items-center ${
-              hasLiked ? "text-blue-500" : "text-gray-600"
-            } hover:text-blue-500`}
+            className={`flex items-center px-3 py-1 rounded-lg transition ${
+              hasLiked
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700 text-gray-400 hover:bg-blue-600"
+            }`}
             disabled={!isLogin}
           >
-            <FaThumbsUp className="mr-1   text-2xl" />
-            <span className="text-2xl">{likedBy.length}</span>
+            <FaThumbsUp className="mr-2 text-lg" />
+            <span>{likedBy.length}</span>
           </button>
 
           <button
             onClick={onDislike}
-            className={`flex items-center ${
-              hasDisliked ? "text-red-500" : "text-gray-600"
-            } hover:text-red-500`}
+            className={`flex items-center px-3 py-1 rounded-lg transition ${
+              hasDisliked
+                ? "bg-red-500 text-white"
+                : "bg-gray-700 text-gray-400 hover:bg-red-600"
+            }`}
             disabled={!isLogin}
           >
-            <FaThumbsDown className="mr-1 text-2xl" />
-            <span className="text-2xl">{dislikedBy.length}</span>
+            <FaThumbsDown className="mr-2 text-lg" />
+            <span>{dislikedBy.length}</span>
           </button>
         </div>
       </div>
 
+      {/* Delete Button */}
       {isLogin && user?.id === userId && (
-        <div className="absolute bottom-2 right-4 flex items-center justify-center">
-          <MdDeleteForever
-            className="h-5 text-2xl w-5 cursor-pointer hover:text-red-600"
-            onClick={onDelete}
-          />
-        </div>
+        <button
+          onClick={onDelete}
+          className="absolute bottom-2 right-2 p-2 rounded-full bg-gray-800 hover:bg-red-600 transition text-gray-400 hover:text-white"
+        >
+          <MdDeleteForever className="text-2xl" />
+        </button>
       )}
     </div>
   );

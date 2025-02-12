@@ -57,5 +57,41 @@ html {
 }
 
 
+/* ===== Background animation ===== */
+@keyframes blob-1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-5%, -10%) scale(1.05);
+    }
+}
+
+@keyframes blob-2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(5%, 5%) scale(0.95);
+    }
+}
+
+@keyframes blob-3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-3%, 8%) scale(1.02);
+    }
+}
 
 /* https://i.pinimg.com/736x/33/46/14/334614c6c3ba051d37a5f753368cd964.jpg */

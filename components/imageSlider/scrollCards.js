@@ -49,11 +49,10 @@ export default function RightLowerComponent({ filmcards }) {
   return (
     <div
       ref={componentRef}
-      className="backdrop-blur-md backdrop-brightness-75 shadow-lg
-      right-lower-component w-full h-[100vh]   sticky top-0"
+      className=" right-lower-component w-full h-[100vh]   sticky top-6"
     >
       <div className="p-2">
-        <h2 className="text-3xl pt-4 font-bold text-white">You must like :</h2>
+        <h2 className="text-3xl pt-8 font-bold text-white">You must like :</h2>
         <div
           ref={cardivRef}
           className="cardiv no-scrollbar h-screen flex gap-4 overflow-x-auto whitespace-nowrap mt-6 p-4"
@@ -69,7 +68,6 @@ export default function RightLowerComponent({ filmcards }) {
           )}
         </div>
       </div>
-      <div className=" text-orange-400">end of the div</div>
     </div>
   );
 }

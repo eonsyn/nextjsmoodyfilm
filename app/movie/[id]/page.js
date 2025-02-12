@@ -97,14 +97,17 @@ export default async function MovieDetails({ params }) {
             {movie.imdbRating || "N/A"}
           </p>
         </div>
-        <h2 className="font-bold text-4xl">Download</h2>
+        <h2 className="font-bold text-4xl  mb-2">Download</h2>
         <div className="space-y-4  ">
           {movie.downloadData.map((download) => (
             <div
               key={download._id}
-              className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md  rounded-md shadow-md"
+              className="flex   
+               justify-between items-center p-4 bg-black/40 backdrop-blur  rounded-md shadow-white/10 shadow-md"
             >
-              <span className="  w-[60%] sm:w-[60%]">{download.title}</span>
+              <span className="font-bold  w-[60%] sm:w-[60%]">
+                {download.title}
+              </span>
               <div className="flex sm:flex-row flex-col gap-1 sm:gap-0 items-center space-x-4">
                 {download.downloadHref && (
                   <WatchButton url={download.downloadHref} />
@@ -120,7 +123,7 @@ export default async function MovieDetails({ params }) {
           ))}
         </div>
 
-        <div className="watch-online mt-6 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+        <div className="watch-online mt-6 p-2  bg-black/40 backdrop-blur rounded-lg shadow-md  shadow-white/10  ">
           {movie.watchOnline ? (
             <div className="text-center">
               <Link href={`/watch/${movie.watchOnline.split("/")[4]}`}>
@@ -130,14 +133,14 @@ export default async function MovieDetails({ params }) {
               </Link>
             </div>
           ) : (
-            <p className="text-center text-black font-medium">
+            <p className="text-center text-white font-medium">
               Online streaming of this movie coming soon...
             </p>
           )}
         </div>
       </div>
       <AllComment id={id} />
-      <div className="relative h-[200vh] w-full no-scrollbar ">
+      <div className="relative h-[200vh] pt-4 w-full no-scrollbar ">
         <RightLowerComponent filmcards={filmcards} />
       </div>
     </div>

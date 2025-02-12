@@ -14,21 +14,22 @@ const ReviewForm = ({ sendMessage }) => {
   };
 
   return (
-    <div className="shadow-md bg-slate-400 my-8  rounded-lg p-4">
-      <h2 className="text-lg text-white font-bold mb-4">Write a Comment</h2>
-      <form onSubmit={handleSubmit} className="flex items-center space-x-2">
+    <div className="shadow-lg bg-black/40 backdrop-blur-md my-8 rounded-xl p-5">
+      <h2 className="text-xl text-white font-semibold mb-4">Write a Comment</h2>
+      <form onSubmit={handleSubmit} className="flex items-center space-x-3">
         <textarea
-          className="flex-grow border border-gray-300 text-black rounded-full p-2 pl-4 focus:outline-none focus:ring focus:border-blue-500 resize-none"
-          rows="1"
-          placeholder="Write a comment..."
+          className="flex-grow bg-black/50 text-white border border-gray-600 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all duration-200"
+          rows="2"
+          placeholder="Share your thoughts..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
         ></textarea>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
+          disabled={loading}
         >
-          {loading ? "loading" : "Post"}
+          {loading ? "Posting..." : "Post"}
         </button>
       </form>
     </div>

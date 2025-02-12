@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+import { useSession } from "next-auth/react";
 const AllComment = ({ id }) => {
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState("");
@@ -32,7 +34,8 @@ const AllComment = ({ id }) => {
 
     const checkUserLogin = async () => {
       try {
-        const storedUser = JSON.parse(localStorage.getItem("MoodyfilmUser"));
+        const storedUser = session?.user;
+
         if (storedUser) {
           setUser(storedUser);
           setIsLoggedIn(true);
@@ -142,7 +145,7 @@ const AllComment = ({ id }) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("MoodyfilmToken")}`, // Add token if required
+            Authorization: `Bearer ${localStorage.getItem("MoodyfilmToken")}`, // Adding token if required
           },
           credentials: "include", // Include credentials in the request
         }
@@ -199,7 +202,9 @@ const AllComment = ({ id }) => {
       router.push("/login");
     }
   };
-
+  useEffect(() => {
+    console.log("Component mounted or count changed:", user);
+  }, [user]);
   return (
     <div className="p-3 ">
       <ToastContainer />
