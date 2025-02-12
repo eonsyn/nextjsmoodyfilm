@@ -1,4 +1,5 @@
 import DownloadButton from "@/components/basicComponent/downloadbutton";
+
 import WatchButton from "@/components/basicComponent/WatchButton";
 import RightLowerComponent from "@/components/imageSlider/scrollCards";
 import AllComment from "@/majorComponent/allComment";
@@ -20,67 +21,36 @@ async function getMovieDetails(id) {
     return null;
   }
 }
+async function getRecommendation(genres) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/recommend-movie`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ genre: genres }),
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to fetch recommendations:", response.statusText);
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    return null;
+  }
+}
 
 export default async function MovieDetails({ params }) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
-  const filmcards = [
-    {
-      _id: "67a0e3a77d7e1f8ec5a1f442",
-      filmTitle: "Rana Naidu",
-      imdbRating: 7,
-      genre: ["Action", "Crime", "Drama"],
-      urlOfThumbnail:
-        "https://assets.gadgets360cdn.com/pricee/assets/product/202304/Rana-Naidu_1681876033.jpg",
-    },
 
-    {
-      _id: "679ddd7f810a1ba532b8b433",
-      filmTitle: "Spider-Man: Into the Spider-Verse",
-      imdbRating: 8.4,
-      genre: [
-        "Animation",
-        "Action",
-        "Adventure",
-        "Comedy",
-        "Family",
-        "Fantasy",
-        "Sci-Fi",
-      ],
-      urlOfThumbnail:
-        "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1.jpg",
-    },
-    {
-      _id: "679cfce3fd74bf7c14b3a45e",
-      filmTitle: "Puss in Boots",
-      imdbRating: 6.6,
-      genre: [
-        "Animation",
-        "Action",
-        "Adventure",
-        "Comedy",
-        "Family",
-        "Fantasy",
-      ],
-      urlOfThumbnail:
-        "https://m.media-amazon.com/images/M/MV5BOTQwMGU5YTEtYmQzMy00MTM0LWFhNzAtOGY2Yzc1MzBkYTYyXkEyXkFqcGc@._V1.jpg",
-    },
-    {
-      _id: "679ce3a01bc65c2d1a5d37d0",
-      filmTitle: "Deva",
-      imdbRating: null,
-      genre: ["Action", "Thriller"],
-      urlOfThumbnail: "https://i.imgur.com/GLUZPdB.jpeg",
-    },
-    {
-      _id: "679b8b7d6ce9155b3e8faea6",
-      filmTitle: "Kill",
-      imdbRating: 7.5,
-      genre: ["Action", "Crime", "Drama", "Thriller"],
-      urlOfThumbnail:
-        "https://m.media-amazon.com/images/M/MV5BZjI1ZjM3NjUtYTc1Ni00ODJmLWI5YjQtMWZiZTAyNTFiZGY1XkEyXkFqcGc@._V1.jpg",
-    },
-  ];
+  const cardsrem = (await getRecommendation(movie.genre)).films;
+  console.log(cardsrem);
+  const filmcards = cardsrem;
   if (!movie) return notFound(); // Show 404 page if movie is not found
 
   return (
