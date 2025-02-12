@@ -1,31 +1,19 @@
 "use client";
-import Head from "next/head";
+
 import BlurBackground from "@/components/basicComponent/blurbackground";
 import Navigation from "@/components/basicComponent/navigation";
 import SearchBar from "@/components/searchbar/SearchBar";
 import { SessionProvider } from "next-auth/react";
-import { SearchProvider } from "../context/SearchContext";
+import { SearchProvider } from "@/context/SearchContext";
 import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Playwrite+IS:wght@100..400&family=Poppins:ital,wght@0,100;0,400;0,700;0,800;0,900;1,800&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
       <body className="custom-body-class font-poppins">
-        <SessionProvider>
-          <SearchProvider>
+        <SearchProvider>
+          <SessionProvider>
             <BlurBackground>
               {/* Sticky top bar */}
               <div className="fixed top-0 left-0 w-full h-16 flex z-50">
@@ -56,8 +44,8 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </BlurBackground>
-          </SearchProvider>
-        </SessionProvider>
+          </SessionProvider>
+        </SearchProvider>
       </body>
     </html>
   );

@@ -3,7 +3,7 @@
 import Card from "@/components/basicComponent/card";
 import { useSearch } from "@/context/SearchContext";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import useSWR from "swr";
 import "../styles/globals.css";
 
@@ -18,19 +18,24 @@ function MoviesList() {
   const { searchTerm } = useSearch();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
 
-  const { data, error, isLoading, mutate } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/home?page=${pageFromUrl}&search=${searchTerm}`,
-    fetcher
-  );
+  // Construct API URL with search query
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/home?page=${pageFromUrl}&search=${searchTerm}`;
+
+  const { data, error, isLoading, mutate } = useSWR(apiUrl, fetcher);
 
   const movies = data?.films || [];
   const currentPage = data?.currentPage || pageFromUrl;
   const totalPages = data?.totalPages || 1;
 
+  // Trigger API call when search term changes
+  useEffect(() => {
+    mutate();
+  }, [searchTerm, mutate]);
+
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       window.history.pushState(null, "", `?page=${newPage}`);
-      mutate(); // Re-fetch data when page changes
+      mutate(); // Re-fetch movies when page changes
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -38,7 +43,7 @@ function MoviesList() {
   if (isLoading) {
     return (
       <div className="mx-5 text-center mt-[2rem]">
-        <h1 className="text-3xl font-bold text-center   text-white mb-8">
+        <h1 className="text-3xl font-bold text-center text-white mb-8">
           Loading Movies...
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -68,17 +73,16 @@ function MoviesList() {
   }
 
   return (
-    <div className="container min-h-screen mx-auto pt-10  px-4 py-6">
-      {/* <h1 className="text-3xl font-bold text-center text-gray-900 text-white mb-8">
-        Movie Library
-      </h1> */}
+    <div className="container min-h-screen mx-auto pt-10 px-4 py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {movies.length > 0 ? (
           movies.map((movie) => <Card key={movie._id} {...movie} />)
         ) : (
-          <p className="text-center col-span-4">No movies found</p>
+          <p className="text-center col-span-4 text-white">No movies found</p>
         )}
       </div>
+
+      {/* Pagination Controls */}
       <div className="flex justify-center items-center mt-8">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

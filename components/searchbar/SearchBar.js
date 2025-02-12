@@ -1,6 +1,9 @@
 import { IoIosSearch } from "react-icons/io";
+import { useSearch } from "@/context/SearchContext";
 
 export default function SearchBar() {
+  const { searchTerm, setSearchTerm } = useSearch();
+
   return (
     <div className="search h-12 w-full bg-white/20 backdrop-blur-lg shadow-lg text-white rounded-lg flex items-center px-4 border border-white/20">
       {/* Search Icon */}
@@ -12,8 +15,10 @@ export default function SearchBar() {
       <div className="input-bar flex-grow">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search movies..."
           className="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none text-lg"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
     </div>
