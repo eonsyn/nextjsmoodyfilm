@@ -27,7 +27,7 @@ export default function Page() {
     try {
       console.log(formData);
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/user/signup`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/signup`,
         {
           method: "POST",
           headers: {
@@ -53,21 +53,22 @@ export default function Page() {
     }
   };
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <ToastContainer />
-      {/* Signup Card */}
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Sign up
+
+      {/* Signup Card with Glassmorphism */}
+      <div className="w-full max-w-md backdrop-blur-lg bg-white/10 shadow-xl border border-white/20 rounded-2xl p-6">
+        <h1 className="text-3xl font-extrabold text-center text-white drop-shadow-md mb-6">
+          Sign Up
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
@@ -76,7 +77,7 @@ export default function Page() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Full Name"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
@@ -85,7 +86,7 @@ export default function Page() {
             value={formData.userName}
             onChange={handleChange}
             placeholder="Username"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
@@ -95,27 +96,24 @@ export default function Page() {
             onChange={handleChange}
             autoComplete="new-password"
             placeholder="Password"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition duration-300"
+            className="w-full p-3 rounded-lg text-white font-semibold transition duration-300 bg-blue-500 hover:bg-blue-600 shadow-lg"
           >
             Sign Up
           </button>
         </form>
-        {/* <p className="text-xs text-gray-500 text-center mt-4">
-          By signing up, you agree to our Terms, Data Policy, and Cookies
-          Policy.
-        </p> */}
       </div>
-      {/* Login Redirect */}
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-4 mt-4 text-center">
-        <p className="text-sm">
+
+      {/* Login Redirect with Glass Effect */}
+      <div className="w-full max-w-md backdrop-blur-lg bg-white/10 shadow-md border border-white/20 rounded-2xl p-4 mt-4 text-center">
+        <p className="text-sm text-white">
           Have an account?{" "}
           <Link href="/login">
-            <strong className="text-blue-500 cursor-pointer hover:underline">
+            <strong className="text-blue-400 cursor-pointer hover:underline">
               Log in
             </strong>
           </Link>

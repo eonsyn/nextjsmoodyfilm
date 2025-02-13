@@ -35,12 +35,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[100vh] -mt-10 ">
-      <div className="w-full max-w-sm p-6 bg-white/30 backdrop-blur-md rounded-lg shadow-md">
-        <h1 className="text-3xl text-background font-bold text-center   mb-6">
-          MoodyFilms Login
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-sm backdrop-blur-lg bg-white/10 shadow-xl border border-white/20 rounded-2xl p-6">
+        <h1 className="text-3xl font-extrabold text-center text-white drop-shadow-md mb-6">
+          MoodyFilm Login
         </h1>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-5">
           {error && (
             <div className="p-2 text-sm text-red-600 bg-red-100 rounded">
               {error}
@@ -54,7 +54,7 @@ export default function LoginPage() {
               onChange={handleChange}
               placeholder="Email"
               required
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500"
+              className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -66,12 +66,12 @@ export default function LoginPage() {
               onChange={handleChange}
               placeholder="Password"
               required
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500"
+              className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
-            className={`w-full px-4 py-2 text-white bg-blue-600 rounded-md focus:outline-none hover:bg-blue-700 ${
+            className={`w-full p-3 rounded-lg text-white font-semibold transition duration-300 bg-blue-500 hover:bg-blue-600 shadow-lg ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={loading}
@@ -80,11 +80,13 @@ export default function LoginPage() {
           </button>
         </form>
       </div>
-      <div className="w-full max-w-sm p-4 mt-6 text-center bg-white rounded-lg shadow-md">
-        <p className="text-sm">
+
+      {/* Signup Redirect with Glass Effect */}
+      <div className="w-full max-w-sm backdrop-blur-lg bg-white/10 shadow-md border border-white/20 rounded-2xl p-4 mt-6 text-center">
+        <p className="text-sm text-white">
           Don’t have an account?{" "}
           <Link href="/signup">
-            <strong className="text-blue-500 cursor-pointer hover:underline">
+            <strong className="text-blue-400 cursor-pointer hover:underline">
               Sign up
             </strong>
           </Link>

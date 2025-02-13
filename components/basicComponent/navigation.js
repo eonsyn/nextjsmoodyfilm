@@ -13,8 +13,7 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Movies", href: "/movies" }, // Main Movies Page
-    { name: "Contact", href: "/contact" },
+    { name: "Reqeust", href: "/request-movies" },
   ];
   //
   return (

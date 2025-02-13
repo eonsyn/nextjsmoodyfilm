@@ -11,9 +11,9 @@ import LogoutButton from "./SignOut";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Movies", href: "/movies" }, // Main Movies Page
+
   { name: "Contact", href: "/contact" },
-  { name: "Request-Movie", href: "/request-movie" },
+  { name: "Request-Movie", href: "/request-movies" },
 ];
 
 function Authentication() {
@@ -113,10 +113,10 @@ function Authentication() {
   }
 
   return (
-    <div className="relative md:bg-white/30 md:backdrop-blur-md h-[80%] px-2 shadow-lg rounded-md text-white flex items-center md:space-x-4 space-x-2">
+    <div className="relativeh-[80%]  rounded-md text-white flex items-center ">
       {status === "authenticated" ? (
-        <>
-          <div className="rounded-full h-10 w-10 bg-red-100 text-black flex items-center justify-center border-2 border-orange-200 text-xl hidden md:block font-bold">
+        <div className="px-2  md:bg-white/30 md:backdrop-blur-md  shadow-lg rounded-md h-full w-full py-1 flex items-center md:space-x-4 space-x-2  ">
+          <div className="rounded-full h-10 w-10 bg-red-100 text-black    items-center justify-center border-2 border-orange-200 text-xl hidden md:flex font-bold">
             {session?.user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="name hidden md:block">
@@ -149,7 +149,7 @@ function Authentication() {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div className="hidden md:flex space-x-4">
           <Link
