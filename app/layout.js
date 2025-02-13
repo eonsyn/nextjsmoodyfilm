@@ -1,12 +1,13 @@
 "use client";
 
 import BlurBackground from "@/components/basicComponent/blurbackground";
-import Navigation from "@/components/basicComponent/navigation";
+import Navbar from "@/components/basicComponent/navigation";
 import SearchBar from "@/components/searchbar/SearchBar";
 import { SessionProvider } from "next-auth/react";
 import { SearchProvider } from "@/context/SearchContext";
 import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
+import Footer from "@/components/basicComponent/Footer";
 
 export default function RootLayout({ children }) {
   return (
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
               <div className="min-h-screen w-screen flex justify-evenly relative pt-10">
                 {/* Left Sidebar */}
                 <div className="left-sidebar hidden md:block w-[15%] relative pl-4">
-                  <Navigation />
+                  <Navbar />
                 </div>
 
                 {/* Main Content */}
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
             </BlurBackground>
           </SessionProvider>
         </SearchProvider>
+        <Footer></Footer>
       </body>
     </html>
   );

@@ -14,6 +14,7 @@ const navItems = [
 
   { name: "Contact", href: "/contact" },
   { name: "Request-Movie", href: "/request-movies" },
+  { name: "Privacy-Policy", href: "/privacy-policy" },
 ];
 
 function Authentication() {

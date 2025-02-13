@@ -36,9 +36,9 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <div className="fixed bottom-16 ">
-        <Link href="/request-movies">
-          <strong className="text-white">Request Movie</strong>
+      <div className="fixed bottom-40 ">
+        <Link href="/privacy-policy">
+          <strong className="text-white">Privacy-Policy</strong>
         </Link>
       </div>
     </aside>
