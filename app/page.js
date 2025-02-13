@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      url: `https://moodyfilm.netlify.app/movies/${page}`,
+      url: `https://moodyfilm.netlify.app/?page=${page}`,
       type: "website",
     },
   };
