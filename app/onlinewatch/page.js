@@ -8,7 +8,7 @@ const VideoPlayer = () => {
   const videoUrl = searchParams.get("url");
 
   return (
-    <div className="w-full max-w-4xl rounded-lg overflow-hidden shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4">
+    <div className="w-full  rounded-lg   shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4">
       {videoUrl ? (
         <video controls className="w-full h-auto rounded-lg">
           <source src={videoUrl} type="video/mp4" />
