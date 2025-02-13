@@ -29,7 +29,7 @@ export default async function MoviesList({ params }) {
 export async function generateMetadata({ params }) {
   const page = params.page || "1";
   const title = `   MoodyFilm- Page ${page} `;
-  const description = `Browse the latest movies on MoodyFilm. Discover and download your favorite films. Page ${page} of our movie collection.`;
+  const description = `MoodyFilms - Discover and download movies, explore trailers, read synopses, and enjoy personalized AI-powered movie recommendations based on your mood.`;
 
   return {
     title,
