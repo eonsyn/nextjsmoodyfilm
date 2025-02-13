@@ -27,8 +27,23 @@ export default function RootLayout({ children }) {
             })(window, document, 'script', 'dataLayer', 'GTM-5VJB87LR');
           `}
         </Script>
+        {/* Google Site Verification */}
+        <meta
+          name="google-site-verification"
+          content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
+        />
       </head>
       <body className="custom-body-class font-poppins">
+        {/* <!-- Google Tag Manager (noscript) --> */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          ></iframe>
+        </noscript>
+        {/* <!-- End Google Tag Manager (noscript) --> */}
         <SearchProvider>
           <SessionProvider>
             <BlurBackground>
