@@ -2,7 +2,7 @@
 
 import Card from "@/components/basicComponent/card";
 import { useSearch } from "@/context/SearchContext";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import useSWR from "swr";
 
@@ -70,11 +70,15 @@ export default function MoviesClient({
 
   return (
     <div className="container min-h-screen mx-auto pt-10 px-4 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
         {movies.length > 0 ? (
-          movies.map((movie) => <Card key={movie._id} {...movie} />)
+          movies.map((movie) => (
+            <div key={movie._id} className="break-inside-avoid">
+              <Card {...movie} />
+            </div>
+          ))
         ) : (
-          <p className="text-center col-span-4 text-white">No movies found</p>
+          <p className="text-center text-white w-full">No movies found</p>
         )}
       </div>
 

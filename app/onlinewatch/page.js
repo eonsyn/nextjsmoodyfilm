@@ -1,19 +1,37 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
+import Hls from "hls.js";
 import { Suspense } from "react";
 
 const VideoPlayer = () => {
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get("url");
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoUrl && videoRef.current) {
+      const video = videoRef.current;
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoUrl;
+      }
+    }
+  }, [videoUrl]);
 
   return (
-    <div className="w-full  rounded-lg   shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4">
+    <div className="w-full rounded-lg shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4 overflow-hidden">
       {videoUrl ? (
-        <video controls className="w-full h-auto rounded-lg">
-          <source src={videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <video
+          ref={videoRef}
+          controls
+          className="w-full h-auto rounded-lg"
+          style={{ objectFit: "contain" }}
+        />
       ) : (
         <div className="p-6 text-center text-white/80">
           <p>No video URL provided.</p>

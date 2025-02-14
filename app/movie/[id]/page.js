@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Head from "next/head";
 
-export const revalidate = 3600;
+export const revalidate = 600;
 
 export async function generateStaticParams() {
   try {
