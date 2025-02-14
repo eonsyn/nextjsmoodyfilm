@@ -1,8 +1,8 @@
-export const metadata = {
+export const generateMetadata = () => ({
   title: "Privacy Policy - MoodyFilm",
   description:
     "Read the privacy policy of MoodyFilm to understand how we collect, use, and protect your personal data.",
-};
+});
 
 export default function PrivacyPolicyPage() {
   return (
