@@ -7,11 +7,11 @@ import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
 import Footer from "@/components/basicComponent/Footer";
 
-export const metadata = {
-  icons: {
-    icon: "/favicon.png", // ✅ Ensure favicon is in public/
-  },
-};
+// export const metadata = {
+//   icons: {
+//     icon: "/favicon.png", // ✅ Ensure favicon is in public/
+//   },
+// };
 
 export default function RootLayout({ children }) {
   return (
