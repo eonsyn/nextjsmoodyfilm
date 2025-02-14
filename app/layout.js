@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        {/* <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function (w, d, s, l, i) {
               w[l] = w[l] || []; 
@@ -26,23 +26,23 @@ export default function RootLayout({ children }) {
               f.parentNode.insertBefore(j, f);
             })(window, document, 'script', 'dataLayer', 'GTM-5VJB87LR');
           `}
-        </Script>
+        </Script> */}
         {/* Google Site Verification */}
-        <meta
+        {/* <meta
           name="google-site-verification"
           content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
-        />
+        /> */}
       </head>
       <body className="custom-body-class font-poppins">
         {/* <!-- Google Tag Manager (noscript) --> */}
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
             height="0"
             width="0"
             style="display:none;visibility:hidden"
           ></iframe>
-        </noscript>
+        </noscript> */}
         {/* <!-- End Google Tag Manager (noscript) --> */}
         <SearchProvider>
           <SessionProvider>
