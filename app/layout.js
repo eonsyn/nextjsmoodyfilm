@@ -6,15 +6,10 @@ import { SearchProvider } from "@/context/SearchContext";
 import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
 import Footer from "@/components/basicComponent/Footer";
-import Script from "next/script"; // ✅ Import for Google Tag Manager
 
 export const metadata = {
-  title: "MoodyFilm",
-  description: "Watch and download movies effortlessly.",
   icons: {
-    icon: "/favicon.ico", // ✅ Ensure favicon is in public/
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.png", // ✅ Ensure favicon is in public/
   },
 };
 
@@ -23,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className="custom-body-class font-poppins">
         {/* ✅ Google Tag Manager - Placed Correctly */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        {/* <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){
               w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
@@ -33,7 +28,7 @@ export default function RootLayout({ children }) {
               f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-5VJB87LR');
           `}
-        </Script>
+        </Script> */}
 
         <SearchProvider>
           <SessionProvider>
@@ -71,14 +66,14 @@ export default function RootLayout({ children }) {
         </SearchProvider>
 
         {/* ✅ Google Tag Manager NoScript */}
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
-        </noscript>
+        </noscript> */}
 
         <Footer />
       </body>
