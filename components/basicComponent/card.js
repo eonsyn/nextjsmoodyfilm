@@ -82,6 +82,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
           <img
             src={urlOfThumbnail}
             alt={filmTitle}
+            loading="lazy"
             className="w-full h-full object-cover opacity-0 transition-opacity duration-700"
             onLoad={(e) => (e.target.style.opacity = "1")}
           />
