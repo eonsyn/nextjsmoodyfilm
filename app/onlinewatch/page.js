@@ -1,9 +1,8 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
 import Hls from "hls.js";
-import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef } from "react";
 
 const VideoPlayer = () => {
   const searchParams = useSearchParams();
@@ -43,7 +42,7 @@ const VideoPlayer = () => {
 
 const OnlineWatch = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen  text-white p-4">
       <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
         Online Watch
       </h1>

@@ -1,5 +1,6 @@
 "use client";
 
+import Masonry from "react-masonry-css";
 import Card from "@/components/basicComponent/card";
 import { useSearch } from "@/context/SearchContext";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,12 +13,8 @@ const fetcher = async (url) => {
   return response.json();
 };
 
-export default function MoviesClient({
-  initialMovies,
-  initialPage,
-  totalPages,
-}) {
-  const searchParams = useSearchParams(); // ✅ Should be inside "use client"
+export default function MoviesClient({ initialMovies, initialPage, totalPages }) {
+  const searchParams = useSearchParams();
   const { searchTerm } = useSearch();
   const router = useRouter();
   const pageFromUrl = parseInt(searchParams.get("page")) || initialPage;
@@ -28,8 +25,7 @@ export default function MoviesClient({
     pageFromUrl === initialPage && !searchTerm ? null : apiUrl,
     fetcher,
     {
-      fallbackData:
-        pageFromUrl === initialPage ? { films: initialMovies } : undefined,
+      fallbackData: pageFromUrl === initialPage ? { films: initialMovies } : undefined,
     }
   );
 
@@ -37,7 +33,6 @@ export default function MoviesClient({
     mutate();
   }, [searchTerm, mutate]);
 
-  // ✅ Ensure `movies` array is always available
   const movies = data?.films || initialMovies || [];
 
   const handlePageChange = (newPage) => {
@@ -49,9 +44,7 @@ export default function MoviesClient({
   };
 
   if (isLoading) {
-    return (
-      <div className="text-center text-white mt-10">Loading Movies...</div>
-    );
+    return <div className="text-center text-white mt-10">Loading Movies...</div>;
   }
 
   if (error) {
@@ -70,17 +63,21 @@ export default function MoviesClient({
 
   return (
     <div className="container min-h-screen mx-auto pt-10 px-4 py-6">
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+      <Masonry
+        breakpointCols={{ default: 4, 1100: 3, 768: 2, 500: 1 }}
+        className="flex w-auto -ml-4"
+        columnClassName="pl-4 bg-clip-padding"
+      >
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <div key={movie._id} className="break-inside-avoid">
+            <div key={movie._id} className="mb-6">
               <Card {...movie} />
             </div>
           ))
         ) : (
           <p className="text-center text-white w-full">No movies found</p>
         )}
-      </div>
+      </Masonry>
 
       {/* Pagination Controls */}
       <div className="flex justify-center items-center mt-8">
