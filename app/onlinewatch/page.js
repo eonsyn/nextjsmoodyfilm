@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
@@ -55,7 +55,10 @@ const OnlineWatch = () => {
       <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
         Online Watch
       </h1>
-      <VideoPlayer />
+      {/* Wrap VideoPlayer in Suspense */}
+      <Suspense fallback={<p className="text-white">Loading video...</p>}>
+        <VideoPlayer />
+      </Suspense>
     </div>
   );
 };
