@@ -1,44 +1,20 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, Suspense } from "react";
-import videojs from "video.js";
-import "video.js/dist/video-js.css";
+import { Suspense } from "react";
 
 const VideoPlayer = () => {
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get("url");
-  const videoRef = useRef(null);
-  const playerRef = useRef(null);
-
-  useEffect(() => {
-    if (videoUrl && videoRef.current) {
-      playerRef.current = videojs(videoRef.current, {
-        controls: true,
-        autoplay: false,
-        responsive: true,
-        fluid: true,
-      });
-
-      playerRef.current.src({
-        src: videoUrl,
-        type: "application/x-mpegURL",
-      });
-    }
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.dispose();
-      }
-    };
-  }, [videoUrl]);
 
   return (
     <div className="w-full rounded-lg shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4 overflow-hidden">
       {videoUrl ? (
         <video
-          ref={videoRef}
-          className="video-js vjs-default-skin w-full h-auto rounded-lg"
+          src={videoUrl}
+          controls
+          autoPlay={false}
+          className="w-full h-auto rounded-lg"
         />
       ) : (
         <div className="p-6 text-center text-white/80">
