@@ -1,3 +1,5 @@
+"use client";
+
 import BlurBackground from "@/components/basicComponent/blurbackground";
 import Navbar from "@/components/basicComponent/navigation";
 import SearchBar from "@/components/searchbar/SearchBar";
@@ -7,33 +9,45 @@ import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
 import Footer from "@/components/basicComponent/Footer";
 
-// export const metadata = {
-//   icons: {
-//     icon: "/favicon.png", // ✅ Ensure favicon is in public/
-//   },
-// };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="custom-body-class font-poppins">
-        {/* ✅ Google Tag Manager - Placed Correctly */}
+      <head>
+        {/* Google Tag Manager */}
         {/* <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){
-              w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-              var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-              j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-              f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-5VJB87LR');
-          `}
+          {
+            (function (w, d, s, l, i) {
+              w[l] = w[l] || []; 
+              w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'}); 
+              var f = d.getElementsByTagName(s)[0], 
+                  j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; 
+              j.async = true; 
+              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; 
+              f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5VJB87LR');
+          }
         </Script> */}
-
+        {/* Google Site Verification */}
+        {/* <meta
+          name="google-site-verification"
+          content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
+        /> */}
+      </head>
+      <body className="custom-body-class font-poppins">
+        {/* <!-- Google Tag Manager (noscript) --> */}
+        {/* <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          ></iframe>
+        </noscript> */}
+        {/* <!-- End Google Tag Manager (noscript) --> */}
         <SearchProvider>
           <SessionProvider>
             <BlurBackground>
-              {/* ✅ Sticky top bar */}
+              {/* Sticky top bar */}
               <div className="fixed top-0 left-0 w-full h-16 flex z-50">
                 <div className="logo md:w-[20vw] w-0 text-white flex items-center justify-center h-full">
                   <h1 className="text-3xl hidden md:block font-bold">
@@ -51,12 +65,12 @@ export default function RootLayout({ children }) {
               </div>
 
               <div className="min-h-screen w-screen flex justify-evenly relative pt-10">
-                {/* ✅ Left Sidebar */}
+                {/* Left Sidebar */}
                 <div className="left-sidebar hidden md:block w-[15%] relative pl-4">
                   <Navbar />
                 </div>
 
-                {/* ✅ Main Content */}
+                {/* Main Content */}
                 <div className="right pl-0 md:pl-3 w-[95%] md:w-[80%]">
                   {children}
                 </div>
@@ -64,18 +78,7 @@ export default function RootLayout({ children }) {
             </BlurBackground>
           </SessionProvider>
         </SearchProvider>
-
-        {/* ✅ Google Tag Manager NoScript */}
-        {/* <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript> */}
-
-        <Footer />
+        <Footer></Footer>
       </body>
     </html>
   );
