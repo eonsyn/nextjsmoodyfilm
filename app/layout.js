@@ -1,13 +1,13 @@
 "use client";
 
+import Authentication from "@/components/authentication/Authentication";
 import BlurBackground from "@/components/basicComponent/blurbackground";
+import Footer from "@/components/basicComponent/Footer";
 import Navbar from "@/components/basicComponent/navigation";
 import SearchBar from "@/components/searchbar/SearchBar";
-import { SessionProvider } from "next-auth/react";
 import { SearchProvider } from "@/context/SearchContext";
+import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
-import Authentication from "@/components/authentication/Authentication";
-import Footer from "@/components/basicComponent/Footer";
 
 export default function RootLayout({ children }) {
   return (
