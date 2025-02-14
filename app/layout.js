@@ -8,7 +8,7 @@ import { SearchProvider } from "@/context/SearchContext";
 import "../styles/globals.css";
 import Authentication from "@/components/authentication/Authentication";
 import Footer from "@/components/basicComponent/Footer";
-import Script from "next/script";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -83,3 +83,9 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+export const metadata = {
+  icons: {
+    icon: "/favicon.png", // or "/favicon.png"
+  },
+};
