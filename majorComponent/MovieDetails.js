@@ -9,6 +9,7 @@ export default function MovieDetail({ movie }) {
 
   const [dominantColor, setDominantColor] = useState("#ffffff");
   const [colourgradient, setColourGradient] = useState("");
+  const [fade, setFade] = useState(true);
 
   const images = movie?.imageData || [];
   const doubledImages = [...images, ...images]; // Duplicate images for smooth infinite loop
@@ -17,11 +18,15 @@ export default function MovieDetail({ movie }) {
   useEffect(() => {
     if (images.length === 0) return;
     const interval = setInterval(() => {
-      setMainImage((prev) => {
-        const currentIndex = images.indexOf(prev);
-        return images[(currentIndex + 1) % images.length]; // Move to next image
-      });
-    }, 2500); // Change every 2.5 seconds
+      setFade(false); // Start fade-out
+      setTimeout(() => {
+        setMainImage((prev) => {
+          const currentIndex = images.indexOf(prev);
+          return images[(currentIndex + 1) % images.length]; // Move to next image
+        });
+        setFade(true); // Start fade-in after image change
+      }, 300); // Wait 300ms for fade-out before switching
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [images]);
@@ -118,7 +123,7 @@ export default function MovieDetail({ movie }) {
           </p>
         </div>
         {/* 🔥 Smooth Scrolling Image Gallery */}
-        <div className="scrollable_image_div w-full pt-4 md:pt-0 h-[33%] rounded-md overflow-hidden">
+        <div className="scrollable_image_div hidden md:block w-full pt-4 md:pt-0 h-[33%] rounded-md overflow-hidden">
           <motion.div
             className="flex h-full"
             style={{ width: `${doubledImages.length * 50}%` }} // Ensure correct width
@@ -147,6 +152,13 @@ export default function MovieDetail({ movie }) {
               </div>
             ))}
           </motion.div>
+        </div>
+        <div className="  w-[100vw] h-[60vw] p-2 ">
+          <img
+            src={mainImage}
+            alt="Movie Poster"
+            className="w-full hidden md:block h-full object-cover"
+          />
         </div>
       </div>
     </div>
