@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Hls from "hls.js";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 const VideoPlayer = () => {
   const searchParams = useSearchParams();
@@ -42,14 +42,14 @@ const VideoPlayer = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="w-[90%] max-w-4xl rounded-lg shadow-lg bg-white p-4">
+    <div className="flex items-center justify-center min-h-screen p-4 sm:p-2">
+      <div className="w-full sm:w-[90%] max-w-4xl rounded-lg shadow-lg sm:p-2">
         {loading && (
           <div className="text-center text-gray-700 font-semibold mb-4">
             ⏳ Loading video...
           </div>
         )}
-        <video ref={videoRef} controls className="w-full rounded-lg" />
+        <video ref={videoRef} controls className="w-full" />
       </div>
     </div>
   );
