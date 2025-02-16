@@ -1,41 +1,56 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-
-const VideoPlayer = () => {
-  const searchParams = useSearchParams();
-  const videoUrl = searchParams.get("url");
-
-  return (
-    <div className="w-full rounded-lg shadow-xl border border-white/20 bg-white/10 backdrop-blur-lg p-4">
-      {videoUrl ? (
-        <video
-          src={videoUrl}
-          controls
-          playsInline
-          muted
-          className="w-full h-auto rounded-lg"
-          style={{ display: "block" }} // Ensures video element is properly rendered
-        />
-      ) : (
-        <div className="p-6 text-center text-white/80">
-          <p>No video URL provided.</p>
-        </div>
-      )}
-    </div>
-  );
-};
+import Hls from "hls.js";
 
 const OnlineWatch = () => {
+  const searchParams = useSearchParams();
+  const videoUrl = searchParams.get("url");
+  const videoRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (!videoUrl) return;
+
+    const video = videoRef.current;
+    if (Hls.isSupported() && videoUrl.endsWith(".m3u8")) {
+      const hls = new Hls();
+      hls.loadSource(videoUrl);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => setLoading(false));
+      hls.on(Hls.Events.ERROR, (_, data) => console.error("HLS Error:", data));
+
+      return () => hls.destroy();
+    } else {
+      video.src = videoUrl;
+      setLoading(false);
+    }
+  }, [videoUrl]);
+
+  if (!videoUrl) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-700 font-semibold">
+          ❌ Error: No video URL provided!
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-white p-4">
-      <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        Online Watch
-      </h1>
-      <Suspense fallback={<p className="text-white">Loading video...</p>}>
-        <VideoPlayer />
-      </Suspense>
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="w-[90%] max-w-4xl rounded-lg shadow-lg bg-white p-4">
+        {loading && (
+          <div className="text-center text-gray-700 font-semibold mb-4">
+            ⏳ Loading video...
+          </div>
+        )}
+        <video ref={videoRef} controls className="w-full rounded-lg" />
+      </div>
     </div>
   );
 };

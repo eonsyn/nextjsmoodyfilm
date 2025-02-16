@@ -7,7 +7,6 @@ import MovieDetail from "@/majorComponent/MovieDetails";
 import { notFound } from "next/navigation";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import Head from "next/head";
 
 export const revalidate = 600;
 
@@ -66,12 +65,12 @@ async function getRecommendation(genres) {
 }
 
 export default async function MovieDetails({ params }) {
-  const { id } = await params;
+  const { id } = params; // ✅ No need to await params
   const movie = await getMovieDetails(id);
 
-  const filmcards = (await getRecommendation(movie.genre)).films;
+  if (!movie) return notFound();
 
-  if (!movie) return notFound(); // Show 404 page if movie is not found
+  const filmcards = (await getRecommendation(movie.genre))?.films || [];
 
   return (
     <>
@@ -149,7 +148,7 @@ export default async function MovieDetails({ params }) {
 }
 
 export async function generateMetadata({ params }) {
-  const { id } = params;
+  const { id } = params; // ✅ No need to await params
   const movie = await getMovieDetails(id);
 
   if (!movie) {

@@ -6,49 +6,47 @@ import Footer from "@/components/basicComponent/Footer";
 import Navbar from "@/components/basicComponent/navigation";
 import SearchBar from "@/components/searchbar/SearchBar";
 import { SearchProvider } from "@/context/SearchContext";
+import gsap from "gsap";
 import { SessionProvider } from "next-auth/react";
+import { useEffect, useRef } from "react";
 import "../styles/globals.css";
 
 export default function RootLayout({ children }) {
+  const topBarRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        gsap.to(topBarRef.current, {
+          backgroundColor: "#000000",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(topBarRef.current, {
+          backgroundColor: "transparent",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Google Tag Manager */}
-        {/* <Script id="google-tag-manager" strategy="afterInteractive">
-          {
-            (function (w, d, s, l, i) {
-              w[l] = w[l] || []; 
-              w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'}); 
-              var f = d.getElementsByTagName(s)[0], 
-                  j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; 
-              j.async = true; 
-              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; 
-              f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-5VJB87LR');
-          }
-        </Script> */}
-        {/* Google Site Verification */}
-        {/* <meta
-          name="google-site-verification"
-          content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
-        /> */}
-      </head>
+      <head></head>
       <body className="custom-body-class font-poppins">
-        {/* <!-- Google Tag Manager (noscript) --> */}
-        {/* <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5VJB87LR"
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden"
-          ></iframe>
-        </noscript> */}
-        {/* <!-- End Google Tag Manager (noscript) --> */}
         <SearchProvider>
           <SessionProvider>
             <BlurBackground>
               {/* Sticky top bar */}
-              <div className="fixed top-0 left-0 w-full h-16 flex z-50">
+              <div
+                ref={topBarRef}
+                className="fixed top-0 left-0 w-full h-16 flex z-50 transition-all"
+              >
                 <div className="logo md:w-[20vw] w-0 text-white flex items-center justify-center h-full">
                   <h1 className="text-3xl hidden md:block font-bold">
                     MoodyFilm
