@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Hls from "hls.js";
 
-const OnlineWatch = () => {
+const VideoPlayer = () => {
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get("url");
   const videoRef = useRef(null);
@@ -54,5 +54,11 @@ const OnlineWatch = () => {
     </div>
   );
 };
+
+const OnlineWatch = () => (
+  <Suspense fallback={<div className="text-center p-4">Loading...</div>}>
+    <VideoPlayer />
+  </Suspense>
+);
 
 export default OnlineWatch;
