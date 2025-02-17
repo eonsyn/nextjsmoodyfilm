@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import CommentDummy from "@/components/dummy/DummyComment";
 
 import { useSession } from "next-auth/react";
 const AllComment = ({ id }) => {
@@ -14,6 +15,7 @@ const AllComment = ({ id }) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [tempReview, settempReview] = useState("");
   const [user, setUser] = useState({});
 
@@ -29,6 +31,8 @@ const AllComment = ({ id }) => {
         setReviews(data.reviews);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -206,22 +210,40 @@ const AllComment = ({ id }) => {
     console.log("Component mounted or count changed:", user);
   }, [user]);
   return (
-    <div className="p-3 ">
+    <div className="p-3">
       <ToastContainer />
       <h1 className="pt-8 text-white text-4xl font-semibold">
-        What people say's:
+        What people say:
       </h1>
       <ReviewForm sendMessage={handleSubmit} />
 
-      {reviews.map((review, newkey) => (
-        <Comment
-          key={newkey}
-          {...review}
-          onLike={() => handleLike(review.id)}
-          onDislike={() => handleDislike(review.id)}
-          onDelete={() => handleDelete(review.id)}
-        />
-      ))}
+      {/* Comments Section */}
+      <div className="comment-section h-[10vmax] overflow-y-auto bg-gray-900 p-3 rounded-md">
+        {loading ? (
+          // Show skeleton loaders while loading
+          <>
+            <CommentDummy />
+
+            <CommentDummy />
+          </>
+        ) : reviews.length > 0 ? (
+          // Render comments if available
+          reviews.map((review, index) => (
+            <Comment
+              key={index}
+              {...review}
+              onLike={() => handleLike(review.id)}
+              onDislike={() => handleDislike(review.id)}
+              onDelete={() => handleDelete(review.id)}
+            />
+          ))
+        ) : (
+          // Show message if no comments exist
+          <p className="text-gray-400 text-center mt-3">
+            Be the first to comment on this film!
+          </p>
+        )}
+      </div>
     </div>
   );
 };

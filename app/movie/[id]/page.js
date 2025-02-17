@@ -74,15 +74,6 @@ export default async function MovieDetails({ params }) {
 
   return (
     <>
-      {/* <Head>
-        <title>{movie.filmTitle}</title>
-        <meta name="description" content={movie.title} />
-        <meta
-          name="keywords"
-          content="movie request, film request, Moodyfilm, stream movies, download movies"
-        />
-        <meta name="author" content="Moodyfilm" />
-      </Head> */}
       <div className="mt-4 w-full">
         <MovieDetail movie={movie}></MovieDetail>
         <div className=" text-white ">
@@ -139,7 +130,7 @@ export default async function MovieDetails({ params }) {
           </div>
         </div>
         <AllComment id={id} />
-        <div className="relative h-fit   pt-4 w-full   ">
+        <div className="relative h-fit  pt-4 w-full   ">
           <RightLowerComponent filmcards={filmcards} />
         </div>
       </div>

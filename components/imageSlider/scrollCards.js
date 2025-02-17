@@ -3,7 +3,7 @@ import Card from "../basicComponent/card";
 // import DummyCard from "../dummy/DummyCard";
 export default function RightLowerComponent({ filmcards }) {
   return (
-    <div className="right-lower-component w-full md:h-[100vh] md:sticky md:top-6 bg-gray-900 p-4">
+    <div className="right-lower-component w-full   md:sticky md:top-6   p-4">
       <h2 className="text-xl md:text-3xl font-bold text-white mb-6">
         You might like:
       </h2>

@@ -179,12 +179,12 @@ function Authentication() {
       {/* Mobile Fullscreen Dropdown */}
       <div
         ref={mobileMenuRef}
-        className="absolute -top-2 -right-6 pt-4 w-[60vw] h-screen bg-white/30 backdrop-blur-md text-black shadow-lg md:hidden flex flex-col items-center justify-center space-y-6"
+        className="absolute  top-0 -right-6 pt-4 w-[60vw] h-screen bg-white/30 backdrop-blur-md text-black shadow-lg md:hidden flex flex-col items-center justify-center space-y-6 rounded-2xl "
         style={{ opacity: 0, transform: "translateX(-20px)", display: "none" }}
       >
         <div
           onClick={handleMobileLinkClick}
-          className="closebutton absolute top-2 right-6 font-bold text-black cursor-pointer  h-6 w-6 rounded-full flex items-center justify-center "
+          className="closebutton absolute top-4 right-9 font-bold text-black cursor-pointer hover:text-red-600 h-6 w-6 rounded-full flex items-center justify-center "
         >
           <RxCrossCircled className="text-4xl" />
         </div>

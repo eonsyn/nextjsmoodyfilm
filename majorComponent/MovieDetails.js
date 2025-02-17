@@ -14,7 +14,8 @@ export default function MovieDetail({ movie }) {
   const images = movie?.imageData || [];
   const doubledImages = [...images, ...images]; // Duplicate images for smooth infinite loop
   const [mainImage, setMainImage] = useState(images[0] || ""); // Default empty string if no images
-
+  const notFoundImage =
+    "https://eagle-sensors.com/wp-content/uploads/unavailable-image.jpg";
   useEffect(() => {
     if (images.length === 0) return;
     const interval = setInterval(() => {
@@ -82,7 +83,7 @@ export default function MovieDetail({ movie }) {
         style={{ backgroundColor: dominantColor }}
       >
         <img
-          src={mainImage}
+          src={mainImage ? mainImage : notFoundImage}
           alt="Movie Poster"
           className="w-full hidden md:block h-full object-cover"
         />
@@ -124,38 +125,48 @@ export default function MovieDetail({ movie }) {
         </div>
         {/* 🔥 Smooth Scrolling Image Gallery */}
         <div className="scrollable_image_div hidden md:block w-full pt-4 md:pt-0 h-[33%] rounded-md overflow-hidden">
-          <motion.div
-            className="flex h-full"
-            style={{ width: `${doubledImages.length * 50}%` }} // Ensure correct width
-            animate={{ x: ["0%", "-50%"] }} // Move half, as we doubled images
-            transition={{
-              duration: 6,
-              ease: "linear",
-              repeat: Infinity,
-              onUpdate: (latest) => {
-                if (latest.x <= -50) {
-                  setMainImage((prev) => {
-                    const currentIndex = images.indexOf(prev);
-                    return images[(currentIndex + 1) % images.length]; // Update main image when first image fully moves out
-                  });
-                }
-              },
-            }}
-          >
-            {doubledImages.map((imgurl, index) => (
-              <div key={index} className="w-[50%] mx-1 h-full rounded-sm">
-                <img
-                  src={imgurl}
-                  className="w-full h-full object-cover"
-                  alt={`Movie Image ${index}`}
-                />
-              </div>
-            ))}
-          </motion.div>
+          {doubledImages && doubledImages.length > 0 ? (
+            <motion.div
+              className="flex h-full"
+              style={{ width: `${doubledImages.length * 50}%` }} // Ensure correct width
+              animate={{ x: ["0%", "-50%"] }} // Move half, as we doubled images
+              transition={{
+                duration: 6,
+                ease: "linear",
+                repeat: Infinity,
+                onUpdate: (latest) => {
+                  if (latest.x <= -50) {
+                    setMainImage((prev) => {
+                      const currentIndex = images.indexOf(prev);
+                      return images[(currentIndex + 1) % images.length]; // Update main image when first image fully moves out
+                    });
+                  }
+                },
+              }}
+            >
+              {doubledImages.map((imgurl, index) => (
+                <div key={index} className="w-[50%] mx-1 h-full rounded-sm">
+                  <img
+                    src={imgurl || notFoundImage}
+                    className="w-full h-full object-cover"
+                    alt={`Movie Image ${index}`}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="w-[100%]   h-full rounded-sm">
+              <img
+                src={notFoundImage}
+                className="w-full h-full object-cover"
+                alt={`Movie Image `}
+              />
+            </div>
+          )}
         </div>
         <div className="mobile-image mt-3 block md:hidden w-[95vw] h-[60vw]  bg-red-300 rounded-sm  ">
           <img
-            src={mainImage}
+            src={mainImage ? mainImage : notFoundImage}
             alt="Movie Poster"
             className="w-full h-full object-cover"
           />
