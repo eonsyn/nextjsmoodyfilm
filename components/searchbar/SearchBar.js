@@ -13,7 +13,7 @@ export default function SearchBar() {
       if (window.scrollY > 10) {
         setIsScrolled(true);
         gsap.to(searchBarRef.current, {
-          backgroundColor: "rgba(255, 255, 255, 0.3)", // White with 30% opacity
+          backgroundColor: "rgba(255, 255, 255, 0.6)", // White with 30% opacity
 
           color: "#000000", // Black text for contrast
           duration: 0.5,
