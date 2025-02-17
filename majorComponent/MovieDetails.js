@@ -153,11 +153,11 @@ export default function MovieDetail({ movie }) {
             ))}
           </motion.div>
         </div>
-        <div className="  w-[100vw] h-[60vw] p-2 ">
+        <div className="mobile-image mt-3 block md:hidden w-[95vw] h-[60vw]  bg-red-300 rounded-sm  ">
           <img
             src={mainImage}
             alt="Movie Poster"
-            className="w-full hidden md:block h-full object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
       </div>
