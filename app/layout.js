@@ -18,13 +18,15 @@ export default function RootLayout({ children }) {
     const handleScroll = () => {
       if (window.scrollY > 10) {
         gsap.to(topBarRef.current, {
-          backgroundColor: "#000000",
+          backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent black
+          backdropFilter: "blur(20px)", // Apply blur
           duration: 0.5,
           ease: "power2.out",
         });
       } else {
         gsap.to(topBarRef.current, {
           backgroundColor: "transparent",
+          backdropFilter: "blur(0px)", // Remove blur
           duration: 0.5,
           ease: "power2.out",
         });
@@ -42,10 +44,10 @@ export default function RootLayout({ children }) {
         <SearchProvider>
           <SessionProvider>
             <BlurBackground>
-              {/* Sticky top bar */}
+              {/* Sticky Glassmorphic Top Bar */}
               <div
                 ref={topBarRef}
-                className="fixed top-0 left-0 w-full h-16 flex z-50 transition-all"
+                className="fixed top-0 left-0 w-full h-16 flex z-50 transition-all bg-transparent backdrop-blur-sm"
               >
                 <div className="logo md:w-[20vw] w-0 text-white flex items-center justify-center h-full">
                   <h1 className="text-3xl hidden md:block font-bold">
