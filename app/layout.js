@@ -1,21 +1,7 @@
-// src/app/layout.js
 import Footer from "@/components/basicComponent/Footer";
 import ProvidersLayout from "@/components/providerComponent/ProvidersLayout";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "../styles/globals.css";
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <GoogleTagManager gtmId="GTM-5VJB87LR" />
-      <body className="custom-body-class font-poppins">
-        <ProvidersLayout>{children}</ProvidersLayout>
-        <Footer />
-      </body>
-      <GoogleAnalytics gaId="G-WSBWKX5YW4" />
-    </html>
-  );
-}
 
 export function metadata() {
   const title = "MoodyFilm ";
@@ -41,6 +27,14 @@ export function metadata() {
         },
       ],
     },
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+    },
+    charset: "UTF-8",
+    other: {
+      "google-site-verification": "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
+    },
     twitter: {
       card: "summary_large_image",
       title,
@@ -57,7 +51,7 @@ export function metadata() {
     publisher: "MoodyFilm",
     language: "en-US",
     charset: "UTF-8",
-
+    googleSiteVerification: "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
     additionalMetaTags: [
       {
         property: "og:locale",
@@ -82,8 +76,22 @@ export function metadata() {
         href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap",
       },
     ],
-    other: {
-      "google-site-verification": "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
-    },
   };
+}
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google Tag Manager inside <head> */}
+        <GoogleTagManager gtmId="GTM-5VJB87LR" />
+      </head>
+      <body className="custom-body-class font-poppins">
+        <ProvidersLayout>{children}</ProvidersLayout>
+        <Footer />
+        {/* Google Analytics inside <body> */}
+        <GoogleAnalytics gaId="G-WSBWKX5YW4" />
+      </body>
+    </html>
+  );
 }
