@@ -1,9 +1,8 @@
 // src/app/layout.js
-import ProvidersLayout from "@/components/providerComponent/ProvidersLayout";
 import Footer from "@/components/basicComponent/Footer";
+import ProvidersLayout from "@/components/providerComponent/ProvidersLayout";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "../styles/globals.css";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function RootLayout({ children }) {
   return (
@@ -58,7 +57,7 @@ export function metadata() {
     publisher: "MoodyFilm",
     language: "en-US",
     charset: "UTF-8",
-    googleSiteVerification: "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
+
     additionalMetaTags: [
       {
         property: "og:locale",
@@ -83,5 +82,8 @@ export function metadata() {
         href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap",
       },
     ],
+    other: {
+      "google-site-verification": "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
+    },
   };
 }
