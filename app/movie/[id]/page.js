@@ -13,7 +13,7 @@ export const revalidate = 600;
 export async function generateStaticParams() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/get-all-id`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/get-temp-id`
     );
     const data = await response.json();
 

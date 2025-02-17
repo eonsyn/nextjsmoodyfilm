@@ -1,85 +1,87 @@
-"use client";
-
-import Authentication from "@/components/authentication/Authentication";
-import BlurBackground from "@/components/basicComponent/blurbackground";
+// src/app/layout.js
+import ProvidersLayout from "@/components/providerComponent/ProvidersLayout";
 import Footer from "@/components/basicComponent/Footer";
-import Navbar from "@/components/basicComponent/navigation";
-import SearchBar from "@/components/searchbar/SearchBar";
-import { SearchProvider } from "@/context/SearchContext";
-import gsap from "gsap";
-import { SessionProvider } from "next-auth/react";
-import { useEffect, useRef } from "react";
 import "../styles/globals.css";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function RootLayout({ children }) {
-  const topBarRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        gsap.to(topBarRef.current, {
-          backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent black
-          backdropFilter: "blur(20px)", // Apply blur
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      } else {
-        gsap.to(topBarRef.current, {
-          backgroundColor: "transparent",
-          backdropFilter: "blur(0px)", // Remove blur
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <head></head>
+      <GoogleTagManager gtmId="GTM-5VJB87LR" />
       <body className="custom-body-class font-poppins">
-        <SearchProvider>
-          <SessionProvider>
-            <BlurBackground>
-              {/* Sticky Glassmorphic Top Bar */}
-              <div
-                ref={topBarRef}
-                className="fixed top-0 left-0 w-full h-16 flex z-50 transition-all bg-transparent backdrop-blur-sm"
-              >
-                <div className="logo md:w-[20vw] w-0 text-white flex items-center justify-center h-full">
-                  <h1 className="text-3xl hidden md:block font-bold">
-                    MoodyFilm
-                  </h1>
-                </div>
-                <div className="left-header flex w-screen md:w-[85vw] h-full items-center justify-between">
-                  <div className="searchbar flex items-center justify-end pl-2 md:pl-0 h-full w-[70%] md:w-[50%]">
-                    <SearchBar />
-                  </div>
-                  <div className="signup-signin flex items-center justify-end h-full md:w-[35%] w-[25%] pr-4">
-                    <Authentication />
-                  </div>
-                </div>
-              </div>
-
-              <div className="min-h-screen w-screen flex justify-evenly relative pt-10">
-                {/* Left Sidebar */}
-                <div className="left-sidebar hidden md:block w-[15%] relative pl-4">
-                  <Navbar />
-                </div>
-
-                {/* Main Content */}
-                <div className="right pl-0 md:pl-3 w-[95%] md:w-[80%]">
-                  {children}
-                </div>
-              </div>
-            </BlurBackground>
-          </SessionProvider>
-        </SearchProvider>
-        <Footer></Footer>
+        <ProvidersLayout>{children}</ProvidersLayout>
+        <Footer />
       </body>
+      <GoogleAnalytics gaId="G-WSBWKX5YW4" />
     </html>
   );
+}
+
+export function metadata() {
+  const title = "MoodyFilm ";
+  const description =
+    "MoodyFilm is your ultimate destination for discovering, streaming, and downloading movies based on your mood. Explore trailers, read detailed synopses, and enjoy personalized movie recommendations with AI-powered suggestions.";
+
+  return {
+    title,
+    description,
+    keywords:
+      "movies, film streaming, AI movie recommendations, mood-based movie suggestions, download movies, movie trailers, personalized film list, movie genres, best films, stream movies online, watch films, film recommendations, movie downloads, new releases",
+    openGraph: {
+      title,
+      description,
+      url: "https://moodyfilm.netlify.app",
+      type: "website",
+      images: [
+        {
+          url: "https://moodyfilm.netlify.app/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "MoodyFilm - Discover and Stream Movies Based on Your Mood",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      image: "https://moodyfilm.netlify.app/og-image.jpg",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    viewport: "width=device-width, initial-scale=1",
+    canonical: "https://moodyfilm.netlify.app",
+    author: "MoodyFilm Team",
+    publisher: "MoodyFilm",
+    language: "en-US",
+    charset: "UTF-8",
+    googleSiteVerification: "a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY",
+    additionalMetaTags: [
+      {
+        property: "og:locale",
+        content: "en_US",
+      },
+      {
+        property: "og:site_name",
+        content: "MoodyFilm",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+    ],
+    additionalLinkTags: [
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap",
+      },
+    ],
+  };
 }
