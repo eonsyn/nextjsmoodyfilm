@@ -8,10 +8,9 @@ const AdCard = () => {
   const adContainerId = "container-11d07442a2e610464e7bd1e318d65962";
 
   useEffect(() => {
-    // Prevent execution on the server
     if (typeof window === "undefined") return;
 
-    // Check if script is already added to avoid duplicates
+    // Ensure the script is loaded only once
     if (!document.getElementById("ad-script")) {
       const script = document.createElement("script");
       script.async = true;
@@ -19,6 +18,9 @@ const AdCard = () => {
       script.src =
         "//compassionunsuccessful.com/11d07442a2e610464e7bd1e318d65962/invoke.js";
       script.id = "ad-script";
+      script.onload = () => {
+        console.log("Adsterra script loaded.");
+      };
 
       document.body.appendChild(script);
     }
@@ -37,16 +39,16 @@ const AdCard = () => {
   return (
     <div
       ref={cardRef}
-      className="card aspect-w-16 aspect-h-9 relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
+      className="relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
     >
-      {/* Ad Placeholder with Text */}
-      <div className="relative h-full bg-gradient-to-br from-gray-700 to-gray-900 flex flex-col items-center justify-center text-white">
+      {/* Ad Container */}
+      <div id={adContainerId} className="w-full h-full"></div>
+
+      {/* Overlay with Text (Ensure it does not cover the ad) */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-gradient-to-br from-gray-700 to-gray-900 opacity-80 pointer-events-none">
         <h1 className="text-2xl font-bold text-center">Sponsored Ad</h1>
         <p className="text-sm text-gray-300 mt-2">Advertisement</p>
       </div>
-
-      {/* Ad Container */}
-      <div id={adContainerId} className="absolute inset-0"></div>
     </div>
   );
 };
