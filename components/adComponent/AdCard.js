@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import Link from "next/link";
 
 const AdCard = () => {
   const cardRef = useRef(null);
@@ -37,19 +38,21 @@ const AdCard = () => {
   }, []);
 
   return (
-    <div
-      ref={cardRef}
-      className="relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
-    >
-      {/* Ad Container */}
-      <div id={adContainerId} className="w-full h-full"></div>
+    <Link href="https://compassionunsuccessful.com/g0hw4rr1?key=cdd8bdca93ac509c313b4aceb35f084e">
+      <div
+        ref={cardRef}
+        className="relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
+      >
+        {/* Ad Container */}
+        <div id={adContainerId} className="w-full h-full"></div>
 
-      {/* Overlay with Text (Ensure it does not cover the ad) */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-gradient-to-br from-gray-700 to-gray-900 opacity-80 pointer-events-none">
-        <h1 className="text-2xl font-bold text-center">Sponsored Ad</h1>
-        <p className="text-sm text-gray-300 mt-2">Advertisement</p>
+        {/* Overlay with Text (Ensure it does not cover the ad) */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-gradient-to-br from-gray-700 to-gray-900 opacity-80 pointer-events-none">
+          <h1 className="text-2xl font-bold text-center">Sponsored Ad</h1>
+          <p className="text-sm text-gray-300 mt-2">Advertisement</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
