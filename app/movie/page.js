@@ -1,6 +1,5 @@
 import MoviesClient from "@/majorComponent/MoviesClient";
 import { Suspense } from "react";
-
 export async function generateStaticParams() {
   // Generate static pages for first 5 pages
   const totalStaticPages = 5;
