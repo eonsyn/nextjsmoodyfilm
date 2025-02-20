@@ -13,7 +13,11 @@ const fetcher = async (url) => {
   return response.json();
 };
 
-export default function MoviesClient({ initialMovies, initialPage, totalPages }) {
+export default function MoviesClient({
+  initialMovies,
+  initialPage,
+  totalPages,
+}) {
   const searchParams = useSearchParams();
   const { searchTerm } = useSearch();
   const router = useRouter();
@@ -25,7 +29,8 @@ export default function MoviesClient({ initialMovies, initialPage, totalPages })
     pageFromUrl === initialPage && !searchTerm ? null : apiUrl,
     fetcher,
     {
-      fallbackData: pageFromUrl === initialPage ? { films: initialMovies } : undefined,
+      fallbackData:
+        pageFromUrl === initialPage ? { films: initialMovies } : undefined,
     }
   );
 
@@ -44,7 +49,9 @@ export default function MoviesClient({ initialMovies, initialPage, totalPages })
   };
 
   if (isLoading) {
-    return <div className="text-center text-white mt-10">Loading Movies...</div>;
+    return (
+      <div className="text-center text-white mt-10">Loading Movies...</div>
+    );
   }
 
   if (error) {
@@ -84,25 +91,27 @@ export default function MoviesClient({ initialMovies, initialPage, totalPages })
         <button
           onClick={() => handlePageChange(pageFromUrl - 1)}
           disabled={pageFromUrl === 1}
-          className={`px-4 py-2 mx-1 ${
+          className={`px-4 py-2 mx-1 rounded transition-all ${
             pageFromUrl === 1
-              ? "bg-gray-300 text-gray-500"
-              : "bg-blue-500 text-white hover:bg-blue-600"
-          } rounded`}
+              ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+              : "bg-red-600 text-white hover:bg-red-700"
+          }`}
         >
           Previous
         </button>
-        <span className="px-4 py-2 mx-1 text-white">
+
+        <span className="px-4 py-2 mx-2 text-white font-semibold bg-gray-800 rounded">
           Page {pageFromUrl} of {totalPages}
         </span>
+
         <button
           onClick={() => handlePageChange(pageFromUrl + 1)}
           disabled={pageFromUrl === totalPages}
-          className={`px-4 py-2 mx-1 ${
+          className={`px-4 py-2 mx-1 rounded transition-all ${
             pageFromUrl === totalPages
-              ? "bg-gray-300 text-gray-500"
-              : "bg-blue-500 text-white hover:bg-blue-600"
-          } rounded`}
+              ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+              : "bg-red-600 text-white hover:bg-red-700"
+          }`}
         >
           Next
         </button>

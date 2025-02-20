@@ -30,7 +30,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError(result.error);
       } else {
-        router.push("/");
+        router.push("/movie");
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -40,9 +40,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-sm backdrop-blur-lg bg-white/10 shadow-xl border border-white/20 rounded-2xl p-6">
-        <h1 className="text-3xl font-extrabold text-center text-white drop-shadow-md mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4   text-gray-300">
+      <div className="w-full max-w-sm bg-gray-800 shadow-xl border border-gray-700 rounded-2xl p-6">
+        <h1 className="text-3xl font-extrabold text-center text-red-500 drop-shadow-md mb-6">
           MoodyFilm Login
         </h1>
         <form onSubmit={handleLogin} className="space-y-5">
@@ -59,7 +59,7 @@ export default function LoginPage() {
               onChange={handleChange}
               placeholder="Email"
               required
-              className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-600 rounded-lg bg-black text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500"
             />
           </div>
           <div>
@@ -71,12 +71,12 @@ export default function LoginPage() {
               onChange={handleChange}
               placeholder="Password"
               required
-              className="w-full p-3 border border-white/30 rounded-lg bg-transparent text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-600 rounded-lg bg-black text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500"
             />
           </div>
           <button
             type="submit"
-            className={`w-full p-3 rounded-lg text-white font-semibold transition duration-300 bg-blue-500 hover:bg-blue-600 shadow-lg ${
+            className={`w-full p-3 rounded-lg text-white font-semibold transition duration-300 bg-red-600 hover:bg-red-700 shadow-lg ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={loading}
@@ -86,12 +86,12 @@ export default function LoginPage() {
         </form>
       </div>
 
-      {/* Signup Redirect with Glass Effect */}
-      <div className="w-full max-w-sm backdrop-blur-lg bg-white/10 shadow-md border border-white/20 rounded-2xl p-4 mt-6 text-center">
-        <p className="text-sm text-white">
+      {/* Signup Redirect */}
+      <div className="w-full max-w-sm bg-gray-800 shadow-md border border-gray-700 rounded-2xl p-4 mt-6 text-center">
+        <p className="text-sm text-gray-400">
           Don’t have an account?{" "}
           <Link href="/signup">
-            <strong className="text-blue-400 cursor-pointer hover:underline">
+            <strong className="text-red-500 cursor-pointer hover:underline">
               Sign up
             </strong>
           </Link>

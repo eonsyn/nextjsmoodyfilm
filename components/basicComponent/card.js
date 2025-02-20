@@ -78,7 +78,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
             </svg>
           </div>
         )}
-        <div className="relative h-full bg-gray-400">
+        <div className="relative h-full bg-red-600">
           <img
             src={urlOfThumbnail}
             alt={filmTitle}

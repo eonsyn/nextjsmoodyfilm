@@ -1,84 +1,123 @@
 export const generateMetadata = () => ({
-  title: "About Moodyfilm - Your Ultimate Movie Destination",
+  title: "About MoodyFilm - AI-Powered Movie Discovery & Streaming",
   description:
-    "Discover Moodyfilm, your go-to platform for downloading and streaming movies. Enjoy AI-based movie recommendations and retro-styled themes for a nostalgic experience.",
+    "Welcome to MoodyFilm, your ultimate destination for movie discovery, AI-driven recommendations, and seamless streaming. Explore handpicked films, retro aesthetics, and user-curated reviews.",
   keywords: [
-    "Moodyfilm",
-    "movie downloads",
-    "watch movies online",
+    "MoodyFilm",
     "AI movie recommendations",
-    "retro movies",
-    "film reviews",
-    "best movie site",
+    "stream movies online",
+    "best movie discovery platform",
+    "classic and retro films",
+    "cinematic experience",
+    "film reviews and ratings",
+    "movie streaming service",
   ],
-  authors: [{ name: "Moodyfilm Team" }],
+  authors: [{ name: "MoodyFilm Team" }],
   robots: "index, follow",
+  openGraph: {
+    title: "About MoodyFilm - AI-Powered Movie Discovery & Streaming",
+    description:
+      "MoodyFilm offers AI-driven movie recommendations, a nostalgic retro interface, and a seamless streaming experience. Discover films that match your mood today!",
+    url: "https://moodyfilm.com/about",
+    siteName: "MoodyFilm",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://moodyfilm.com/assets/about-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "About MoodyFilm",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About MoodyFilm - AI-Powered Movie Discovery & Streaming",
+    description:
+      "Discover the magic of MoodyFilm! AI-powered recommendations, retro themes, and a cinematic experience like never before.",
+    site: "@MoodyFilm",
+    creator: "@MoodyFilm",
+    // images: ["https://moodyfilm.com/assets/about-banner.jpg"],
+  },
 });
 
 export default function About() {
   return (
-    <div className="min-h-screen p-6 text-white">
-      <div className="w-full shadow-xl rounded-2xl p-8">
-        <h1 className="text-4xl font-extrabold text-center text-blue-400 drop-shadow-lg mb-6">
-          About Moodyfilm 🎬
+    <section className="min-h-screen flex items-center justify-center   text-white p-6">
+      <div className="w-full max-w-4xl bg-white/10 backdrop-blur-lg shadow-2xl rounded-2xl p-10   ">
+        {/* Title */}
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-red-500 drop-shadow-lg mb-6">
+          About MoodyFilm 🎬
         </h1>
 
-        <p className="text-lg text-gray-300 text-center leading-relaxed">
+        {/* Intro Text */}
+        <p className="text-lg md:text-xl text-gray-300 text-center leading-relaxed">
           Welcome to{" "}
-          <span className="text-blue-400 font-semibold">Moodyfilm</span> – your
-          ultimate movie destination! We offer a seamless experience for
-          downloading and streaming movies, tailored to your mood and
-          preferences.
+          <span className="text-red-500 font-semibold">MoodyFilm</span> – your
+          **ultimate destination for emotionally captivating films!** Discover,
+          stream, and experience **movies that match your mood.**
         </p>
 
-        <div className="mt-8 space-y-6">
-          <div className="p-4 bg-white/20 rounded-xl shadow-md">
-            <h2 className="text-xl font-bold text-blue-300">
+        {/* Features */}
+        <div className="mt-10 space-y-6">
+          {/* What We Offer */}
+          <div className="p-6 bg-gray-800/60 rounded-xl shadow-lg border border-gray-700 hover:border-red-500 transition duration-300">
+            <h2 className="text-2xl font-bold text-red-400">
               🎥 What We Offer
             </h2>
-            <ul className="list-disc list-inside text-gray-300 mt-2">
-              <li>AI-based movie recommendations based on your mood.</li>
-              <li>One-click movie downloads for instant access.</li>
-              <li>Retro-styled themes for a nostalgic feel.</li>
-              <li>User reviews, ratings, and trending movie polls.</li>
-              <li>Search and request your favorite movies.</li>
+            <ul className="list-disc list-inside text-gray-300 mt-3 space-y-2">
+              <li>
+                🎯 **AI-powered** movie recommendations tailored to your mood.
+              </li>
+              <li>
+                📥 **Instant access** to high-quality streaming & downloads.
+              </li>
+              <li>🎨 **Aesthetic UI** with immersive dark mode themes.</li>
+              <li>
+                ⭐ **User reviews, trending films, and personalized lists.**
+              </li>
+              <li>🔍 **Search & request any film effortlessly.**</li>
             </ul>
           </div>
 
-          <div className="p-4 bg-white/20 rounded-xl shadow-md">
-            <h2 className="text-xl font-bold text-blue-300">
-              🌟 Why Choose Moodyfilm?
+          {/* Why Choose Us */}
+          <div className="p-6 bg-gray-800/60 rounded-xl shadow-lg border border-gray-700 hover:border-red-500 transition duration-300">
+            <h2 className="text-2xl font-bold text-red-400">
+              🌟 Why Choose MoodyFilm?
             </h2>
-            <p className="text-gray-300 mt-2">
-              We are passionate about movies and strive to bring you an
-              immersive, easy-to-use platform with a touch of personalization.
-              Whether you're in the mood for action, comedy, or a nostalgic
-              classic – Moodyfilm has something for you!
+            <p className="text-gray-300 mt-3">
+              We bring you **handpicked cinematic gems** with an intuitive,
+              user-friendly experience. Whether you're craving **thrillers,
+              psychological dramas, or timeless classics**, MoodyFilm has you
+              covered! 🎬🔥
             </p>
           </div>
 
-          <div className="p-4 bg-white/20 rounded-xl shadow-md">
-            <h2 className="text-xl font-bold text-blue-300">
-              📢 Join the Moodyfilm Community
+          {/* Community Section */}
+          <div className="p-6 bg-gray-800/60 rounded-xl shadow-lg border border-gray-700 hover:border-red-500 transition duration-300">
+            <h2 className="text-2xl font-bold text-red-400">
+              📢 Join the MoodyFilm Community
             </h2>
-            <p className="text-gray-300 mt-2">
-              Engage with fellow movie lovers, share reviews, and explore hidden
-              gems. Follow us for updates on the latest releases and special
-              features!
+            <p className="text-gray-300 mt-3">
+              Connect with movie lovers, share reviews, and **discover hidden
+              cinematic treasures**. Stay updated with **exclusive content,
+              featured films, and community picks!**
             </p>
           </div>
         </div>
 
-        <div className="mt-10 text-center">
-          <p className="text-gray-400">Ready to explore? 🎬</p>
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-400 text-lg">Ready to explore? 🎬</p>
           <a
-            href="/"
-            className="inline-block mt-3 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+            href="/movie"
+            className="inline-block mt-4 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-300"
           >
             Browse Movies
           </a>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

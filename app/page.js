@@ -1,47 +1,23 @@
-import MoviesClient from "@/majorComponent/MoviesClient";
-import { Suspense } from "react";
-
-export async function generateStaticParams() {
-  // Generate static pages for first 5 pages
-  const totalStaticPages = 5;
-  return Array.from({ length: totalStaticPages }, (_, i) => ({
-    page: (i + 1).toString(),
-  }));
+import HeroSection from "@/components/home/HeroSection";
+import MoodyMoviesSection from "@/components/home/MoodyMoviesSection";
+import TrendingMovies from "@/components/home/TrendingMovies";
+function page() {
+  return (
+    <div className="w-full min-h-full relative ">
+      <section className="heroSection w-full h-[90vh] md:h-[600px] ">
+        <div className="hero w-full absolute -top-10">
+          <HeroSection />
+        </div>
+      </section>
+      <section className="what-is-moody-movie  ">
+        <MoodyMoviesSection />
+      </section>
+      <TrendingMovies />
+    </div>
+  );
 }
 
-export default async function MoviesList({ params }) {
-  const page = params.page || "1"; // Default to page 1 if not provided
-
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/home?page=${page}`,
-      { next: { revalidate: 600 } } // Revalidate every 10 minutes
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    return (
-      <Suspense fallback={<div>Loading movies...</div>}>
-        <MoviesClient
-          initialMovies={data.films}
-          initialPage={data.currentPage}
-          totalPages={data.totalPages}
-        />
-      </Suspense>
-    );
-  } catch (error) {
-    console.error("Error fetching movies:", error);
-    return (
-      <div className="text-red-500">
-        Failed to load movies. Please try again.
-      </div>
-    );
-  }
-}
+export default page;
 
 export async function generateMetadata() {
   const title = "MoodyFilm - Discover & Stream Movies Based on Your Mood";

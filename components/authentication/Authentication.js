@@ -4,8 +4,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { ImCross } from "react-icons/im";
 import { IoIosArrowUp } from "react-icons/io";
-import { RxCrossCircled } from "react-icons/rx";
 import LogoutButton from "./SignOut";
 
 const navItems = [
@@ -24,6 +24,17 @@ function Authentication() {
   const dropdownRef = useRef(null);
   const toggleRef = useRef(null);
   const mobileMenuRef = useRef(null);
+
+  // Toggle Mobile Menu & Animate Icon
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((prev) => !prev);
+
+    gsap.to(menuIconRef.current, {
+      rotate: mobileMenuOpen ? 0 : 180, // Rotates smoothly
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -74,7 +85,7 @@ function Authentication() {
     }
   }, [dropdownOpen]);
 
-  // GSAP animation for mobile menu
+  // Animate Mobile Menu Open/Close
   useEffect(() => {
     if (mobileMenuRef.current) {
       if (mobileMenuOpen) {
@@ -114,7 +125,7 @@ function Authentication() {
   }
 
   return (
-    <div className="relativeh-[80%]  rounded-md text-white flex items-center ">
+    <div className=" rounded-md text-white flex items md:items-center ">
       {status === "authenticated" ? (
         <div className="px-2  md:bg-white/30 md:backdrop-blur-md  shadow-lg rounded-md h-full w-full py-1 flex items-center md:space-x-4 space-x-2  ">
           <div className="rounded-full h-10 w-10 bg-red-100 text-black    items-center justify-center border-2 border-orange-200 text-xl hidden md:flex font-bold">
@@ -170,7 +181,7 @@ function Authentication() {
 
       {/* Hamburger Menu for Mobile */}
       <div
-        className="md:hidden cursor-pointer"
+        className="md:hidden   w-full cursor-pointer"
         onClick={() => setMobileMenuOpen((prev) => !prev)}
       >
         <GiHamburgerMenu className="text-4xl" />
@@ -179,14 +190,15 @@ function Authentication() {
       {/* Mobile Fullscreen Dropdown */}
       <div
         ref={mobileMenuRef}
-        className="absolute  top-0 -right-6 pt-4 w-[60vw] h-screen bg-white/30 backdrop-blur-md text-black shadow-lg md:hidden flex flex-col items-center justify-center space-y-6 rounded-2xl "
+        className="absolute top-0 -right-6 pt-4 w-[60vw] h-screen bg-white/80 backdrop-blur-md text-black shadow-xl md:hidden flex flex-col items-center justify-center space-y-6 rounded-2xl
+"
         style={{ opacity: 0, transform: "translateX(-20px)", display: "none" }}
       >
         <div
           onClick={handleMobileLinkClick}
           className="closebutton absolute top-4 right-9 font-bold text-black cursor-pointer hover:text-red-600 h-6 w-6 rounded-full flex items-center justify-center "
         >
-          <RxCrossCircled className="text-4xl" />
+          <ImCross className="  font-bold" />
         </div>
 
         {navItems.map((item) => (

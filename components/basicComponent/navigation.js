@@ -11,23 +11,23 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navItems = [
-    { name: "Home", href: "/" },
+    { name: "Movies", href: "/movie" },
     { name: "About", href: "/about" },
     { name: "Reqeust", href: "/request-movies" },
   ];
   //
   return (
-    <aside className=" shadow-md w-full   ">
-      <ul className="flex flex-col fixed top-10 space-y-4 py-8  items-center">
+    <aside className="shadow-md w-full bg-black/90 text-white">
+      <ul className="flex flex-col fixed top-16 space-y-6 py-8 items-center">
         {navItems.map((item) => (
           <li key={item.href}>
             <Link
               href={item.href}
-              className={`block text-lg  text-white font-semibold pl-4 ${
+              className={`block text-lg font-semibold pl-4 transition-all ${
                 pathname === item.href ||
                 (item.name === "Movies" && pathname.startsWith("/movie/"))
-                  ? "text-blue-600   border-l-8 border-blue-600"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? "text-red-500 border-l-8 border-red-500"
+                  : "text-gray-400 hover:text-red-400 hover:border-l-4 hover:border-red-400"
               }`}
               onClick={toggleMenu} // Close menu on click
             >
@@ -36,9 +36,13 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <div className="fixed bottom-40 ">
+
+      {/* Privacy Policy Link */}
+      <div className="fixed bottom-40 left-4">
         <Link href="/privacy-policy">
-          <strong className="text-white">Privacy-Policy</strong>
+          <strong className="text-gray-300 hover:text-red-400 transition">
+            Privacy Policy
+          </strong>
         </Link>
       </div>
     </aside>
