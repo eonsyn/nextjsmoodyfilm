@@ -47,9 +47,11 @@ export default function SearchBar() {
     >
       {/* Logo Section */}
       <div className="logo md:w-[20vw] flex items-center justify-center h-full text-white">
-        <h1 className="text-3xl font-bold text-red-500 pl-2 md:pl-0">
-          MoodyFilm
-        </h1>
+        <Link href="/">
+          <h1 className="text-3xl font-bold text-red-500 pl-2 md:pl-0">
+            MoodyFilm
+          </h1>
+        </Link>
       </div>
 
       {/* Main Header Section */}
