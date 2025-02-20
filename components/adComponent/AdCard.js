@@ -41,7 +41,7 @@ const AdCard = () => {
     <Link href="https://compassionunsuccessful.com/g0hw4rr1?key=cdd8bdca93ac509c313b4aceb35f084e">
       <div
         ref={cardRef}
-        className="relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
+        className="relative cursor-pointer bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
       >
         {/* Ad Container */}
         <div id={adContainerId} className="w-full h-full"></div>
