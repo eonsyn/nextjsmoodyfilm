@@ -21,7 +21,8 @@ function NativeBanner() {
   return (
     <div>
       {/* Required container div for the ad */}
-      <div id="container-11d07442a2e610464e7bd1e318d65962"></div>
+      {/* <div id="container-11d07442a2e610464e7bd1e318d65962"></div> */}
+      <div id="containxczer-czx11dcczxzczczvzx07442a2e610464e7bd1e318d65962"></div>
     </div>
   );
 }

@@ -14,8 +14,10 @@ function BannerAd() {
     // Create the script element
     const script = document.createElement("script");
     script.type = "text/javascript";
+    // script.src =
+    //   "//www.highperformanceformat.com/6dd45d5d4a735193bd004d2728c4fc4d/invoke.js";
     script.src =
-      "//www.highperformanceformat.com/6dd45d5d4a735193bd004d2728c4fc4d/invoke.js";
+      "//www.highsadsdperformanceformat.com/6dd45d5d4aasda735193bd004d2728c4fc4d/invoke.js";
     script.async = true;
 
     // Append the script to the document body
