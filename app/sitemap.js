@@ -3,29 +3,44 @@ export default async function sitemap() {
 
   try {
     const response = await fetch(
-      "https://refactored-tribble.vercel.app/get-all-id"
+      "https://refactored-tribble.vercel.app/get-all-id",
+      {
+        cache: "no-store", // Ensures fresh API call in Next.js
+      }
     );
-    const result = await response.json(); // Parse JSON response
 
-    const idData = result.data.map((item) => item._id); // Extract only _id values
+    if (!response.ok) {
+      console.error(`API Error: ${response.status} ${response.statusText}`);
+      return [];
+    }
 
-    const moviePages = idData.map((id) => ({
-      url: `${baseUrl}/movie/${id}`,
-      lastModified: new Date().toISOString(), // Use ISO format
+    const result = await response.json();
+
+    if (!result.success || !Array.isArray(result.data)) {
+      console.error("Invalid API response format");
+      return [];
+    }
+
+    // Function to escape XML special characters in URLs
+    const escapeXmlUrl = (url) =>
+      encodeURI(url)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    const moviePages = result.data.map((item) => ({
+      url: escapeXmlUrl(`${baseUrl}/movie/${item.filmUrl}`),
+      lastModified: new Date().toISOString(),
     }));
 
     return [
-      {
-        url: baseUrl,
-        lastModified: new Date(),
-      },
+      { url: baseUrl, lastModified: new Date().toISOString() },
       ...moviePages,
     ];
   } catch (error) {
-    console.error("Error occurred in sitemap generation:", error);
+    console.error("Error in sitemap generation:", error);
+    return [];
   }
-
-  return []; // Ensure function always returns an array
 }
 
 // return [

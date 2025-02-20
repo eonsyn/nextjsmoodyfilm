@@ -51,7 +51,7 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
   }, [loading]);
 
   return (
-    <Link href={`/movie/${_id}`}>
+    <Link href={`/movie/${_id}/${filmTitle.replace(/\s+/g, "-")}`}>
       <div
         key={_id}
         className="card aspect-w-16 aspect-h-9 relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"

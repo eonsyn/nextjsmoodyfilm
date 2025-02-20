@@ -77,7 +77,6 @@ export async function generateMetadata() {
       index: true, // Allow indexing
       follow: true, // Allow crawling of links
     },
-    viewport: "width=device-width, initial-scale=1", // Ensure mobile responsiveness
     canonical: "https://moodyfilm.netlify.app", // Canonical URL for SEO
     author: "MoodyFilm Team",
     publisher: "MoodyFilm",

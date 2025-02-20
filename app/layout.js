@@ -45,7 +45,6 @@ export function metadata() {
       index: true,
       follow: true,
     },
-    viewport: "width=device-width, initial-scale=1",
     canonical: "https://moodyfilm.netlify.app",
     author: "MoodyFilm Team",
     publisher: "MoodyFilm",
@@ -98,4 +97,38 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
+}
+
+{
+  /* <svg
+  width="200"
+  height="150"
+  viewBox="0 0 200 150"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#FFC72C" />
+      <stop offset="100%" stop-color="#FF1E1E" />
+    </linearGradient>
+  </defs>
+
+  <!-- Triangle Shape -->
+  <polygon points="0,75 200,0 200,150" fill="url(#gradient)" />
+
+  <!-- MF Text with Overlapping Effect -->
+  <text
+    x="100"
+    y="100"
+    font-family="Arial, sans-serif"
+    font-size="65"
+    font-weight="bold"
+    fill="#B3DAF7"
+    letter-spacing="-20"
+  >
+    MF
+  </text>
+</svg> */
 }
