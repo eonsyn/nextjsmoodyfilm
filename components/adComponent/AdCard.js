@@ -37,12 +37,15 @@ const AdCard = () => {
     }
   }, []);
 
+  const openAd = () => {
+    window.open(
+      "https://compassionunsuccessful.com/g0hw4rr1?key=cdd8bdca93ac509c313b4aceb35f084e",
+      "_blank"
+    );
+  };
+
   return (
-    <Link
-      href="https://compassionunsuccessful.com/g0hw4rr1?key=cdd8bdca93ac509c313b4aceb35f084e"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <div className="cursor-pointer" onClick={openAd}>
       <div
         ref={cardRef}
         className="relative cursor-pointer bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
@@ -56,7 +59,7 @@ const AdCard = () => {
           <p className="text-sm text-gray-300 mt-2">Advertisement</p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
