@@ -11,6 +11,11 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
 
   const handleClick = () => {
     setLoading(true);
+
+    // Set a timeout to hide the loading animation after 3 seconds
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -30,18 +35,15 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
 
   useEffect(() => {
     if (playIconRef.current && loading) {
-      // Get the total length of the polygon path
       const pathLength = playIconRef.current
         .querySelector("polygon")
         .getTotalLength();
 
-      // Set initial stroke properties
       gsap.set(playIconRef.current.querySelector("polygon"), {
         strokeDasharray: pathLength,
         strokeDashoffset: pathLength,
       });
 
-      // Animate the stroke offset to 0 for the draw effect
       gsap.to(playIconRef.current.querySelector("polygon"), {
         strokeDashoffset: 0,
         duration: 1.5,
@@ -51,16 +53,18 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
   }, [loading]);
 
   return (
-    <Link href={`/movie/${_id}/${filmTitle.replace(/\s+/g, "-")}`}>
+    <Link
+      href={`/movie/${_id}/${filmTitle.replace(/\s+/g, "-")}`}
+      onClick={handleClick}
+    >
       <div
         key={_id}
         className="card aspect-w-16 aspect-h-9 relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px]"
-        onClick={handleClick}
       >
         {loading && (
           <div
             ref={cardRef}
-            className="  waiting-card absolute top-0 left-0 w-full h-full bg-white/30 backdrop-blur-md flex items-center justify-center z-20"
+            className="waiting-card absolute top-0 left-0 w-full h-full bg-white/30 backdrop-blur-md flex items-center justify-center z-20"
           >
             <svg
               ref={playIconRef}
