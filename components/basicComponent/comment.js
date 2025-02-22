@@ -1,8 +1,9 @@
 "use client";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { MdClose, MdDeleteForever } from "react-icons/md";
+import { useSession } from "next-auth/react";
+import { useSwipeable } from "react-swipeable";
 
 const Comment = ({
   id,
@@ -16,52 +17,79 @@ const Comment = ({
   onLike,
   onDislike,
   onDelete,
+  onSwipeLeft,
+  onSwipeRight,
 }) => {
   const { data: session, status } = useSession();
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
+  const [showFullComment, setShowFullComment] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
       setUser(session.user);
       setIsLogin(true);
-
       setHasLiked(session.user.id && likedBy.includes(session.user.id));
       setHasDisliked(session.user.id && dislikedBy.includes(session.user.id));
-    } else if (status === "unauthenticated") {
+    } else {
       setIsLogin(false);
       setUser(null);
     }
   }, [likedBy, dislikedBy, status, session]);
 
+  const handlers = useSwipeable({
+    onSwipedLeft: onSwipeLeft,
+    onSwipedRight: onSwipeRight,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   return (
-    <div className="bg-black/20 backdrop-blur-lg shadow-lg rounded-lg p-6 mb-5 flex items-start space-x-4 relative border border-gray-700">
-      {/* User Avatar */}
-      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
-        {userProfile}
+    <div
+      {...handlers}
+      className="relative bg-gray-800 shadow-lg   rounded-lg p-5 w-full max-w-md flex flex-col space-y-3 border border-gray-700 overflow-hidden"
+    >
+      {/* User Avatar & Name */}
+      <div className="flex items-center space-x-3">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+          {userProfile}
+        </div>
+        <div>
+          <p className="text-white font-semibold">{userName}</p>
+          <p className="text-xs text-gray-400">
+            {new Date(createdAt).toLocaleDateString()}
+          </p>
+        </div>
       </div>
 
-      {/* Comment Box */}
-      <div className="flex-grow">
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold text-white">{userName}</span>
-          <span className="text-xs text-gray-400">
-            {new Date(createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-        </div>
+      {/* Comment Text */}
+      <p className="text-gray-300 text-base bg-gray-700 p-4 rounded-md border border-gray-600">
+        {review.length > 100 ? (
+          <>
+            {showFullComment ? (
+              review
+            ) : (
+              <>
+                {review.substring(0, 100)}...
+                <button
+                  className="text-blue-400 underline"
+                  onClick={() => setShowFullComment(true)}
+                >
+                  Click here to see more
+                </button>
+              </>
+            )}
+          </>
+        ) : (
+          review
+        )}
+      </p>
 
-        <p className="mt-3 text-gray-300 text-base bg-gray-800/40 p-4 rounded-md border border-gray-600">
-          {review}
-        </p>
-
-        {/* Interaction Buttons */}
-        <div className="flex items-center space-x-4 mt-4">
+      {/* Interaction Buttons */}
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex space-x-4">
           <button
             onClick={onLike}
             className={`flex items-center px-3 py-1 rounded-lg transition ${
@@ -71,7 +99,7 @@ const Comment = ({
             }`}
             disabled={!isLogin}
           >
-            <FaThumbsUp className="mr-2 text-lg" />
+            <FaThumbsUp className="mr-2" />
             <span>{likedBy.length}</span>
           </button>
 
@@ -84,20 +112,34 @@ const Comment = ({
             }`}
             disabled={!isLogin}
           >
-            <FaThumbsDown className="mr-2 text-lg" />
+            <FaThumbsDown className="mr-2" />
             <span>{dislikedBy.length}</span>
           </button>
         </div>
+
+        {isLogin && user?.id === userId && (
+          <button
+            onClick={onDelete}
+            className="p-2 rounded-full bg-gray-800 hover:bg-red-600 transition text-gray-400 hover:text-white"
+          >
+            <MdDeleteForever className="text-2xl" />
+          </button>
+        )}
       </div>
 
-      {/* Delete Button */}
-      {isLogin && user?.id === userId && (
-        <button
-          onClick={onDelete}
-          className="absolute bottom-2 right-2 p-2 rounded-full bg-gray-800 hover:bg-red-600 transition text-gray-400 hover:text-white"
-        >
-          <MdDeleteForever className="text-2xl" />
-        </button>
+      {/* Modal for Full Comment */}
+      {showFullComment && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 p-6 rounded-lg max-w-lg w-full text-white relative">
+            <button
+              onClick={() => setShowFullComment(false)}
+              className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 hover:bg-red-600 transition"
+            >
+              <MdClose className="text-2xl" />
+            </button>
+            <p className="text-lg">{review}</p>
+          </div>
+        </div>
       )}
     </div>
   );

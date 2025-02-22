@@ -65,7 +65,7 @@ async function getRecommendation(genres) {
 }
 
 export default async function MovieDetails({ params }) {
-  const { id, filmName } = params; // ✅ No need to await params
+  const { id, filmName } = await params; // ✅ No need to await params
 
   const movie = await getMovieDetails(id);
 

@@ -1,13 +1,13 @@
 "use client";
 
-import Masonry from "react-masonry-css";
+import AdCard from "@/components/adComponent/AdCard";
 import Card from "@/components/basicComponent/card";
+import SkeletonCard from "@/components/dummy/SkeletonCard";
 import { useSearch } from "@/context/SearchContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import SkeletonCard from "@/components/dummy/SkeletonCard";
 import { useEffect } from "react";
+import Masonry from "react-masonry-css";
 import useSWR from "swr";
-import AdCard from "@/components/adComponent/AdCard";
 
 const fetcher = async (url) => {
   const response = await fetch(url);
@@ -41,15 +41,11 @@ export default function MoviesClient({
   }, [searchTerm, mutate]);
 
   const movies = data?.films || initialMovies || [];
-  const totalMovies = movies.length;
+  // const totalMovies = movies.length;
 
   // Define ad insertion points (spread 4 ads evenly across the list)
-  const adPositions = new Set([
-    Math.floor(totalMovies * 0.2), // 20% in
-    Math.floor(totalMovies * 0.4), // 40% in
-    Math.floor(totalMovies * 0.6), // 60% in
-    Math.floor(totalMovies * 0.8), // 80% in
-  ]);
+  const adPositions = new Set([16, 6, 4, 13]);
+  console.log(adPositions.has(2));
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -91,16 +87,24 @@ export default function MoviesClient({
         columnClassName="pl-4 bg-clip-padding"
       >
         {movies.length > 0 ? (
-          movies.map((movie, index) => (
-            <div key={movie._id} className="mb-6">
-              <Card {...movie} />
-              {adPositions.has(index) && (
-                <div className="mb-6">
+          movies.flatMap((movie, index) => {
+            const elements = [
+              <div key={movie._id} className="mb-6">
+                <Card {...movie} />
+              </div>,
+            ];
+
+            // Insert <AdCard /> every third movie
+            if (adPositions.has(index + 1)) {
+              elements.push(
+                <div key={`ad-${index}`} className="mb-6">
                   <AdCard />
                 </div>
-              )}
-            </div>
-          ))
+              );
+            }
+
+            return elements;
+          })
         ) : (
           <p className="text-center text-white w-full">No movies found</p>
         )}

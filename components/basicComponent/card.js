@@ -83,11 +83,12 @@ const Card = ({ filmTitle, imdbRating, _id, genre, urlOfThumbnail }) => {
           </div>
         )}
         <div className="relative h-full bg-red-600">
+          {/* mix-blend-darken */}
           <img
             src={urlOfThumbnail}
             alt={filmTitle}
             loading="lazy"
-            className="w-full h-full object-cover opacity-0 transition-opacity duration-700"
+            className="w-full h-full   object-cover opacity-0 transition-opacity duration-700"
             onLoad={(e) => (e.target.style.opacity = "1")}
           />
           <div className="absolute bottom-0 h-[50%] w-full bg-gradient-to-t from-black via-transparent to-transparent"></div>

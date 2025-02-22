@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 export const authOptions = {
   providers: [
@@ -25,6 +26,8 @@ export const authOptions = {
           if (!response.ok) {
             throw new Error(data.message || "Invalid credentials");
           }
+          const cookieStore = await cookies();
+          cookieStore.set("user_auth_token", data.token);
 
           return {
             id: data.userId,

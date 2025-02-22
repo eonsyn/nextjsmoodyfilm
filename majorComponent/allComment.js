@@ -1,11 +1,11 @@
 "use client";
 import Comment from "@/components/basicComponent/comment";
+import CommentDummy from "@/components/dummy/DummyComment";
 import ReviewForm from "@/components/userComponent/reviewForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import CommentDummy from "@/components/dummy/DummyComment";
 
 import { useSession } from "next-auth/react";
 const AllComment = ({ id }) => {
@@ -187,6 +187,8 @@ const AllComment = ({ id }) => {
       };
 
       // Make API request
+      //
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/sendReview`,
         payload,
@@ -194,7 +196,7 @@ const AllComment = ({ id }) => {
           withCredentials: true,
         }
       );
-
+      console.log(response);
       // Handle success
       toast.success("Comment sent successfully!");
       settempReview(review);
@@ -218,31 +220,32 @@ const AllComment = ({ id }) => {
       <ReviewForm sendMessage={handleSubmit} />
 
       {/* Comments Section */}
-      <div className="comment-section h-[10vmax] overflow-y-auto bg-gray-900 p-3 rounded-md">
-        {loading ? (
-          // Show skeleton loaders while loading
-          <>
-            <CommentDummy />
-
-            <CommentDummy />
-          </>
-        ) : reviews.length > 0 ? (
-          // Render comments if available
-          reviews.map((review, index) => (
-            <Comment
-              key={index}
-              {...review}
-              onLike={() => handleLike(review.id)}
-              onDislike={() => handleDislike(review.id)}
-              onDelete={() => handleDelete(review.id)}
-            />
-          ))
-        ) : (
-          // Show message if no comments exist
-          <p className="text-gray-400 text-center mt-3">
-            Be the first to comment on this film!
-          </p>
-        )}
+      <div className="comment-section bg-gray-900 p-4 rounded-lg shadow-md max-h-[25vmax] overflow-y-auto space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  ">
+          {loading ? (
+            // Show skeleton loaders while loading
+            <>
+              <CommentDummy />
+              <CommentDummy />
+            </>
+          ) : reviews.length > 0 ? (
+            // Render comments if available
+            reviews.map((review, index) => (
+              <Comment
+                key={index}
+                {...review}
+                onLike={() => handleLike(review.id)}
+                onDislike={() => handleDislike(review.id)}
+                onDelete={() => handleDelete(review.id)}
+              />
+            ))
+          ) : (
+            // Show message if no comments exist
+            <p className="text-gray-400 text-center py-4">
+              Be the first to comment on this film!
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

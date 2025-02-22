@@ -43,7 +43,7 @@ export default function LoginPage() {
     <div className="flex flex-col items-center justify-center min-h-screen p-4   text-gray-300">
       <div className="w-full max-w-sm bg-gray-800 shadow-xl border border-gray-700 rounded-2xl p-6">
         <h1 className="text-3xl font-extrabold text-center text-red-500 drop-shadow-md mb-6">
-          MoodyFilm Login
+          Login
         </h1>
         <form onSubmit={handleLogin} className="space-y-5">
           {error && (
