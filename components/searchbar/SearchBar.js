@@ -21,33 +21,22 @@ export default function SearchBar() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   const handleSearchbar = () => {
+    setIsMobileSearchOpen(!isMobileSearchOpen);
     gsap.to(mobileSearchRef.current, {
       opacity: isMobileSearchOpen ? 0 : 1,
-      x: isMobileSearchOpen ? -20 : 0,
-      duration: 0.5,
+      y: isMobileSearchOpen ? -10 : 0,
+      duration: 0.4,
       ease: "power2.inOut",
-      onComplete: () => setIsMobileSearchOpen(!isMobileSearchOpen),
     });
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 10;
-      setIsScrolled(scrolled);
-
+      setIsScrolled(window.scrollY > 10);
       gsap.to(topBarRef.current, {
-        backgroundColor: scrolled ? "transparent" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
-        duration: 1,
-        ease: "power2.out",
-      });
-
-      gsap.to(searchBarRef.current, {
-        backgroundColor: scrolled
-          ? "rgba(255, 255, 255, 0.6)"
-          : "rgba(255, 255, 255, 0.2)",
-        color: scrolled ? "#000000" : "#FFFFFF",
-        duration: 1,
+        backgroundColor: "rgba(20, 20, 20, 0.9)",
+        backdropFilter: "blur(10px)",
+        duration: 0.6,
         ease: "power2.out",
       });
     };
@@ -59,82 +48,72 @@ export default function SearchBar() {
   return (
     <div
       ref={topBarRef}
-      className="fixed top-0 left-0 w-full h-16 flex items-center z-50 transition-all  backdrop-blur-md shadow-lg"
+      className="fixed top-0 left-0 w-full h-16 flex items-center z-50 shadow-lg transition-all"
     >
-      <div className="logo pl-2 w-full md:w-[20vw] flex items-center justify-center h-full text-white">
+      {/* Logo Section */}
+      <div className="pl-2 w-[80vw] md:w-[20vw] flex items-center justify-center h-full">
         <Link href="/">
-          <img src="https://i.imgur.com/azdV4hV.png" alt="Moodyfilm Logo" />
+          <img
+            src="https://i.imgur.com/azdV4hV.png"
+            alt="Moodyfilm Logo"
+            className="h-10"
+          />
         </Link>
       </div>
 
+      {/* Search & Navigation */}
       <div className="flex w-full md:w-[85vw] h-full items-center justify-between px-4">
         {pathname === "/movie" ? (
           <div className="flex items-center justify-end md:h-full md:w-[50%]">
+            {/* Search Bar */}
             <div
               ref={searchBarRef}
-              className={`search justify-center md:justify-start md:w-full shadow-lg rounded-full md:rounded-lg flex items-center px-4 border transition-all ${
+              className={`flex items-center px-4 rounded-full shadow-md border transition-all ${
                 isScrolled
-                  ? "border-gray-300 text-black"
-                  : "border-white/20 text-white"
+                  ? "border-gray-400 bg-white text-black"
+                  : "border-white/30 bg-white/20 text-white"
               }`}
             >
-              <div className="icon-search md:w-12 flex items-center justify-center">
-                <div
-                  onClick={handleSearchbar}
-                  className="block h-full md:hidden"
-                >
-                  <div className="rounded-full h-12 w-12 flex items-center justify-center">
-                    {isMobileSearchOpen ? (
-                      <IoCloseSharp
-                        className={`text-2xl ${
-                          isScrolled ? "text-gray-500" : "text-gray-300"
-                        }`}
-                      />
-                    ) : (
-                      <IoIosSearch
-                        className={`text-2xl ${
-                          isScrolled ? "text-gray-500" : "text-gray-300"
-                        }`}
-                      />
-                    )}
-                  </div>
-                </div>
-                <IoIosSearch
-                  className={`text-2xl hidden md:block ${
-                    isScrolled ? "text-gray-500" : "text-slate-300"
-                  }`}
-                />
-              </div>
-
-              <div className="input-bar flex-grow">
-                <input
-                  type="text"
-                  placeholder="Search movies..."
-                  className={`
-      w-full bg-transparent px-4 py-2 rounded-lg text-lg transition-all focus:outline-none hidden md:block
-      ${isScrolled ? "text-black" : "text-slate-300"}
-    `}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+              <IoIosSearch className="text-2xl text-gray-500 hidden md:block" />
+              <input
+                type="text"
+                placeholder="Search movies..."
+                className="w-full bg-transparent px-3 py-2 text-lg focus:outline-none hidden md:block"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
 
+            {/* Mobile Search Icon */}
+            <div className="md:hidden ml-3">
+              <button
+                onClick={handleSearchbar}
+                className="p-2 rounded-full bg-white/30"
+              >
+                {isMobileSearchOpen ? (
+                  <IoCloseSharp className="text-2xl text-gray-800" />
+                ) : (
+                  <IoIosSearch className="text-2xl text-gray-800" />
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Search Input */}
             <div
               ref={mobileSearchRef}
-              className="absolute top-16 left-0 w-full opacity-0 p-4 flex items-center justify-center"
+              className={`absolute top-16 left-0 w-full px-4 py-2 bg-white text-black rounded-md shadow-md opacity-0`}
             >
               <input
                 type="text"
                 placeholder="Search movies..."
-                className="w-full bg-white text-black px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           </div>
-        ) : pathname === "/" ? (
-          <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%] text-white">
+        ) : (
+          <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%]">
             <ul className="flex space-x-6">
               {[
                 { href: "/movie", label: "Movies" },
@@ -153,11 +132,10 @@ export default function SearchBar() {
               ))}
             </ul>
           </nav>
-        ) : (
-          <div className="flex items-center justify-end h-full w-[70%] md:w-[50%]"></div>
         )}
 
-        <div className="signup-signin flex items-center justify-end h-full md:w-[35%] w-[25%] pr-4">
+        {/* Auth Section */}
+        <div className="flex items-center justify-end md:w-[35%] w-[25%] pr-4">
           <Authentication />
         </div>
       </div>
