@@ -36,7 +36,7 @@ export default function SearchBar() {
       setIsScrolled(scrolled);
 
       gsap.to(topBarRef.current, {
-        backgroundColor: scrolled ? "rgba(0, 0, 0, 0.3)" : "transparent",
+        backgroundColor: scrolled ? "transparent" : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
         duration: 1,
         ease: "power2.out",
@@ -59,7 +59,7 @@ export default function SearchBar() {
   return (
     <div
       ref={topBarRef}
-      className="fixed top-0 left-0 w-full h-16 flex items-center z-50 transition-all bg-black/80 backdrop-blur-md shadow-lg"
+      className="fixed top-0 left-0 w-full h-16 flex items-center z-50 transition-all  backdrop-blur-md shadow-lg"
     >
       <div className="logo pl-2 w-full md:w-[20vw] flex items-center justify-center h-full text-white">
         <Link href="/">
@@ -101,7 +101,7 @@ export default function SearchBar() {
                 </div>
                 <IoIosSearch
                   className={`text-2xl hidden md:block ${
-                    isScrolled ? "text-gray-500" : "text-gray-300"
+                    isScrolled ? "text-gray-500" : "text-slate-300"
                   }`}
                 />
               </div>
@@ -110,7 +110,10 @@ export default function SearchBar() {
                 <input
                   type="text"
                   placeholder="Search movies..."
-                  className={`w-full bg-transparent text-white px-4 py-2 rounded-lg focus:outline-none    transition-all hidden md:block text-lg`}
+                  className={`
+      w-full bg-transparent px-4 py-2 rounded-lg text-lg transition-all focus:outline-none hidden md:block
+      ${isScrolled ? "text-black" : "text-slate-300"}
+    `}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />

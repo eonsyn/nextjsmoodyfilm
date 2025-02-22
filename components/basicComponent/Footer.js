@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -26,8 +26,8 @@ export default function Footer() {
             </Link>
           </li>
           <li>
-            <Link href="/contact" className="hover:text-red-500 transition">
-              Contact
+            <Link href="/movie" className="hover:text-red-500 transition">
+              Movies
             </Link>
           </li>
           <li>

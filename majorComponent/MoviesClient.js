@@ -44,7 +44,7 @@ export default function MoviesClient({
   // const totalMovies = movies.length;
 
   // Define ad insertion points (spread 4 ads evenly across the list)
-  const adPositions = new Set([16, 6, 4, 13]);
+  const adPositions = new Set([10, 6, 4, 13]);
   console.log(adPositions.has(2));
 
   const handlePageChange = (newPage) => {
@@ -81,11 +81,7 @@ export default function MoviesClient({
 
   return (
     <div className="container min-h-screen mx-auto pt-10 px-4 py-6">
-      <Masonry
-        breakpointCols={{ default: 4, 1100: 3, 768: 2, 500: 1 }}
-        className="flex w-auto -ml-4"
-        columnClassName="pl-4 bg-clip-padding"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
         {movies.length > 0 ? (
           movies.flatMap((movie, index) => {
             const elements = [
@@ -94,7 +90,7 @@ export default function MoviesClient({
               </div>,
             ];
 
-            // Insert <AdCard /> every third movie
+            // Ensure <AdCard /> is always visible on all screen sizes
             if (adPositions.has(index + 1)) {
               elements.push(
                 <div key={`ad-${index}`} className="mb-6">
@@ -108,7 +104,7 @@ export default function MoviesClient({
         ) : (
           <p className="text-center text-white w-full">No movies found</p>
         )}
-      </Masonry>
+      </div>
 
       {/* Pagination Controls */}
       <div className="flex justify-center items-center mt-8">

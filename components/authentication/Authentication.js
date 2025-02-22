@@ -12,7 +12,7 @@ const navItems = [
   { name: "Movies", href: "/movie" },
   { name: "About", href: "/about" },
 
-  { name: "Contact", href: "/contact" },
+  // { name: "Contact", href: "/contact" },
   { name: "Request-Movie", href: "/request-movies" },
   { name: "Privacy-Policy", href: "/privacy-policy" },
 ];

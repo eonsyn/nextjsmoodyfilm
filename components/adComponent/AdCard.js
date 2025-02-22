@@ -24,6 +24,17 @@ const AdCard = () => {
       document.body.appendChild(script);
     }
   }, []);
+  useEffect(() => {
+    const checkAd = setInterval(() => {
+      const adContainer = document.getElementById(adContainerId);
+      if (adContainer && adContainer.innerHTML.trim().length > 0) {
+        console.log("Ad loaded successfully.");
+        clearInterval(checkAd);
+      }
+    }, 1000);
+
+    return () => clearInterval(checkAd);
+  }, []);
 
   useEffect(() => {
     if (cardRef.current && loading) {
@@ -53,7 +64,7 @@ const AdCard = () => {
 
   return (
     <div
-      className="card aspect-w-16 aspect-h-9 relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl sm:h-[450px] cursor-pointer "
+      className="card aspect-w-16 aspect-h-9 relative bg-gray-200 shadow-lg rounded-lg overflow-hidden transition-all transform hover:scale-105 hover:shadow-2xl h-[450px] sm:h-[450px] cursor-pointer "
       onClick={openAd}
     >
       {loading && (
@@ -70,7 +81,7 @@ const AdCard = () => {
         {/* Overlay with Text */}
         <div className="absolute bottom-0 h-[50%] w-full bg-gradient-to-t from-black via-transparent to-transparent p-4 text-white text-center">
           <h1 className="text-xl font-bold">Sponsored Ad</h1>
-          <p className="text-sm text-gray-300 mt-2">Advertisement</p>
+          <p className="text-sm text-gray-300 mt-2">Click to help us</p>
         </div>
       </div>
     </div>
