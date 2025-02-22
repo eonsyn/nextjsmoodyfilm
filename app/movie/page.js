@@ -44,7 +44,7 @@ export default async function MoviesList({ params }) {
 
 export async function generateMetadata() {
   return {
-    title: "Explore Movies - Find Your Next Favorite Film | MoodFilm",
+    title: "Movies | MoodFilm",
     description:
       "Discover a wide range of movies on MoodFilm. Browse, search, and find your next favorite film. Stay updated with the latest releases and top-rated films.",
     keywords:
