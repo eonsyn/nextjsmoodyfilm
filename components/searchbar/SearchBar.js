@@ -34,7 +34,7 @@ export default function SearchBar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       gsap.to(topBarRef.current, {
-        backgroundColor: "rgba(20, 20, 20, 0.9)",
+        backgroundColor: "rgba(20, 20, 20, 0.6)",
         backdropFilter: "blur(10px)",
         duration: 0.6,
         ease: "power2.out",
@@ -48,7 +48,7 @@ export default function SearchBar() {
   return (
     <div
       ref={topBarRef}
-      className="fixed top-0 left-0 w-full h-16 flex items-center z-50 shadow-lg transition-all"
+      className="fixed bg-transparent top-0 left-0 w-full h-16 flex items-center z-50 shadow-lg transition-all"
     >
       {/* Logo Section */}
       <div className="pl-2 w-[80vw] md:w-[20vw] flex items-center justify-center h-full">
@@ -113,25 +113,28 @@ export default function SearchBar() {
             </div>
           </div>
         ) : (
-          <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%]">
-            <ul className="flex space-x-6">
-              {[
-                { href: "/movie", label: "Movies" },
-                { href: "/about", label: "About" },
-                { href: "/request-movies", label: "Request Film" },
-                { href: "/privacy-policy", label: "Privacy Policy" },
-              ].map(({ href, label }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className="font-medium transition-colors hover:text-red-500"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <>
+            <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%]">
+              <ul className="flex space-x-6 text-white">
+                {[
+                  { href: "/movie", label: "Movies" },
+                  { href: "/about", label: "About" },
+                  { href: "/request-movies", label: "Request Film" },
+                  { href: "/privacy-policy", label: "Privacy Policy" },
+                ].map(({ href, label }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className="font-medium text-white transition-colors duration-300 hover:text-red-500"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className="space h-full w-16 bg-red"></div>
+          </>
         )}
 
         {/* Auth Section */}

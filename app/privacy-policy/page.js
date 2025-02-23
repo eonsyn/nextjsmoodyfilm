@@ -43,9 +43,9 @@ export const generateMetadata = () => ({
 
 export default function PrivacyPolicyPage() {
   return (
-    <section className="min-h-screen flex items-center justify-center   text-white p-6">
+    <section className="min-h-screen flex items-center justify-center   text-white pt-6 md:p-6">
       <div className="w-full max-w-3xl bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-red-700">
-        {/* Title */}
+        {/* Title */} 
         <h1 className="text-4xl font-extrabold text-center text-red-500 drop-shadow-lg mb-6">
           Privacy Policy
         </h1>

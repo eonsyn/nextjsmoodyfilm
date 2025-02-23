@@ -44,7 +44,7 @@ export const generateMetadata = () => ({
 
 export default function About() {
   return (
-    <section className="min-h-screen flex items-center justify-center   text-white p-6">
+    <section className="min-h-screen flex items-center justify-center   text-white pt-2 md:p-6">
       <div className="w-full max-w-4xl bg-white/10 backdrop-blur-lg shadow-2xl rounded-2xl p-10   ">
         {/* Title */}
         <h1 className="text-4xl md:text-5xl font-extrabold text-center text-red-500 drop-shadow-lg mb-6">
