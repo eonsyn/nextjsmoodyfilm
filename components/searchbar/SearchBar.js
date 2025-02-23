@@ -112,7 +112,7 @@ export default function SearchBar() {
               />
             </div>
           </div>
-        ) : (
+        ) : pathname === "/" ? (
           <>
             <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%]">
               <ul className="flex space-x-6 text-white">
@@ -135,6 +135,8 @@ export default function SearchBar() {
             </nav>
             <div className="space h-full w-16 bg-red"></div>
           </>
+        ) : (
+          <div className="space h-full w-16 bg-red"></div>
         )}
 
         {/* Auth Section */}
