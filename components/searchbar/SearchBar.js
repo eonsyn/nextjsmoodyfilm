@@ -63,7 +63,7 @@ export default function SearchBar() {
 
       {/* Search & Navigation */}
       <div className="flex w-full md:w-[85vw] h-full items-center justify-between px-4">
-        {pathname === "/movie" ? (
+        {pathname === "/" ? (
           <div className="flex items-center justify-end md:h-full md:w-[50%]">
             {/* Search Bar */}
             <div
@@ -112,12 +112,12 @@ export default function SearchBar() {
               />
             </div>
           </div>
-        ) : pathname === "/" ? (
+        ) : pathname === "/home" ? (
           <>
             <nav className="hidden md:flex items-center justify-end h-full w-[70%] md:w-[50%]">
               <ul className="flex space-x-6 text-white">
                 {[
-                  { href: "/movie", label: "Movies" },
+                  { href: "/", label: "Movies" },
                   { href: "/about", label: "About" },
                   { href: "/request-movies", label: "Request Film" },
                   { href: "/privacy-policy", label: "Privacy Policy" },

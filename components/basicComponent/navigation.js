@@ -11,7 +11,7 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navItems = [
-    { name: "Movies", href: "/movie" },
+    { name: "Movies", href: "/" },
     { name: "About", href: "/about" },
     { name: "Reqeust", href: "/request-movies" },
   ];

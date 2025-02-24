@@ -9,7 +9,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import LogoutButton from "./SignOut";
 
 const navItems = [
-  { name: "Movies", href: "/movie" },
+  { name: "Movies", href: "/" },
   { name: "About", href: "/about" },
 
   // { name: "Contact", href: "/contact" },

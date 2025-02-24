@@ -16,7 +16,7 @@ export default function Footer() {
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center md:justify-start space-x-6 text-sm font-medium">
           <li>
-            <Link href="/" className="hover:text-red-500 transition">
+            <Link href="/home" className="hover:text-red-500 transition">
               Home
             </Link>
           </li>
@@ -26,7 +26,7 @@ export default function Footer() {
             </Link>
           </li>
           <li>
-            <Link href="/movie" className="hover:text-red-500 transition">
+            <Link href="/" className="hover:text-red-500 transition">
               Movies
             </Link>
           </li>

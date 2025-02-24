@@ -9,7 +9,7 @@ import Navbar from "@/components/basicComponent/navigation";
 
 const ProvidersLayout = ({ children }) => {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
+  const isHomePage = pathname === "/home";
 
   return (
     <SearchProvider>
