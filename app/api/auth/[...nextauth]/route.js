@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
 
 export const authOptions = {
   providers: [
@@ -26,8 +25,6 @@ export const authOptions = {
           if (!response.ok) {
             throw new Error(data.message || "Invalid credentials");
           }
-          const cookieStore = await cookies();
-          cookieStore.set("user_auth_token", data.token);
 
           return {
             id: data.userId,
@@ -35,6 +32,7 @@ export const authOptions = {
             name: data.name,
             username: data.username,
             profile: data.profile,
+            token: data.token, // Store JWT here
           };
         } catch (error) {
           throw new Error(error.message);
@@ -42,9 +40,7 @@ export const authOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: "/login", // Custom login page
-  },
+  pages: { signIn: "/login" },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -53,6 +49,7 @@ export const authOptions = {
         token.name = user.name;
         token.username = user.username;
         token.profile = user.profile;
+        token.accessToken = user.token; // Store JWT
       }
       return token;
     },
@@ -64,6 +61,7 @@ export const authOptions = {
         username: token.username,
         profile: token.profile,
       };
+      session.accessToken = token.accessToken; // Pass token in session
       return session;
     },
   },
