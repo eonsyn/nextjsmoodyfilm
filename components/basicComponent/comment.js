@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 import { MdClose, MdDeleteForever } from "react-icons/md";
 import { useSession } from "next-auth/react";
@@ -26,6 +26,7 @@ const Comment = ({
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
   const [showFullComment, setShowFullComment] = useState(false);
+  const commentRef = useRef(null);
 
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
@@ -39,6 +40,24 @@ const Comment = ({
     }
   }, [likedBy, dislikedBy, status, session]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (commentRef.current && !commentRef.current.contains(event.target)) {
+        setShowFullComment(false);
+      }
+    };
+
+    if (showFullComment) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showFullComment]);
+
   const handlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
     onSwipedRight: onSwipeRight,
@@ -49,7 +68,7 @@ const Comment = ({
   return (
     <div
       {...handlers}
-      className="relative bg-gray-800 shadow-lg   rounded-lg p-5 w-full max-w-md flex flex-col space-y-3 border border-gray-700 overflow-hidden"
+      className="relative bg-gray-800 shadow-lg rounded-lg p-5 w-full max-w-md flex flex-col space-y-3 border border-gray-700 overflow-hidden"
     >
       {/* User Avatar & Name */}
       <div className="flex items-center space-x-3">
@@ -69,7 +88,20 @@ const Comment = ({
         {review.length > 100 ? (
           <>
             {showFullComment ? (
-              review
+              <div
+                ref={commentRef}
+                className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+              >
+                <div className=" bg-gray-900 p-6 rounded-lg max-w-lg w-full max-h-[80vh] overflow-y-auto text-white relative">
+                  <button
+                    onClick={() => setShowFullComment(false)}
+                    className="sticky top-0 right-0 p-2 rounded-full bg-gray-800 hover:bg-red-600 transition"
+                  >
+                    <MdClose className="text-2xl" />
+                  </button>
+                  <p className="text-lg">{review}</p>
+                </div>
+              </div>
             ) : (
               <>
                 {review.substring(0, 100)}...
@@ -126,21 +158,6 @@ const Comment = ({
           </button>
         )}
       </div>
-
-      {/* Modal for Full Comment */}
-      {showFullComment && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 p-6 rounded-lg max-w-lg w-full text-white relative">
-            <button
-              onClick={() => setShowFullComment(false)}
-              className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 hover:bg-red-600 transition"
-            >
-              <MdClose className="text-2xl" />
-            </button>
-            <p className="text-lg">{review}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
