@@ -1,6 +1,7 @@
 "use client";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
+import { AiOutlineLoading } from "react-icons/ai";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -118,8 +119,8 @@ function Authentication() {
 
   if (status === "loading") {
     return (
-      <div className="bg-white/30 backdrop-blur-md h-[50%] px-2 flex items-center justify-center text-white rounded-md">
-        <p>Loading...</p>
+      <div className="bg-white/30 backdrop-blur-md h-[50%] px-2 flex items-center justify-center text-white rounded-md py-1">
+        <AiOutlineLoading className="animate-spin text-xl" />
       </div>
     );
   }
