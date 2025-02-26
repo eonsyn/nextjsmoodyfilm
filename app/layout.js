@@ -68,7 +68,7 @@ export function metadata() {
     additionalLinkTags: [
       {
         rel: "icon",
-        href: "/favicon.ico",
+        href: "https://moodyfilm.netlify.app/logo/logo.svg",
       },
       {
         rel: "apple-touch-icon",

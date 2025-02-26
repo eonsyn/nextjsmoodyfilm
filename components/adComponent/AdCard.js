@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 
 const AdCard = () => {
   const cardRef = useRef(null);
-  const adContainerId = "container-11d07442a2e610464e7bd1e318d65962";
   const [loading, setLoading] = useState(false);
+  const adContainerId = "container-11d07442a2e610464e7bd1e318d65962";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -22,18 +22,21 @@ const AdCard = () => {
         console.log("Adsterra script loaded.");
       };
       document.body.appendChild(script);
+    } else {
+      // Re-trigger the ad load for each instance
+      setTimeout(() => {
+        const adContainer = document.getElementById(adContainerId);
+        if (adContainer) {
+          adContainer.innerHTML = ""; // Clear previous content
+          const newScript = document.createElement("script");
+          newScript.async = true;
+          newScript.setAttribute("data-cfasync", "false");
+          newScript.src =
+            "//compassionunsuccessful.com/11d07442a2e610464e7bd1e318d65962/invoke.js";
+          adContainer.appendChild(newScript);
+        }
+      }, 1000);
     }
-  }, []);
-  useEffect(() => {
-    const checkAd = setInterval(() => {
-      const adContainer = document.getElementById(adContainerId);
-      if (adContainer && adContainer.innerHTML.trim().length > 0) {
-        console.log("Ad loaded successfully.");
-        clearInterval(checkAd);
-      }
-    }, 1000);
-
-    return () => clearInterval(checkAd);
   }, []);
 
   useEffect(() => {
