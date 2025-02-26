@@ -59,128 +59,120 @@ const AllComment = ({ id }) => {
 
   const handleLike = async (reviewId) => {
     try {
-      // 🔥 Check if the user is logged in
-      const session = await getSession();
-      if (!session) {
-        const confirmLogin = window.confirm("You need to log in first.");
-        if (confirmLogin) router.push("/login");
-        return;
+      if (!isLoggedIn) {
+        const confirmDelete = window.confirm("You have to login first..");
+        if (!confirmDelete) return; // Exit if user cancels
+        router.push("/login");
       }
 
-      // 🔥 Send like request
-      const response = await axios.post(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/likeReview`,
-        { reviewId, userId: session.user.id },
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session.token}`, // Use NextAuth token
+            Authorization: `Bearer ${session.accessToken}`,
           },
-          withCredentials: true, // Ensure credentials are included
+          body: JSON.stringify({
+            reviewId,
+            userId: user.id,
+          }),
+          credentials: "include",
         }
       );
 
-      const data = response.data;
+      const data = await response.json();
 
       if (data.review) {
-        // 🔥 Update the state to reflect the like action
         setReviews((prevReviews) =>
           prevReviews.map((review) =>
             review.id === reviewId ? { ...review, ...data.review } : review
           )
         );
-        toast.success("You liked this comment!");
+        toast.success("You like this comment!");
       } else {
-        throw new Error(data.error || "Failed to like the comment.");
+        toast.error("You have to login first!");
+        console.error(data.error);
       }
     } catch (error) {
       console.error("Error liking review:", error);
-      toast.error(error.response?.data?.error || "Something went wrong!");
     }
   };
 
   const handleDislike = async (reviewId) => {
     try {
-      // 🔥 Check if the user is logged in
-      const session = await getSession();
-      if (!session) {
-        const confirmLogin = window.confirm("You need to log in first.");
-        if (confirmLogin) router.push("/login");
-        return;
+      if (!isLoggedIn) {
+        const confirmLogin = window.confirm("You have to login first..");
+        if (!confirmLogin) return; // Exit if user cancels
+        router.push("/login");
       }
-
-      // 🔥 Send dislike request
-      const response = await axios.post(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/dislikeReview`,
-        { reviewId, userId: session.user.id },
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session.token}`, // Use NextAuth token
+            Authorization: `Bearer ${session.accessToken}`,
           },
-          withCredentials: true, // Ensure credentials are included
+          body: JSON.stringify({
+            reviewId,
+            userId: user.id,
+          }),
+          credentials: "include",
         }
       );
 
-      const data = response.data;
+      const data = await response.json();
 
       if (data.review) {
-        // 🔥 Update the state with the new review data
         setReviews((prevReviews) =>
           prevReviews.map((review) =>
             review.id === reviewId ? { ...review, ...data.review } : review
           )
         );
-        toast.success("You disliked this comment!");
+        toast.success("You dislike this comment!");
       } else {
-        throw new Error(data.error || "Failed to dislike the comment.");
+        toast.error("You have to login first!");
+        console.error(data.error);
       }
     } catch (error) {
+      toast.error("you have to login first!");
       console.error("Error disliking review:", error);
-      toast.error(error.response?.data?.error || "Something went wrong!");
     }
   };
 
   const handleDelete = async (commentId) => {
+    console.log("hi this is test ");
+    const confirmDelete = window.confirm(
+      "You are sure you want to delete this comment ?"
+    );
+    if (!confirmDelete) return;
     try {
-      // Confirm before deleting
-      const confirmDelete = window.confirm(
-        "Are you sure you want to delete this comment?"
-      );
-      if (!confirmDelete) return;
-
-      // 🔥 Get session token from NextAuth
-      const session = await getSession();
-      if (!session) {
-        toast.error("You need to be logged in to delete a review.");
-        router.push("/login");
-        return;
-      }
-
-      // Send API request
-      const response = await axios.delete(
-        `https://refactored-tribble.vercel.app/user/deleteReview/${commentId}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/deleteReview/${commentId}`,
         {
+          method: "DELETE",
           headers: {
-            Authorization: `Bearer ${session.token}`, // Send NextAuth token
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.accessToken}`, // ✅ Correct token usage
           },
-          withCredentials: true, // Include credentials
+          credentials: "include", // Include credentials in the request
         }
       );
 
-      if (response.status === 200) {
-        toast.success("Review deleted successfully!");
-
-        // 🔥 Update state to remove the deleted comment
+      if (response.ok) {
+        toast.success("Review deleted successfully");
+        // Update the reviews state to remove the deleted comment
         setReviews((prevReviews) =>
           prevReviews.filter((r) => r.id !== commentId)
         );
       } else {
-        throw new Error(response.data.message || "Failed to delete review.");
+        const errorData = await response.json();
+        console.error("Error deleting review:", errorData.message);
       }
     } catch (error) {
-      console.error("Error deleting review:", error);
-      toast.error("Something went wrong!");
+      toast.error("something went wrong!");
+      console.error("Error:", error);
     }
   };
 
@@ -225,6 +217,7 @@ const AllComment = ({ id }) => {
   return (
     <div className="p-3">
       <ToastContainer />
+
       <h1 className="pt-8 text-white text-4xl font-semibold">
         What people say:
       </h1>
