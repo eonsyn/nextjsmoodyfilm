@@ -53,7 +53,7 @@ export async function generateMetadata() {
       title: "Explore Movies - MoodFilm",
       description:
         "Find movies of all genres on MoodFilm. Search and explore the best films with user reviews and recommendations.",
-      url: "https://moodyfilm.netlify.app/movie",
+      url: "https://moodyfilm.netlify.app",
       siteName: "MoodFilm",
       images: [
         {
@@ -73,7 +73,7 @@ export async function generateMetadata() {
       images: ["https://moodyfilm.netlify.app/og-image.jpg"],
     },
     alternates: {
-      canonical: "https://moodyfilm.netlify.app/movie",
+      canonical: "https://moodyfilm.netlify.app",
     },
   };
 }

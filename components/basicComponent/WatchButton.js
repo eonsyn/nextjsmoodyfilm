@@ -6,7 +6,8 @@ const WatchButton = ({ url }) => {
 
   // Check if URL is valid
   const isDailymotion = url?.startsWith("https://dai.ly/");
-  const isMkv = url?.endsWith(".mkv");
+  const isMkv = url?.endsWith(".mkv");const isMp4 = url?.endsWith(".mp4");
+
 
   if (!url || (!isDailymotion && !isMkv)) {
     return <span>Coming soon...</span>;
@@ -17,7 +18,7 @@ const WatchButton = ({ url }) => {
       // Extract only the video ID from the URL
       const videoId = url.replace("https://dai.ly/", "").split("?")[0];
       router.push(`/watchondailymotion/${encodeURIComponent(videoId)}`);
-    } else if (isMkv) {
+    } else if (isMkv ||isMp4) {
       router.push(`/onlinewatch?url=${encodeURIComponent(url)}`);
     }
   };
