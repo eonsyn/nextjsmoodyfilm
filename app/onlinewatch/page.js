@@ -41,9 +41,6 @@ const VideoPlayer = () => {
     );
   }
 
-  // Define a default poster image URL (or fetch dynamically if needed)
-  const posterImageUrl = "htt"; // Change this as needed
-
   return (
     <div className="flex items-center justify-center min-h-screen p-4 sm:p-2">
       <div className="w-full sm:w-[90%] max-w-4xl rounded-lg shadow-lg sm:p-2">
@@ -52,12 +49,7 @@ const VideoPlayer = () => {
             ⏳ Loading video...
           </div>
         )}
-        <video
-          ref={videoRef}
-          controls
-          className="w-full"
-          poster={posterImageUrl} // Set the poster attribute here
-        />
+        <video ref={videoRef} controls className="w-full" />
       </div>
     </div>
   );
