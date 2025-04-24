@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Custom Scrollbar Styles ===== */
+
+/* WebKit-based Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Vertical scrollbar */
+    height: 8px;
+    /* Horizontal scrollbar */
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Light gray */
+    border-radius: 10px;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+    background: #2e8bc0;
+    /* Ocean Blue */
+    border-radius: 10px;
+}
+
+/* Scrollbar Handle on Hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #145da0;
+    /* Darker Blue */
+}
+
+/* ===== Firefox Custom Scrollbar ===== */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #2e8bc0 #f1f1f1;
+}
+
+/* ===== Hide Scrollbar Without Using Overflow: Hidden ===== */
+.no-scrollbar {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE & Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
+}
+
+html {
+    scroll-behavior: auto;
+    /* Disable Next.js default smooth scrolling */
+}
+
+
+/* ===== Background animation ===== */
+@keyframes blob-1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-5%, -10%) scale(1.05);
+    }
+}
+
+@keyframes blob-2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(5%, 5%) scale(0.95);
+    }
+}
+
+@keyframes blob-3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-3%, 8%) scale(1.02);
+    }
+}
+
+
+/* https://i.pinimg.com/736x/33/46/14/334614c6c3ba051d37a5f753368cd964.jpg */
