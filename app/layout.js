@@ -88,7 +88,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* Google Tag Manager inside <head> */}
         <GoogleTagManager gtmId="GTM-5VJB87LR" />
-        <script type='text/javascript' src='//compassionunsuccessful.com/59/63/db/5963db43f43bf3e0a9acae9009c0b384.js'></script>
+       
       </head>
       <body className="custom-body-class font-poppins">
         <ProvidersLayout>
@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
         <Footer />
         {/* Google Analytics inside <body> */}
         <GoogleAnalytics gaId="G-WSBWKX5YW4" />
-        
+        <script type='text/javascript' src='//compassionunsuccessful.com/c8/eb/6d/c8eb6dfc89bbc4f31571824120b94f81.js'></script>
       </body>
     </html>
   );
