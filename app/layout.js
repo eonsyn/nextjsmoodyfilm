@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
         <Footer />
         {/* Google Analytics inside <body> */}
         <GoogleAnalytics gaId="G-WSBWKX5YW4" />
-        <script type='text/javascript' src='//compassionunsuccessful.com/c8/eb/6d/c8eb6dfc89bbc4f31571824120b94f81.js'></script>
+        
       </body>
     </html>
   );
